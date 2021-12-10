@@ -28,6 +28,11 @@ namespace BusinessLayer.Concrete
             return _WriterDal.List();
         }
 
+        public List<Writer> GetWriterByID(int id)
+        {
+            return _WriterDal.List().Where(p => p.WriterId == id).ToList();
+        }
+
         public void TAdd(Writer t)
         {
             _WriterDal.Insert(t);

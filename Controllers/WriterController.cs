@@ -24,10 +24,7 @@ namespace HealthProject.Controllers
         {
             return PartialView();
         }
-        [AllowAnonymous]
-        public IActionResult TEST()
-        {
-            return View();
-        }
+     
+      
     }
 }
