@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface IWriterDal:IRepository<Writer>
+  public  interface IMessageDal : IRepository<Message>
     {
-        Writer GetByFilterFL(Expression<Func<Writer, bool>> filter = null);
+        List<Message> GetListWithMessageByWriter(int id);
     }
 }

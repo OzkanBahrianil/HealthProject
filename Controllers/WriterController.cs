@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
@@ -17,9 +18,13 @@ namespace HealthProject.Controllers
     public class WriterController : Controller
     {
         WriterManeger wm = new WriterManeger(new EfWriterDal());
-        [AllowAnonymous]
+       
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.v = usermail;
+            var writerName =  wm.TGetByFilter(x => x.WriterMail == usermail);
+            ViewBag.WriterName = writerName.WriterName;
             return View();
         }
         [AllowAnonymous]

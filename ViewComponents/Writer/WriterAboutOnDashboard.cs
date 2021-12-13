@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +14,9 @@ namespace HealthProject.ViewComponents.Writer
         WriterManeger wm = new WriterManeger(new EfWriterDal());
         public IViewComponentResult Invoke()
         {
-            var values = wm.GetWriterByID(1);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            var values = wm.GetWriterByID(writerID);
             return View(values);
         }
     }

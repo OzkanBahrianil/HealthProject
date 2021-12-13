@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.EntityFremawork
 {
-  public  class EfNotificationDal : GenericRepository<Notification>, INotificationDal
+  public class EfNotificationDal : GenericRepository<Notification>, INotificationDal
     {
     }
 }

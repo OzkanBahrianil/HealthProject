@@ -4,6 +4,7 @@ using EntityLayer.Concrate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,7 +48,12 @@ namespace BusinessLayer.Concrete
         {
             _WriterDal.Update(t);
         }
+        public Writer TGetByFilter(Expression<Func<Writer, bool>> filter)
+        {
+            return _WriterDal.GetByFilterFL(filter);
+        }
 
-       
+
+
     }
 }

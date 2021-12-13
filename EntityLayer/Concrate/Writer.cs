@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrate
 {
-   public class Writer
+    public class Writer
     {
         [Key]
         public int WriterId { get; set; }
@@ -18,5 +18,8 @@ namespace EntityLayer.Concrate
         public string WriterPassword { get; set; }
         public bool WriterStatus { get; set; }
         public List<Blog> Blogs { get; set; }
+
+        public virtual ICollection<Message> WriterSender { get; set;}
+        public virtual ICollection<Message> WriterReceiver{ get; set; }
     }
 }
