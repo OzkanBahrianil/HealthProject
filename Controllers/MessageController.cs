@@ -14,7 +14,7 @@ namespace HealthProject.Controllers
         MessageManeger mm = new MessageManeger(new EfMessageDal());
         public IActionResult InBox()
         {
-            int id = 2;
+            int id = 1;
             var values = mm.GetInboxLinstByWriter(id);
             return View(values);
         }

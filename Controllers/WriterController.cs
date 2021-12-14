@@ -41,7 +41,9 @@ namespace HealthProject.Controllers
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var writervalues = wm.GetByIDT(1);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            var writervalues = wm.GetByIDT(writerID);
             return View(writervalues);
         }
         [AllowAnonymous]

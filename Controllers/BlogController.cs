@@ -18,6 +18,7 @@ namespace HealthProject.Controllers
     {
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
         BlogManeger bm = new BlogManeger(new EfBlogDal());
+        WriterManeger wm = new WriterManeger(new EfWriterDal());
         public IActionResult Index()
         {
             var values = bm.GetBlogListWithCategory();
@@ -32,7 +33,9 @@ namespace HealthProject.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var values = bm.GetListWithCategoryByWriterbm(1);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            var values = bm.GetListWithCategoryByWriterbm(writerID);
             return View(values);
         }
         [HttpGet]
@@ -55,7 +58,9 @@ namespace HealthProject.Controllers
             {
                 p.BlogStatus = true;
                 p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.WriterID = 1;
+                var usermail = User.Identity.Name;
+                var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+                p.WriterID = writerID;
                 bm.TAdd(p);
                 return RedirectToAction("BlogListByWriter", "Blog");
 
@@ -93,7 +98,9 @@ namespace HealthProject.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog p)
         {
-            p.WriterID = 1;
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            p.WriterID = writerID;
             p.BlogCreateDate =DateTime.Parse(DateTime.Now.ToShortDateString());
             p.BlogStatus = true;
             bm.TUpdate(p);
