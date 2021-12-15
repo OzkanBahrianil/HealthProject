@@ -15,7 +15,6 @@ namespace HealthProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [AllowAnonymous]
-
     public class CategoryController : Controller
     {
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
