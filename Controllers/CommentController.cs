@@ -22,13 +22,16 @@ namespace HealthProject.Controllers
             return PartialView();
         }
         [HttpPost]
-        public PartialViewResult PartialAddComment(Comment p)
+        public IActionResult PartialAddComment(Comment p)
         {
             p.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             p.CommentStatus = true;
-            p.BlogID = 2;
+            int id = p.BlogID;
             cm.TAdd(p);
-            return PartialView();
+            return RedirectToAction("BlogReadAll","Blog", new { @id = id });
+            
+
+
         }
         public PartialViewResult CommentListByBlog(int id)
         {

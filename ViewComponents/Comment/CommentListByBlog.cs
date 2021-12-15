@@ -13,7 +13,7 @@ namespace HealthProject.ViewComponents.Comment
         CommentManeger cm = new CommentManeger(new EfCommentDal());
         public IViewComponentResult Invoke(int id)
         {
-            var values = cm.GetByIDT(id);
+            var values = cm.GetCommentListByIdBlog(id);
             return View(values);
         }
     }

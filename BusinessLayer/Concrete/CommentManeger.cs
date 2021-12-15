@@ -23,6 +23,11 @@ namespace BusinessLayer.Concrete
             return _CommentDal.Get(x => x.CommentID == id);
         }
 
+        public List<Comment> GetCommentListByIdBlog(int id)
+        {
+            return _CommentDal.List().Where(p => p.BlogID == id).ToList();
+        }
+
         public List<Comment> GetListT()
         {
             return _CommentDal.List();

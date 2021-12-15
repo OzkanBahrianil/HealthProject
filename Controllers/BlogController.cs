@@ -26,9 +26,9 @@ namespace HealthProject.Controllers
         }
         public IActionResult BlogReadAll(int id)
         {
-            ViewBag.i = id;
-            var values = bm.GetByIDT(id);
-            return View(values);
+              ViewBag.i = id;
+              var values = bm.GetBlogListById(id);
+              return View(values);
         }
 
         public IActionResult BlogListByWriter()

@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
+    [AllowAnonymous]
     public class RegisterController : Controller
     {
         WriterManeger wm = new WriterManeger(new EfWriterDal());
@@ -30,7 +32,7 @@ namespace HealthProject.Controllers
             p.WriterStatus = true;
             p.WriterAbout = "den";
             wm.TAdd(p);
-            return RedirectToAction("Index","Blog");
+            return RedirectToAction("Index","Login");
 
             }
             else

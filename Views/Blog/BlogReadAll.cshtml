@@ -9,12 +9,12 @@
 <body>
 
 
-    <!--//banner-->
+
     <section class="banner-bottom">
-        <!--/blog-->
+
         <div class="container">
             <div class="row">
-                <!--left-->
+
                 <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
                     @foreach (var item in Model)
                     {
@@ -22,7 +22,7 @@
                             <div class="b-grid-top">
                                 <div class="blog_info_left_grid">
                                     <a href="single.html">
-                                        <img src="~/web/images/b1.jpg" class="img-fluid" alt="">
+                                        <img src="@item.BlogImage" class="img-fluid" alt="">
                                     </a>
                                 </div>
                                 <div class="blog-info-middle">
@@ -59,7 +59,7 @@
 
                     @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.i })
 
-                    @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
+                    @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddComment", ViewBag.i } })
                 </div>
 
                 <!--//left-->
@@ -71,8 +71,13 @@
                         </div>
                         <h4>Mail Bütletine Abone Olun</h4>
                         @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
                         @await Component.InvokeAsync("CategoryList")
-                        @await Component.InvokeAsync("WriterLastBlog")
+
+                        @foreach (var item in Model)
+                        {
+                            @await Component.InvokeAsync("WriterLastBlog", new { id = item.WriterID })
+                        }
                         <div class="single-gd my-5 tech-btm">
                             <h4>Our Progress</h4>
                             <div class="progress">

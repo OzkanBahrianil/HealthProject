@@ -18,11 +18,11 @@ namespace HealthProject.Controllers
             return PartialView();
         }
         [HttpPost]
-        public PartialViewResult SubscribeMail(NewsLetter p)
+        public ActionResult SubscribeMail(NewsLetter p)
         {
             p.MailStatus = true;
             nlm.TAdd(p);
-            return PartialView();
+            return RedirectToAction("Index", "Blog");
         }
     }
 }
