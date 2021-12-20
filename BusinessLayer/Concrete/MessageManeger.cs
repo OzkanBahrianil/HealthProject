@@ -19,6 +19,11 @@ namespace BusinessLayer.Concrete
             _MessageDal = MessageDal;
         }
 
+        public List<Message> GetMessageListById(int id)
+        {
+            return _MessageDal.GetListWithWriter().Where(p => p.MessageID == id).ToList();
+        }
+
         public Message GetByIDT(int id)
         {
             return _MessageDal.Get(x => x.MessageID == id);

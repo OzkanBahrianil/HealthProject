@@ -466,7 +466,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="wwwroot\WriterImageFiles\" />
   </ItemGroup>
 
 </Project>

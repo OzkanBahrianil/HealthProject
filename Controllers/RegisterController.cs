@@ -28,9 +28,10 @@ namespace HealthProject.Controllers
             WriterValidation writerValidation = new WriterValidation();
             ValidationResult result = writerValidation.Validate(p);
             if (result.IsValid)
-            { 
+            {
+            p.WriterImage = "User.png";
             p.WriterStatus = true;
-            p.WriterAbout = "den";
+            p.WriterAbout = "-";
             wm.TAdd(p);
             return RedirectToAction("Index","Login");
 

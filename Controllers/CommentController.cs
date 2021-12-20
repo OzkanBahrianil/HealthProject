@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
+    [AllowAnonymous]
     public class CommentController : Controller
     {
         CommentManeger cm = new CommentManeger(new EfCommentDal());

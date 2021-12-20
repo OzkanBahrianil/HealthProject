@@ -13,6 +13,7 @@ namespace HealthProject.ViewComponents.Writer
         NotificationManeger nm = new NotificationManeger(new EfNotificationDal());
         public IViewComponentResult Invoke()
         {
+           
             var values = nm.GetListT();
             return View(values);
         }

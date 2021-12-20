@@ -19,7 +19,7 @@ namespace HealthProject.Controllers
         [AllowAnonymous]
         public IActionResult AllNotification()
         {
-            var values = nm.GetListT();
+            var values = nm.GetListT().OrderByDescending(x=>x.NotificationTime).ToList();
             return View(values);
         }
     }

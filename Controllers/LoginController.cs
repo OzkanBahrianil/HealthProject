@@ -11,16 +11,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
-{
+{  [AllowAnonymous]
     public class LoginController : Controller
     {
-        [AllowAnonymous]
+      
         public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Index(Writer p)
         {
 
@@ -39,6 +38,7 @@ namespace HealthProject.Controllers
             }
             else
             {
+                ViewBag.Hata = "Email veya Şifre Hatalı";
                 return View();
             }
         }

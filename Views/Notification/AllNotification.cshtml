@@ -5,21 +5,53 @@
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>Bildirimler</h1>
-<table class="table table-bordered">
-    <tr>
-        <th>#</th>
-        <th>Bildirim</th>
-        <th>Tarih</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-<tr>
-    <td>@item.NotificationID</td>
-    <td>@item.NotificationDetails</td>
-    <td>@item.NotificationTime.ToShortDateString()</td>
-</tr>
-    }
-</table>
+<link href="~/inspinia-gh-pages/css/animate.css" rel="stylesheet">
+<link href="~/inspinia-gh-pages/css/stylemes.css" rel="stylesheet">
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Bildirimler</h5>
+
+        </div>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>Konu</th>
+                    <th>Bildirim Türü</th>
+                    <th>Bildirim Zamanı</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr class="alert alert-dismissable" style="background-color:@item.NotificationColor;">
+
+                        <td>
+                            @item.NotificationDetails
+                        </td>
+                        <td>
+                            @item.NotificationType
+                        </td>
+                        <td>
+                            @item.NotificationTime.ToShortDateString()
+                        </td>
+                        <td>
+                            <button aria-hidden="true" data-dismiss="alert" style="background-color:transparent; border:hidden;" type="button">x</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            }
+        </table>
+
+    </div>
+</div>
+
+
+
+
 
 

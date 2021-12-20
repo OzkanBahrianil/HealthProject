@@ -20,5 +20,13 @@ namespace DataAccessLayer.EntityFremawork
                 return c.Messages.Include(x => x.SenderUser).Where(x => x.ReceiverID == id).ToList();
             }
         }
+
+        public List<Message> GetListWithWriter()
+        {
+            using (var c = new Context())
+            {
+                return c.Messages.Include(x => x.SenderUser).ToList();
+            }
+        }
     }
 }

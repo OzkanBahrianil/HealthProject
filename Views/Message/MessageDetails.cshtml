@@ -1,20 +1,63 @@
-﻿
-@model EntityLayer.Concrate.Message
+﻿@using EntityLayer.Concrate
+@model List<Message>
 @{
     ViewData["Title"] = "MessageDetails";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>Mesajım</h1>
-@Html.HiddenFor(x => x.MessageID, new { @class = "form-control" })
-<br />
-@Html.Label("Mesaj Başlığı")
-@Html.TextBoxFor(x => x.Subject, new { @class = "form-control" })
-<br />
-@Html.Label("Mesaj İçeriği")
-@Html.TextAreaFor(x => x.MessageDetails, 20, 3, new { @class = "form-control", disabled = "disabled" })
-<br />
-<button href="/Message/InBox/" class="btn btn-success">Messajlare Dön</button>
+
+<link href="~/inspinia-gh-pages/css/stylemes.css" rel="stylesheet">
+
+<body>
+    @foreach (var item in Model)
+    {
+        <div class="mail-box-header">
+
+            <h2>
+                Mesaj Detayları
+            </h2>
+
+
+
+            <div class="mail-tools tooltip-demo m-t-md">
+
+
+                <h3>
+                    <span class="font-normal">Konu: </span>@item.Subject
+                </h3>
+                <h5>
+                    <span class="float-right font-normal">@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</span>
+                    <span class="font-normal">Gönderen: </span>@item.SenderUser.WriterName
+                </h5>
+            </div>
+        </div>
+        <div class="mail-box">
+
+
+            <div class="mail-body">
+                <p>
+                  @item.MessageDetails
+                </p>
+               
+            </div>
+         
+            <div class="mail-body text-right tooltip-demo">
+                <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Cevap Ver</a>
+                <a class="btn btn-sm btn-white" href="/Message/InBox/" ><i class="fa fa-arrow-right"></i>Mesajlara Dön</a>
+                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Sil</button>
+            </div>
+       
+
+
+        </div>
+        }
+</body>
+
+
+
+
+
+
 
 
 

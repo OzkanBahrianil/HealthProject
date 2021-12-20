@@ -5392,14 +5392,16 @@ input[type="button"].btn-block {
   align-items: center; }
 
 .navbar-toggler {
-  padding: 0.25rem 0.75rem;
-  font-size: 1.25rem;
-  line-height: 1;
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 0.25rem; }
-  .navbar-toggler:hover, .navbar-toggler:focus {
-    text-decoration: none; }
+    padding: 0.25rem 0.75rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1 !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 0.25rem !important;
+}
+    .navbar-toggler:hover, .navbar-toggler:focus {
+        text-decoration: none !important;
+    }
 
 .navbar-toggler-icon {
   display: inline-block;
