@@ -10,12 +10,13 @@ namespace HealthProject.ViewComponents.Writer
 {
     public class WriterMessageNotification : ViewComponent
     {
-
+        WriterManeger wm = new WriterManeger(new EfWriterDal());
         MessageManeger mm = new MessageManeger(new EfMessageDal());
         public IViewComponentResult Invoke()
         {
-            int id = 1;
-            var values = mm.GetInboxLinstByWriter(id);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            var values = mm.GetInboxLinstByWriter(writerID);
             return View(values);
         }
     }

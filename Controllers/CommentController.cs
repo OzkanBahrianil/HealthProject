@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,19 +28,31 @@ namespace HealthProject.Controllers
         [HttpPost]
         public IActionResult PartialAddComment(Comment p)
         {
-            p.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            p.CommentStatus = true;
             int id = p.BlogID;
-            cm.TAdd(p);
-            return RedirectToAction("BlogReadAll","Blog", new { @id = id });
-            
+            CommentValidation bv = new CommentValidation();
+            ValidationResult result = bv.Validate(p);
+            if (result.IsValid)
+            {
+                p.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                p.CommentStatus = true;
+               
+                cm.TAdd(p);
+                return RedirectToAction("BlogReadAll", "Blog", new { @id = id });
+            }
+            else
+            {
+
+                foreach (var item in result.Errors)
+                {
+                    TempData["AletrMessage"] = item.ErrorMessage;
+                }
+            }
+            return RedirectToAction("BlogReadAll", "Blog", new { @id = id });
+
+
 
 
         }
-        public PartialViewResult CommentListByBlog(int id)
-        {
-            var values = cm.GetByIDT(id);
-            return PartialView(values);
-        }
+
     }
 }

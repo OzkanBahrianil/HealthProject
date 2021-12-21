@@ -1,10 +1,40 @@
-﻿
-<div class="tech-btm">
-  
+﻿<div class="tech-btm">
+    <div id="PlaceHolderHere"></div>   
+ 
     <p>Bütün Yazılarımızı Mail Yoluyla Alın</p>
-    <form action="/NewsLetter/SubscribeMail/" method="post">
-        <input type="email" placeholder="Email" required="" name="Mail">
-        <input type="submit" value="Abone Ol">
-    </form>
+    <div class="container">
+        <form action="/NewsLetter/SubscribeMail/" method="post">
+            <input type="email" placeholder="Email" required="" name="Mail">
+            <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal">
+                Abone Ol
+            </button>
 
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Uyarı</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+
+                            Her hafta düzenli olarak açılan bloglar ve içerikleri tarafınızı mail olarak yollanacaktır."Evet, Kabul Ediyorum" butonuna basmanız durumunda kullanıcı sözleşmemizi kabul etmiş olursunuz.
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Evet, Kabul Ediyorum">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Hayır, Kabul Etmiyorum</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+

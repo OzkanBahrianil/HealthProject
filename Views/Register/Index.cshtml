@@ -4,19 +4,19 @@
     Layout = "~/Views/Shared/UserLayout.cshtml";
 }
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <section class="main-content-w3layouts-agileits">
     <div class="container">
         <h3 class="tittle">Kayıt Ol</h3>
         <div class="inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
-               @using (Html.BeginForm("Index", "Register", FormMethod.Post))
-               {
+                @using (Html.BeginForm("Index", "Register", FormMethod.Post))
+                {
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">Adınız soyadınız</label>
-                            @Html.TextBoxFor(x=>x.WriterName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x=>x.WriterName,"",new {@class="text-danger"})
+                            @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Mail Adresi</label>
@@ -27,26 +27,43 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword1 mb-2">Şifre</label>
-                            @Html.TextBoxFor(x => x.WriterPassword, new { @class = "form-control" })
+                            @Html.PasswordFor(x => x.WriterPassword, new { @class = "form-control" })
                             @Html.ValidationMessageFor(x => x.WriterPassword, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1 mb-2">Şifreyi Doğrula</label>
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" />
+                            <span id='message'></span>
                         </div>
 
 
                     </div>
-                    <button type="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+                    <button type="submit" id="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
                     <p>
                         <a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
                     </p>
-               }
+                }
 
             </div>
         </div>
     </div>
     <br />
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+
     <script>
-        $('#btn1').click(function (){
-            swal("Site Kabul Şartları","MAil adresi üzerinden haber ve bilgi e postaları gönderilecektir...vb.");
+        $('#btn1').click(function () {
+            swal("Site Kabul Şartları", "MAil adresi üzerinden haber ve bilgi e postaları gönderilecektir...vb.");
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $('#WriterPassword, #confirm_password').on('keyup', function () {
+            if ($('#WriterPassword').val() == $('#confirm_password').val()) {
+                $('#message').html('Şifreler Aynı').css('color', 'green');
+                document.getElementById('submit').disabled = false;
+            } else {
+                $('#message').html('Şifreler Farklı').css('color', 'red');
+                document.getElementById('submit').disabled = true;
+            }
         });
     </script>
 </section>

@@ -4,7 +4,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Project Status</h4>
+                <h4 class="card-title">Kategoriler</h4>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -18,16 +18,27 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td> @item.CategoryID </td>
-                                    <td> @item.CategoryName </td>
-                                    <td> @item.CategoryStatus </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td> @item.CategoryID </td>
+                                <td> @item.CategoryName </td>
+                                @if (item.CategoryStatus)
+                                {
+                                    <td> Aktif </td>
+
+                                }
+                                else
+                                {
+                                    <td> Pasif </td>
+                                }
+
+
+
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

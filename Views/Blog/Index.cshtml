@@ -4,11 +4,30 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/UserLayout.cshtml";
 }
+
+@if (TempData["AlertSubscribe"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertSubscribe"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
+    <br />
+
+}
+@if (TempData["AlertSubscribeError"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertSubscribeError"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent; border:hidden;" type="button">x</button>
+    </div>
+    <br />
+}
+
 <section class="main-content-w3layouts-agileits">
     <div class="container">
         <h3 class="tittle">Bloglar</h3>
         <div class="inner-sec">
-            <!--left-->
+          
             <div class="left-blog-info-w3layouts-agileits text-left">
                 <div class="row">
                     @foreach (var item in Model)
@@ -41,14 +60,14 @@
                                 <h5 class="card-title">
                                     <a href="/Blog/BlogReadAll/@item.BlogID/">@item.BlogTitle</a>
                                 </h5>
-                                <p class="card-text mb-3">@item.BlogContent.Substring(0, item.BlogContent.Substring(0,130).LastIndexOf(" "))...</p>
+                                <p class="card-text mb-3">@Html.Raw(item.BlogContent.Substring(0, item.BlogContent.Substring(0, 130).LastIndexOf(" ")))...</p>
                                 <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Devamını Oku</a>
                             </div>
                         </div>
                     }
 
                 </div>
-                <!--//left-->
+           
             </div>
         </div>
     </div>

@@ -48,13 +48,13 @@
                         <div class="tech-btm">
                             <img src="~/web/images/banner1.jpg" class="img-fluid" alt="">
                         </div>
+                        <h4>Mail Bütletine Abone Olun</h4>
                         @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
                         @await Html.PartialAsync("~/Views/About/SocialMediaAbout.cshtml")
 
                         <div class="tech-btm">
-                            <h4>Son Yazılar</h4>
-
-                            @await Component.InvokeAsync("WriterLastBlog")
+                            @await Component.InvokeAsync("BlogLast3Post")
                         </div>
                     </div>
 

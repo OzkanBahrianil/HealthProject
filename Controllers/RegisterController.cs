@@ -16,7 +16,7 @@ namespace HealthProject.Controllers
     public class RegisterController : Controller
     {
         WriterManeger wm = new WriterManeger(new EfWriterDal());
-       [HttpGet]
+        [HttpGet]
         public IActionResult Index()
         {
             
@@ -25,7 +25,7 @@ namespace HealthProject.Controllers
         [HttpPost]
         public IActionResult Index(Writer p)
         {
-            WriterValidation writerValidation = new WriterValidation();
+            WriterValidationRegister writerValidation = new WriterValidationRegister();
             ValidationResult result = writerValidation.Validate(p);
             if (result.IsValid)
             {

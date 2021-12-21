@@ -35,16 +35,17 @@ namespace HealthProject.Controllers
         {
             return PartialView();
         }
-        [AllowAnonymous]
+      
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            ViewBag.Password = wm.TGetByFilter(x => x.WriterMail == usermail).WriterPassword.ToString();
             var writervalues = wm.GetByIDT(writerID);
             return View(writervalues);
         }
-        [AllowAnonymous]
+      
         [HttpPost]
         public IActionResult WriterEditProfile(Writer p)
         {
@@ -64,6 +65,70 @@ namespace HealthProject.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public IActionResult WriterEditEmail(Writer p)
+        {
+
+            WriterValidationEmailChange writerValidation = new WriterValidationEmailChange();
+            ValidationResult result = writerValidation.Validate(p);
+            if (result.IsValid)
+            {
+                var usermail = User.Identity.Name;
+                var writer = wm.TGetByFilter(x => x.WriterMail == usermail);
+                p.WriterAbout = writer.WriterAbout;
+                p.WriterImage = writer.WriterImage;
+                p.WriterId = writer.WriterId;
+                p.WriterName = writer.WriterName;
+                p.WriterPassword = writer.WriterPassword;
+                p.WriterStatus = true;
+                wm.TUpdate(p);
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    TempData["AlertMessage"] = item.ErrorMessage;
+                }
+            }
+            return RedirectToAction("WriterEditProfile", "Writer");
+        }
+
+        [HttpPost]
+        public IActionResult WriterEditPassword(Writer p)
+        {
+
+            WriterValidationPasswordChange writerValidation = new WriterValidationPasswordChange();
+            ValidationResult result = writerValidation.Validate(p);
+            if (result.IsValid)
+            {
+                var usermail = User.Identity.Name;
+                var writer = wm.TGetByFilter(x => x.WriterMail == usermail);
+                p.WriterAbout = writer.WriterAbout;
+                p.WriterImage = writer.WriterImage;
+                p.WriterId = writer.WriterId;
+                p.WriterName = writer.WriterName;
+                p.WriterMail = writer.WriterMail;
+                p.WriterStatus = true;
+                wm.TUpdate(p);
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    TempData["AlertMessage"] = item.ErrorMessage;
+                }
+            }
+            return RedirectToAction("WriterEditProfile", "Writer");
+        }
+
+
+
+
+
+
 
         [AllowAnonymous]
         [HttpGet]

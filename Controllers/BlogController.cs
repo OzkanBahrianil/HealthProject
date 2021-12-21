@@ -13,22 +13,24 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
-    [AllowAnonymous]
+
     public class BlogController : Controller
     {
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
         BlogManeger bm = new BlogManeger(new EfBlogDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            var values = bm.GetBlogListWithCategory();
+            var values = bm.GetBlogListWithCategory().OrderByDescending(x=>x.BlogCreateDate).ToList();
             return View(values);
         }
+        [AllowAnonymous]
         public IActionResult BlogReadAll(int id)
         {
-              ViewBag.i = id;
-              var values = bm.GetBlogListById(id);
-              return View(values);
+            ViewBag.i = id;
+            var values = bm.GetBlogListById(id);
+            return View(values);
         }
 
         public IActionResult BlogListByWriter()
@@ -41,11 +43,14 @@ namespace HealthProject.Controllers
         [HttpGet]
         public IActionResult BlogAddByWriter()
         {
-          
-            List<SelectListItem> CategoryValue = (from x in cm.GetListT() select new SelectListItem { 
-            Text= x.CategoryName,
-            Value= x.CategoryID.ToString()
-            }).ToList();
+
+
+            List<SelectListItem> CategoryValue = (from x in cm.GetListT()
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.CategoryName,
+                                                      Value = x.CategoryID.ToString()
+                                                  }).ToList();
             ViewBag.cv = CategoryValue;
             return View();
         }
@@ -62,6 +67,7 @@ namespace HealthProject.Controllers
                 var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
                 p.WriterID = writerID;
                 bm.TAdd(p);
+                TempData["AletrMessage"] = "Ekleme İşlemi Başarılı...!";
                 return RedirectToAction("BlogListByWriter", "Blog");
 
             }
@@ -78,6 +84,7 @@ namespace HealthProject.Controllers
         {
             var blogvalue = bm.GetByIDT(id);
             bm.TDelete(blogvalue);
+            TempData["AletrMessage"] = "Silme İşlemi Başarılı...!";
             return RedirectToAction("BlogListByWriter");
         }
         [HttpGet]
@@ -98,13 +105,28 @@ namespace HealthProject.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog p)
         {
-            var usermail = User.Identity.Name;
-            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
-            p.WriterID = writerID;
-            p.BlogCreateDate =DateTime.Parse(DateTime.Now.ToShortDateString());
-            p.BlogStatus = true;
-            bm.TUpdate(p);
-            return RedirectToAction("BlogListByWriter");
+            BlogValidation bv = new BlogValidation();
+            ValidationResult result = bv.Validate(p);
+            if (result.IsValid)
+            {
+
+                var usermail = User.Identity.Name;
+                var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+                p.WriterID = writerID;
+                p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                p.BlogStatus = true;
+                bm.TUpdate(p);
+                TempData["AletrMessage"] = "Güncelleme İşlemi Başarılı...!";
+                return RedirectToAction("BlogListByWriter");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
     }
 }

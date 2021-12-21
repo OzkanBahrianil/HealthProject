@@ -13,18 +13,44 @@
     <br />
     @Html.Label("Blog Başlığı")
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.BlogTitle)
     <br />
     @Html.Label("Blog Thumpnail Url")
     @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.BlogThumbnailImage)
     <br />
     @Html.Label("Blog Görseli")
     @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.BlogImage)
     <br />
     @Html.Label("Kategori")
-    @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "Form-control" })
+    @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
     <br />
     @Html.Label("İçerik")
-    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control" })
+    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control", id = "summernote" })
+    @Html.ValidationMessageFor(x => x.BlogContent)
     <br />
     <button class="btn btn-success">Güncelle</button>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    </script>
 }

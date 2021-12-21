@@ -31,7 +31,7 @@ namespace BusinessLayer.Concrete
      
         public List<Blog> GetListBlogLast3()
         {
-            return _BlogDal.List().OrderByDescending(x=>x.BlogID).Take(3).ToList();
+            return _BlogDal.List().OrderByDescending(x=>x.BlogCreateDate).Take(3).ToList();
         }
 
         public List<Blog> GetListT()

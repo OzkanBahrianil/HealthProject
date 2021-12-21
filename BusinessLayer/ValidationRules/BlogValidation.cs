@@ -1,4 +1,5 @@
-﻿using EntityLayer.Concrate;
+﻿using DataAccessLayer.Concrete;
+using EntityLayer.Concrate;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ namespace BusinessLayer.ValidationRules
         public BlogValidation()
         {
             RuleFor(x => x.BlogTitle).NotEmpty().WithMessage("Başlık Boş Bırakılamaz");
-            RuleFor(x => x.BlogContent).NotEmpty().WithMessage("İçerik Boş Bırakılamaz");
-            RuleFor(x => x.BlogImage).NotEmpty().WithMessage("Resim Boş Bırakılamaz");
-            RuleFor(x => x.BlogTitle).MaximumLength(150).WithMessage("Başlık En Fazla 150 Karekter Yazılabilir");
-            RuleFor(x => x.BlogTitle).MinimumLength(5).WithMessage("Başlık En Az 5 Karekter Yazılabilir");
+            //RuleFor(x => x.BlogContent).NotEmpty().WithMessage("İçerik Boş Bırakılamaz").MinimumLength(200).WithMessage("İçerik En Az 200 Karekter Yazılabilir");
+            //RuleFor(x => x.BlogTitle).MaximumLength(150).WithMessage("Başlık En Fazla 150 Karekter Yazılabilir").MinimumLength(10).WithMessage("Başlık En Az 10 Karekter Yazılabilir");
+           
         }
+
+      
     }
 }

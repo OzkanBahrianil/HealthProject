@@ -6,6 +6,14 @@
 }
 
 <h1>Yazarın Blogları</h1>
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+    <br />
+}
+
 <table class="table table-bordered">
     <tr>
         <th>#</th>
@@ -18,15 +26,32 @@
     </tr>
     @foreach (var item in Model)
     {
-<tr>
-    <th>@item.BlogID</th>
-    <td>@item.BlogTitle</td>
-    <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
-    <td>@item.Category.CategoryName</td>
-    <td>@item.BlogStatus</td>
-    <td><a href="/Blog/DeleteBlog/@item.BlogID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
-    <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning">Düzenle</a></td>
-</tr>
+        @if (item.BlogStatus)
+        {
+            <tr class="badge-success">
+
+
+                <th>@item.BlogID</th>
+                <td>@item.BlogTitle</td>
+                <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
+                <td>@item.Category.CategoryName</td>
+                <td>Aktif</td>
+                <td><a href="/Blog/DeleteBlog/@item.BlogID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning">Düzenle</a></td>
+            </tr>
+        }
+        else
+        {
+            <tr class="badge-secondary">
+                <th>@item.BlogID</th>
+                <td>@item.BlogTitle</td>
+                <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
+                <td>@item.Category.CategoryName</td>
+                <td>Pasif</td>
+                <td><a href="/Blog/DeleteBlog/@item.BlogID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning">Düzenle</a></td>
+            </tr>
+        }
     }
 </table>
 <a href="/Blog/BlogAddByWriter/" class="btn btn-primary">Yeni Blog Oluştur</a>

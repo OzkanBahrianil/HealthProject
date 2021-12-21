@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,9 +24,25 @@ namespace HealthProject.Controllers
         [HttpPost]
         public ActionResult SubscribeMail(NewsLetter p)
         {
-            p.MailStatus = true;
-            nlm.TAdd(p);
+            NewsLetterValidation bv = new NewsLetterValidation();
+            ValidationResult result = bv.Validate(p);
+            if (result.IsValid)
+            {
+                p.MailStatus = true;
+                nlm.TAdd(p);
+                TempData["AlertSubscribe"] = "Abone Olma İşlemi Başarılı...!";
+                return RedirectToAction("Index", "Blog");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    TempData["AlertSubscribeError"] = item.ErrorMessage;
+                }
+            }
             return RedirectToAction("Index", "Blog");
         }
+
+
     }
 }

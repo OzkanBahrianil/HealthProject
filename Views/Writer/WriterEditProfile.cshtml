@@ -3,32 +3,39 @@
     ViewData["Title"] = "WriterEditProfile";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
-
-@using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
+@if (TempData["AlertMessage"] != null)
 {
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Yazar Profili</h4>
-                <br />
-                @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
+    <div class="alert alert-danger">
+        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessage"]
+    </div>
+    <br />
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Yazar Profili</h4>
+            <br />
+            @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
+            {
                 <form class="forms-sample">
                     <div class="form-group">
+                        @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
                         <label for="exampleInputName1">İsim Soyisim</label>
                         @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail3">Mail address</label>
-                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control" })
+                        <label for="exampleInputName1">Email</label>
+                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword4">Password</label>
-                        @Html.PasswordFor(x => x.WriterPassword, new { @class = "form-control" })
+                        @Html.HiddenFor(x => x.WriterPassword, new { @class = "form-control" })
                     </div>
 
                     <div class="form-group">
                         <label>Yazar Görseli</label>
-                        <input type="file" name="img[]" class="file-upload-default">
+                        <input type="file" name="WriterImage" class="file-upload-default">
                         <div class="input-group col-xs-12">
                             <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                             <span class="input-group-append">
@@ -37,17 +44,99 @@
                         </div>
                     </div>
 
+
                     <div class="form-group">
                         <label for="exampleTextarea1">Hakkında</label>
                         @Html.TextAreaFor(x => x.WriterAbout, 15, 3, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
                     </div>
                     <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
+                    <a href="/Dashboard/Index/" class="btn btn-light">İptal Et</a>
 
-                </form> 
-                <a href="/Dashboard/Index/" class="btn btn-light">İptal Et</a>
+                </form>
+            }
+            <br />
+            <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal">
+                Email Değiştir
+            </button>
+
+            <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal2">
+                Şifre Değiştir
+            </button>
+
+
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Mail Adresini Değiştir</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        @using (Html.BeginForm("WriterEditEmail", "Writer", FormMethod.Post))
+                        {
+                            <div class="modal-body">
+                                <label for="exampleInputName1">Email</label>
+                                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control" })
+                                Bu işlem gerçekleştikten sonra yeniden giriş yapmanız gerekmektedir.
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="Güncelle">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Vazgeç</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="myModal2">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Şifreni Değiştir</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        @using (Html.BeginForm("WriterEditPassword", "Writer", FormMethod.Post))
+                        {
+                    <div class="modal-body">
+
+                        <input style="visibility:hidden;"  type="password" name="confirm_password1" id="confirm_password1" value="@ViewBag.Password" />
+                        <label for="exampleInputName1">Eski Şifre</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" />
+                        <span id='message'></span>
+                        <br />
+                        <label for="exampleInputName1">Yeni Şifre</label>
+                        <input type="password" name="WriterPassword" class="form-control" value="" />
+                    </div>
+
+
+                            <div class="modal-footer">
+                                <input type="submit" id="submit" class="btn btn-primary" value="Güncelle">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal2">Vazgeç</button>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $('#confirm_password1, #confirm_password').on('keyup', function () {
+        if ($('#confirm_password1').val() == $('#confirm_password').val()) {
+                $('#message').html('Şifreler Aynı').css('color', 'green');
+                document.getElementById('submit').disabled = false;
+            } else {
+                $('#message').html('Şifreler Farklı').css('color', 'red');
+                document.getElementById('submit').disabled = true;
+            }
+        });
+</script>
 

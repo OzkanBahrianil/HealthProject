@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HealthProject.ViewComponents.Blog
+namespace HealthProject.ViewComponents.About
 {
-    public class BlogListDashboard: ViewComponent
+    public class AboutFooter : ViewComponent
     {
-
-        BlogManeger bm = new BlogManeger(new EfBlogDal());
+        AboutManeger abm = new AboutManeger(new EfAboutDal());
         public IViewComponentResult Invoke()
         {
-            var values = bm.GetBlogListWithCategory().OrderByDescending(x=>x.BlogCreateDate).Take(10).ToList();
+            var values = abm.GetListT();
             return View(values);
         }
     }
