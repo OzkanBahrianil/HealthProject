@@ -22,7 +22,7 @@
                             <div class="b-grid-top">
                                 <div class="blog_info_left_grid">
                                     <a href="single.html">
-                                        <img src="@item.BlogImage" class="img-fluid" alt="">
+                                        <img src="~/BlogImageFiles/@item.BlogImage" class="img-fluid" alt="">
                                     </a>
                                 </div>
                                 <div class="blog-info-middle">
@@ -39,7 +39,7 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="far fa-comment"></i> 0 Comments
+                                                <i class="far fa-comment"></i> @ViewBag.CommentCount Comments
                                             </a>
                                         </li>
 

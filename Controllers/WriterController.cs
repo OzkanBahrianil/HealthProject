@@ -30,7 +30,6 @@ namespace HealthProject.Controllers
   
   
      
-        [AllowAnonymous]
         public PartialViewResult WriterFooterPartial()
         {
             return PartialView();
@@ -83,7 +82,7 @@ namespace HealthProject.Controllers
                 p.WriterPassword = writer.WriterPassword;
                 p.WriterStatus = true;
                 wm.TUpdate(p);
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("LogOut", "Login");
             }
             else
             {
@@ -112,7 +111,7 @@ namespace HealthProject.Controllers
                 p.WriterMail = writer.WriterMail;
                 p.WriterStatus = true;
                 wm.TUpdate(p);
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("LogOut", "Login");
             }
             else
             {
@@ -127,7 +126,7 @@ namespace HealthProject.Controllers
 
 
 
-
+        //Writeradd gereksiz 
 
 
         [AllowAnonymous]

@@ -14,6 +14,7 @@ namespace HealthProject.ViewComponents.Comment
         public IViewComponentResult Invoke(int id)
         {
             var values = cm.GetCommentListByIdBlog(id);
+           
             return View(values);
         }
     }

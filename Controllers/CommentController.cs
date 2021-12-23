@@ -34,8 +34,7 @@ namespace HealthProject.Controllers
             if (result.IsValid)
             {
                 p.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.CommentStatus = true;
-               
+                p.CommentStatus = true;    
                 cm.TAdd(p);
                 return RedirectToAction("BlogReadAll", "Blog", new { @id = id });
             }

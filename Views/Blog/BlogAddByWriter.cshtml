@@ -1,55 +1,76 @@
-﻿@model EntityLayer.Concrate.Blog
+﻿@model HealthProject.Models.AddBlogImage
 @{
     ViewData["Title"] = "BlogAddByWriter";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
-<h1>Yeni Gönderi</h1>
+<h1>Yeni Gönderi Oluştur</h1>
 <br />
-@using (Html.BeginForm("BlogAddByWriter", "Blog", FormMethod.Post))
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+@using (Html.BeginForm("BlogAddByWriter", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.Label("Blog Başlığı")
-    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.BlogTitle)
+    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", @required = "required" })
+
     <br />
-    @Html.Label("Blog Resmi")
-    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.BlogImage)
-    <br />
-    @Html.Label("Blog Kücük Resmi")
-    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control" })
-    @Html.ValidationMessageFor(x => x.BlogThumbnailImage)
-    <br />
+    <div class="form-group">
+        <label>Blog Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="BlogImage" class="custom-file-input" required="">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Blog Küçük Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="BlogThumbnailImage" class="custom-file-input" required="">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
     @Html.Label("Kategori")
     @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
     <br />
+    @Html.Label("Blog Kısa Tanıtımı")
+    @Html.TextAreaFor(x => x.BlogShortContent, 10, 3, new { @class = "form-control", @required = "required" })
+
+    <br />
     @Html.Label("Blog İçeriği")
-    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control", id = "summernote" })
-    @Html.ValidationMessageFor(x => x.BlogContent)
+    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control", id = "summernote", @required = "required" })
+
     <br />
     <button class="btn btn-info">Ekle</button>
 
 }
 
-
-
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
-        $('#summernote').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    </script>
+    $('#summernote').summernote({
+        placeholder: 'Blog İçeriğini giriniz...',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
 
 

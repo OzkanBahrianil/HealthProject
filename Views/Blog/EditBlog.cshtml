@@ -8,26 +8,30 @@
 <br />
 @using (Html.BeginForm("EditBlog", "Blog", FormMethod.Post))
 {
-    @Html.Label("Blog ID")
-    @Html.TextBoxFor(x => x.BlogID, new { @class = "form-control" })
-    <br />
+
+    @Html.HiddenFor(x => x.BlogID, new { @class = "form-control" })
+
     @Html.Label("Blog Başlığı")
-    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.BlogTitle)
     <br />
     @Html.Label("Blog Thumpnail Url")
-    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.BlogThumbnailImage)
     <br />
     @Html.Label("Blog Görseli")
-    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.BlogImage)
     <br />
     @Html.Label("Kategori")
     @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
     <br />
+    @Html.Label("Blog Kısa Tanıtımı")
+    @Html.TextAreaFor(x => x.BlogShortContent, 10, 3, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.BlogShortContent)
+    <br />
     @Html.Label("İçerik")
-    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control", id = "summernote" })
+    @Html.TextAreaFor(x => x.BlogContent, 15, 3, new { @class = "form-control", id = "summernote", @required = "required" })
     @Html.ValidationMessageFor(x => x.BlogContent)
     <br />
     <button class="btn btn-success">Güncelle</button>

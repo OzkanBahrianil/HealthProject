@@ -10,6 +10,7 @@ namespace DataAccessLayer.Abstract
     public interface IBlogDal : IRepository<Blog>
     {
         List<Blog> GetListWithCategory();
+        List<Blog> GetListWithCategoryWithComments();
         List<Blog> GetListWithCategoryByWriter(int id);
     }
 }

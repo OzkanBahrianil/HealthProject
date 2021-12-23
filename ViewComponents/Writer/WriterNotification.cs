@@ -15,6 +15,7 @@ namespace HealthProject.ViewComponents.Writer
         {
            
             var values = nm.GetListT();
+            ViewBag.WriterNotificationCount = values.Where(x => x.NotificationStatus == true).ToList().Count();
             return View(values);
         }
     }

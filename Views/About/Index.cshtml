@@ -4,20 +4,12 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/UserLayout.cshtml";
 }
-
-<!DOCTYPE html>
-<html lang="zxx">
-
-
-
 <body>
-
-
     <section class="main-content-w3layouts-agileits">
         <div class="container">
             <h3 class="tittle">Hakkımızda</h3>
             <div class="row inner-sec">
-                <!--left-->
+           
                 <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
                     <div class="blog-grid-top">
 
@@ -34,15 +26,14 @@
 
 
                             <p>
-                              @item.AboutDetails1
+                                @item.AboutDetails1
                             </p>
                             <a href="single.html" class="btn btn-primary read-m">Read More</a>
                         }
                     </div>
 
                 </div>
-                <!--//left-->
-                <!--right-->
+             
                 <aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
                     <div class="right-blog-info text-left">
                         <div class="tech-btm">
@@ -53,16 +44,15 @@
 
                         @await Html.PartialAsync("~/Views/About/SocialMediaAbout.cshtml")
 
-                        <div class="tech-btm">
-                            @await Component.InvokeAsync("BlogLast3Post")
+                        <div class="tech-btm">       
+                                @await Component.InvokeAsync("BlogLast3Post")
+                            
                         </div>
                     </div>
 
                 </aside>
-                <!--//right-->
+              
             </div>
         </div>
     </section>
 </body>
-
-</html>

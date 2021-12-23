@@ -17,6 +17,7 @@ namespace HealthProject.ViewComponents.Writer
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
             var values = mm.GetInboxLinstByWriter(writerID);
+            @ViewBag.NewMessageCount = mm.GetInboxLinstByWriter(writerID).Where(x => x.MessageStatus == true).ToList().Count();
             return View(values);
         }
     }

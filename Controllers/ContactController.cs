@@ -24,8 +24,10 @@ namespace HealthProject.Controllers
         {
             p.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             p.ContactStatus = true;
-            cm.TAdd(p);
-            return RedirectToAction("Index","Blog");
+            cm.TAdd(p); 
+            TempData["AlertMessage"] = "Mesajınız Başarı ile Gönderilmiştir...!";
+            return RedirectToAction("Index", "Contact");
+           
         }
     }
 }

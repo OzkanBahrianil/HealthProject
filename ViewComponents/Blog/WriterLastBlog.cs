@@ -13,7 +13,7 @@ namespace HealthProject.ViewComponents.Blog
         BlogManeger bm = new BlogManeger(new EfBlogDal());
         public IViewComponentResult Invoke(int id)
         {
-            var values = bm.GetListWriterBlog(id);
+            var values = bm.GetListWriterBlog(id).OrderByDescending(x=>x.BlogID).Take(5).ToList();
             return View(values);
         }
     }

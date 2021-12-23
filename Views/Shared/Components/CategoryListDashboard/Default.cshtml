@@ -9,7 +9,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th> # </th>
+                                <th></th>
                                 <th> Kategori Adı</th>
                                 <th> Durumu</th>
                                 <th> İşlemler</th>
@@ -19,7 +19,7 @@
                             @foreach (var item in Model)
                             {
                             <tr>
-                                <td> @item.CategoryID </td>
+                                
                                 <td> @item.CategoryName </td>
                                 @if (item.CategoryStatus)
                                 {

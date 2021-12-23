@@ -1,5 +1,6 @@
-﻿@using EntityLayer.Concrate
-@model List<Message>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Message>
 @{
     ViewData["Title"] = "InBox";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -7,29 +8,29 @@
 <link href="~/inspinia-gh-pages/css/stylemes.css" rel="stylesheet">
 
 
-    <div class="mail-box-header">
-        <h2>
-            Mesajlar
-        </h2>
-     
-    </div>
-    <div class="mail-box">
+<div class="mail-box-header">
+    <h2>
+        Mesajlar
+    </h2>
 
-        <table class="table table-hover table-mail">
-            <thead>
-                
-                <tr>
-                    <th></th>
-                    <th>Gönderenin Adı</th>
-                    <th>Konu</th>
-                    <th>Gönderim Zamanı</th>
-                    <th>Detay</th>
+</div>
+<div class="mail-box">
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <table class="table table-hover table-mail">
+        <thead>
+
+            <tr>
+                <th></th>
+                <th>Gönderenin Adı</th>
+                <th>Konu</th>
+                <th>Gönderim Zamanı</th>
+                <th>Detay</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr class="unread">
                     <td class="check-mail">
                         <input type="checkbox" class="i-checks">
@@ -39,13 +40,15 @@
                     <td class="mail-date">@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
                     <td><a href="/Message/MessageDetails/@item.MessageID" class="btn btn-warning">Mesajı Aç</a></td>
                 </tr>
-                }
-            </tbody>
-        </table>
-
-
+            }
+        </tbody>
+    </table>
+    @if (Model.Count > 12)
+    {
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBox", new { page }))
+    }
     </div>
 
 
-  
+
 

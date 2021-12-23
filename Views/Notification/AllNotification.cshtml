@@ -1,5 +1,6 @@
-﻿@using EntityLayer.Concrate
-@model List<Notification>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Notification>
 @{
     ViewData["Title"] = "AllNotification";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -13,40 +14,46 @@
             <h5>Bildirimler</h5>
 
         </div>
-        <table class="table table-borderless">
-            <thead>
-                <tr>
-                    <th>Konu</th>
-                    <th>Bildirim Türü</th>
-                    <th>Bildirim Zamanı</th>
-                    <th></th>
+        <div class="ibox-content">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Konu</th>
+                        <th>Bildirim Türü</th>
+                        <th>Bildirim Zamanı</th>
 
-                </tr>
-            </thead>
-            @foreach (var item in Model)
-            {
-                <tbody>
-                    <tr class="alert alert-dismissable" style="background-color:@item.NotificationColor;">
-
-                        <td>
-                            @item.NotificationDetails
-                        </td>
-                        <td>
-                            @item.NotificationType
-                        </td>
-                        <td>
-                            @item.NotificationTime.ToShortDateString()
-                        </td>
-                        <td>
-                            <button aria-hidden="true" data-dismiss="alert" style="background-color:transparent; border:hidden;" type="button">x</button>
-                        </td>
 
                     </tr>
-                </tbody>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr class="alert alert-dismissable" style="background-color:@item.NotificationColor;">
+                            <td style="@item.NotificationTypeSymbol"></td>
+                            <td>
+                                @item.NotificationDetails
+                            </td>
+                            <td>
+                                @item.NotificationType
+                            </td>
+                            <td>
+                                @item.NotificationTime.ToShortDateString()
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+
+                }
+            </table>
+            @if (Model.Count > 20)
+            {
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("AllNotification", new { page }))
 
             }
-        </table>
 
+        </div>
     </div>
 </div>
 

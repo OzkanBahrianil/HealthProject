@@ -1,5 +1,6 @@
-﻿@using EntityLayer.Concrate
-@model List<Blog>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Blog>
 @{
     ViewData["Title"] = "BlogListByWriter";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -16,7 +17,7 @@
 
 <table class="table table-bordered">
     <tr>
-        <th>#</th>
+      
         <th>Blog Başlığı</th>
         <th>Oluşturulma Tarihi</th>
         <th>Kategori</th>
@@ -30,8 +31,6 @@
         {
             <tr class="badge-success">
 
-
-                <th>@item.BlogID</th>
                 <td>@item.BlogTitle</td>
                 <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.Category.CategoryName</td>
@@ -54,4 +53,8 @@
         }
     }
 </table>
+@if (Model.Count > 10)
+{
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByWriter", new { page }))
+}
 <a href="/Blog/BlogAddByWriter/" class="btn btn-primary">Yeni Blog Oluştur</a>

@@ -70,8 +70,16 @@
         </div>
         <div class="container">
             <div class="contact_grid_right">
+                @if (TempData["AlertMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessage"]
+                    </div>
+                    <br />
+                }
                 <form action="#" method="post">
                     <div class="row contact_left_grid">
+
                         <div class="col-md-6 con-left">
                             <div class="form-group">
                                 <label for="validationCustom01 my-2">Adınız</label>

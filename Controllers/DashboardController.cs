@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
-    [AllowAnonymous]
+
     public class DashboardController : Controller
     {
         WriterManeger wm = new WriterManeger(new EfWriterDal());

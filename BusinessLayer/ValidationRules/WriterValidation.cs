@@ -24,7 +24,7 @@ namespace BusinessLayer.ValidationRules
     }
     public class WriterValidationRegister : AbstractValidator<Writer>
     {
-        Context _c = new Context();
+
         public WriterValidationRegister()
         {
             RuleFor(x => x.WriterName).NotEmpty().WithMessage("İsim Boş Bırakılamaz.").MinimumLength(6).WithMessage("Lütfen tam isminizi giriniz");
@@ -34,14 +34,16 @@ namespace BusinessLayer.ValidationRules
     .Matches("[a-z]+").WithMessage("'Şifre en az 1 küçük karakter içermelidir")
     .Matches(@"(\d)+").WithMessage("Şifre en az 1 sayı içermelidir")
     .Matches("(?!.*[£# “”])").WithMessage("Şifre £ # “” veya boşluk karakterlerini içeremez.");
-            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail Boş Bırakılamaz.").Must(UniqueMail).WithMessage("Email zaten kayıtlı.");
+            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Mail Boş Bırakılamaz");
+            RuleFor(x => x.WriterMail).EmailAddress().WithMessage("Lütfen Geçerli Bir Mail Adresi Giriniz").Must(UniqueMail).WithMessage("Email zaten kayıtlı");
 
 
         }
         private bool UniqueMail(string mail)
         {
+            Context _c = new Context();
 
-            var checkMail = _c.Writers.Where(x => x.WriterMail.ToLower() == mail.ToLower()).SingleOrDefault();
+            var checkMail = _c.Writers.Where(x => x.WriterMail.ToLower() == mail.ToLower()).FirstOrDefault();
 
             if (checkMail == null)
             {

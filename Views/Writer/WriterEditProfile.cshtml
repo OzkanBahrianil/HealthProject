@@ -14,7 +14,7 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Yazar Profili</h4>
+            <h4 class="card-title">Profilini ve Ayarlarını Düzenle</h4>
             <br />
             @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
             {
@@ -51,7 +51,7 @@
                         @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
                     </div>
                     <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
-                    <a href="/Dashboard/Index/" class="btn btn-light">İptal Et</a>
+                    <a href="/Dashboard/Index/" class="btn btn-outline-danger">İptal Et</a>
 
                 </form>
             }
@@ -79,14 +79,18 @@
                         {
                             <div class="modal-body">
                                 <label for="exampleInputName1">Email</label>
-                                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control" })
-                                Bu işlem gerçekleştikten sonra yeniden giriş yapmanız gerekmektedir.
+                                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required = "required", @type = "email" })
+                                <br />
+                                <div class="alert alert-danger">
+                                    <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
+                                    <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+                                </div>
                             </div>
 
 
                             <div class="modal-footer">
                                 <input type="submit" class="btn btn-primary" value="Güncelle">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Vazgeç</button>
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Vazgeç</button>
                             </div>
                         }
                     </div>
@@ -103,21 +107,31 @@
 
                         @using (Html.BeginForm("WriterEditPassword", "Writer", FormMethod.Post))
                         {
-                    <div class="modal-body">
+                            <div class="modal-body">
 
-                        <input style="visibility:hidden;"  type="password" name="confirm_password1" id="confirm_password1" value="@ViewBag.Password" />
-                        <label for="exampleInputName1">Eski Şifre</label>
-                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" />
-                        <span id='message'></span>
-                        <br />
-                        <label for="exampleInputName1">Yeni Şifre</label>
-                        <input type="password" name="WriterPassword" class="form-control" value="" />
-                    </div>
+                                <input style="visibility:hidden;" type="password" name="confirm_password1" id="confirm_password1" value="@ViewBag.Password" />
+                                <br />
+                                <label for="exampleInputName1">Eski Şifre</label>
+                                <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" required="" />
+                                <span id='message'></span>
+                                <br />
+                                <label for="exampleInputName1">Yeni Şifre</label>
+                                <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />
+                                <br />
+                                <label for="exampleInputName1">Yeni Şifre Doğrula</label>
+                                <input type="password" name="WriterNewPasswordCheck" id="WriterNewPasswordCheck" class="form-control" value="" required="" />
+                                <span id='messageConfirm'></span>
+                                <br />
+                                <div class="alert alert-danger">
+                                    <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
+                                    <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+                                </div>
+                            </div>
 
 
                             <div class="modal-footer">
                                 <input type="submit" id="submit" class="btn btn-primary" value="Güncelle">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal2">Vazgeç</button>
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Vazgeç</button>
                             </div>
                         }
                     </div>
@@ -129,14 +143,26 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-    $('#confirm_password1, #confirm_password').on('keyup', function () {
-        if ($('#confirm_password1').val() == $('#confirm_password').val()) {
-                $('#message').html('Şifreler Aynı').css('color', 'green');
-                document.getElementById('submit').disabled = false;
-            } else {
-                $('#message').html('Şifreler Farklı').css('color', 'red');
-                document.getElementById('submit').disabled = true;
-            }
-        });
-</script>
 
+    $('#confirm_password1, #confirm_password').on('keyup', function () {
+
+        if ($('#confirm_password1').val() == $('#confirm_password').val()) {
+            $('#message').html('Şifreler Aynı').css('color', 'green');
+            if ($('#WriterNewPassword').val() != null) {
+                $('#WriterNewPassword, #WriterNewPasswordCheck').on('keyup', function () {
+                    if ($('#WriterNewPassword').val() == $('#WriterNewPasswordCheck').val()) {
+                        $('#messageConfirm').html('Şifreler Aynı').css('color', 'green');
+                        document.getElementById('submit').disabled = false;
+                    } else {
+                        $('#messageConfirm').html('Yeni Şifreler Farklı').css('color', 'red');
+                        document.getElementById('submit').disabled = true;
+                    }
+                });
+            }
+        } else {
+            $('#message').html('Şifreler Farklı').css('color', 'red');
+            document.getElementById('submit').disabled = true;
+        }
+
+    });
+</script>

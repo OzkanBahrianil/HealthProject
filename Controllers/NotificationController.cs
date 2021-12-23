@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HealthProject.Controllers
 {
@@ -16,10 +17,10 @@ namespace HealthProject.Controllers
         {
             return View();
         }
-        [AllowAnonymous]
-        public IActionResult AllNotification()
+ 
+        public IActionResult AllNotification(int page = 1)
         {
-            var values = nm.GetListT().OrderByDescending(x=>x.NotificationTime).ToList();
+            var values = nm.GetListT().OrderByDescending(x=>x.NotificationID).ToPagedList(page, 20);
             return View(values);
         }
     }
