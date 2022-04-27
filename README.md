@@ -2,7 +2,7 @@
 <br/>
 In development
 <br/>
-Last Update 27.04.2022
+Last Update 27.04.2022 /
 
 <small> 
 Using .NET CORE MVC 5.0 And 4-layer Architecture.<br/><br/>
