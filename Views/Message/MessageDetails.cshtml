@@ -6,7 +6,7 @@
 }
 
 
-<link href="~/inspinia-gh-pages/css/stylemes.css" rel="stylesheet">
+<link href="~/Admin/stylemes.css" rel="stylesheet">
 
 <body>
     @foreach (var item in Model)
@@ -27,7 +27,7 @@
                 </h3>
                 <h5>
                     <span class="float-right font-normal">@(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</span>
-                    <span class="font-normal">Gönderen: </span>@item.SenderUser.WriterName
+                    <span class="font-normal">Gönderen: </span>@item.SenderUser.NameSurname
                 </h5>
             </div>
         </div>
@@ -42,9 +42,10 @@
             </div>
          
             <div class="mail-body text-right tooltip-demo">
-                <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Cevap Ver</a>
+           
+                <a class="btn btn-sm btn-white" href="/Message/SendMessage/@item.SenderID/"><i class="fa fa-reply"></i> Cevap Ver</a>
                 <a class="btn btn-sm btn-white" href="/Message/InBox/" ><i class="fa fa-arrow-right"></i>Mesajlara Dön</a>
-                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Sil</button>
+ 
             </div>
        
 

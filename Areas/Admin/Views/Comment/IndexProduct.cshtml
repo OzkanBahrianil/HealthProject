@@ -1,0 +1,63 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.CommentProduct>
+@{
+    ViewData["Title"] = "IndexProduct";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<body>
+    <div class="@*page-wrapper*@">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Yorumlar</h4>
+                    </div>
+                    @foreach (var item in Model)
+                    {
+
+
+                        <div class="comment-widgets scrollable">
+                            <div class="d-flex flex-row comment-row mt-0">
+                                <div class="p-2">
+                                    <img src="~/Admin/assets/images/users/1.jpg"
+                                         alt="user"
+                                         width="50"
+                                         class="rounded-circle" />
+                                </div>
+                                <div class="comment-text w-100">
+                                    <h6 class="font-medium">@item.CommentProductUserName  </h6><h6 class="font-medium" style="text-align:left;">Konu: @item.CommentProductTitle</h6>
+                                    <span class="mb-3 d-block">
+                                        @item.CommentProductContent
+                                    </span>
+                                    <div class="comment-footer">
+                                        <span class="text-muted float-end"> @(((DateTime)item.CommentProductDate).ToString("dd-MMM-yyyy"))</span>
+                                        <a type="button" href="/Admin/Comment/DeleteCommentProductFalse/@item.CommentProductID/"
+                                           class="btn btn-cyan btn-sm text-white">
+                                            Sil
+                                        </a>
+                                        <a type="button" href="/Admin/Comment/ApproveCommentProductFalse/@item.CommentProductID/"
+                                           class="btn btn-success btn-sm text-white">
+                                            Onayla
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>

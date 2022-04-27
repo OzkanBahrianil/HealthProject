@@ -1,0 +1,64 @@
+﻿@model IEnumerable<EntityLayer.Concrate.Comment>
+
+<body>
+    <div class="@*page-wrapper*@">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Yorumlar</h4>
+                    </div>
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="comment-widgets scrollable">
+                            <div class="d-flex flex-row comment-row mt-0">
+                                <div class="p-2">
+                                    <img src="~/Admin/assets/images/users/1.jpg"
+                                         alt="user"
+                                         width="50"
+                                         class="rounded-circle img-fluid" />
+                                </div>
+                                <div class="comment-text w-100">
+                                    <h6 class="font-medium">Gönderen:@item.CommentUserName  </h6><h6 class="font-medium" style="text-align:left;">Konu: @item.CommentTitle&nbsp;&nbsp;&nbsp;&nbsp;Puan: @item.BlogScore</h6> 
+                                    <span class="mb-3 d-block">
+                                   İçerik: @item.CommentContent
+                                    </span>
+                                    @if (item.CommentStatus == true)
+                                    {
+                                        <small>Aktif</small>
+                                    }
+                                    else
+                                    {
+                                        <small>Pasif</small>
+                                    }
+
+                                <div class="comment-footer">
+                                    <span class="text-muted float-end"> @(((DateTime)item.CommentDate).ToString("dd-MMM-yyyy"))</span>
+                                    <button type="button" id="@item.CommentID" onclick="reply_click(this.id)"
+                                            class="btn btn-cyan btn-sm text-white">
+                                        Sil
+                                    </button>
+                                    <button type="button" id="@item.CommentID" onclick="reply_clickU(this.id)"
+                                            class="btn btn-success btn-sm text-white">
+                                        Onayla
+                                    </button>
+
+                                </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>

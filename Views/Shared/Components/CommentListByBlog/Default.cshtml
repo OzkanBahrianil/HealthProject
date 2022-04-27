@@ -5,7 +5,9 @@
     {
         <div class="media">
            
-                <img src="~/web/images/t1.jpg" alt="" class="img-fluid" />
+                <img src="~/Admin/assets/images/users/1.jpg" alt="user"
+                                         width="50"
+                                         class="rounded-circle img-fluid"/>
           
             <div class="media-body">
 
@@ -21,18 +23,32 @@
     @foreach (var item in Model)
     {
 
-        <div class="media">
-            <img src="~/web/images/t1.jpg" alt="" class="img-fluid" />
-            <div class="media-body">
-                <h5 class="mt-0">@item.CommentUserName</h5>
-                <p>
-                    @item.CommentContent
-
-                </p>
-
-
-            </div>
+<div class="media">
+    <img src="~/Admin/assets/images/users/1.jpg"
+         alt="user"
+         width="50"
+         class="rounded-circle img-fluid" />
+    <div class="media-body">
+        <h5 class="mt-0">@item.CommentUserName  <i class="far fa-calendar-alt"></i>  @(((DateTime)item.CommentDate).ToString("dd-MMM-yyyy"))</h5> 
+        <div>
+            @for (int i = 0; i < item.BlogScore; i++)
+            {
+                <span class="fa fa-star"></span>
+            }
+            @for (int i = item.BlogScore; i < 5; i++)
+            {
+                <span class="fa fa-star-o"></span>
+            }
         </div>
+        <p>
+            Konu: @item.CommentTitle
+            <br />Mesaj: @item.CommentContent
+        </p>
+
+
+
+    </div>
+</div>
     }
 
 </div>

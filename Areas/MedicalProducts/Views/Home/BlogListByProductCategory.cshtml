@@ -1,0 +1,82 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.MedicalProduct>
+@{
+    ViewData["Title"] = "BlogListByProductCategory";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Medikal Ürünler<small style="font-size:15px;"> > @ViewBag.CategoryName</small></h3>
+        <div class="row inner-sec">
+
+            <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+                <div class="row mb-4">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 card">
+                            <a href="/MedicalProducts/Home/ProductReadAll/@item.ProductID/">
+                                <img src="~/MedicalProductImageFiles/@item.ProductThumbnailImage" class="card-img-top img-fluid" alt="">
+                            </a>
+                            <div class="card-body">
+                                <ul class="blog-icons my-4">
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ProductRealiseDate).ToString("dd-MMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-comment"></i>  @item.CommentProducts.Where(x => x.ProductID == item.ProductID).ToList().Count()
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-map"></i>@item.ProductCategory.ProductCategoryName
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-heart"></i>Üretim: @item.ProductStyle
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                                <h5 class="card-title ">
+                                    <a href="/MedicalProducts/Home/ProductReadAll/@item.ProductID/">@item.ProductTitle</a>
+                                </h5>
+                                <p class="card-text mb-3"> @item.ProductShortContent.Substring(0, item.ProductShortContent.Substring(0, 150).LastIndexOf(" "))... </p>
+                                <a href="/MedicalProducts/Home/ProductReadAll/@item.ProductID/" class="btn btn-primary read-m">Daha Fazlası</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
+                <div class="right-blog-info text-left">
+                    <div class="tech-btm">
+                        <img src="~/web/images/banner1.jpg" class="img-fluid" alt="">
+                    </div>
+                    <h4>Mail Bütletine Abone Olun</h4>
+                    @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
+                    <div class="tech-btm">
+                        <h4>Ürün Kategorileri</h4>
+                        @await Component.InvokeAsync("ProductCategoryList")
+
+                    </div>
+                </div>
+            </aside>
+
+
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByProductCategory", new { page }))
+
+
+        </div>
+    </div>
+</section>

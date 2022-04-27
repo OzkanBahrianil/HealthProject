@@ -4,15 +4,17 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Kategoriler</h4>
+                <h4 class="card-title">Blog Kategorileri</h4>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th></th>
+                               
                                 <th> Kategori Adı</th>
-                                <th> Durumu</th>
-                                <th> İşlemler</th>
+                                <th> Kategori Durumu</th>
+                                <th> Aktif Blog Durumu</th>
+                                <th> Bloglara Git</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -23,7 +25,7 @@
                                 <td> @item.CategoryName </td>
                                 @if (item.CategoryStatus)
                                 {
-                                    <td> Aktif </td>
+                            <td> Aktif   </td>
 
                                 }
                                 else
@@ -31,14 +33,16 @@
                                     <td> Pasif </td>
                                 }
 
-
+                                
 
                                 <td>
                                     <div class="progress">
-                                        <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-gradient-success" role="progressbar" style="width:  @item.Blogs.Where(x => x.CategoryID == item.CategoryID).ToList().Count()%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
+                                <td> <a href="/Blog/BlogListByCategory/@item.CategoryID/" class="btn btn-outline-primary">Görüntüle</a></td>
                             </tr>
+
                             }
                         </tbody>
                     </table>

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Abstract
 {
-   public interface IWriterService : IGenericService<Writer>
+   public interface IWriterService : IGenericService<AppUser>
     {
-        List<Writer> GetWriterByID(int id);
+        List<AppUser> GetWriterByID(int id);
 
-        Writer TGetByFilter(Expression<Func<Writer, bool>> filter);
+        AppUser TGetByFilter(Expression<Func<AppUser, bool>> filter);
 
 
     }

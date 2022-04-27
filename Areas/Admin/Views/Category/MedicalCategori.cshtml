@@ -1,0 +1,53 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.ProductCategory>
+   
+    @{
+        ViewData["Title"] = "MedicalCategori";
+        Layout = "~/Views/Shared/AdminLayout.cshtml";
+    }
+
+
+
+
+
+
+    <br />
+    <h1>Medikal Ürün Kategori</h1>
+    <br />
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Kategori Adı</th>
+            <th>Kategori Açıklaması</th>
+            <th>Durum</th>
+            <th>Pasif Yap</th>
+            <th>Aktif Yap</th>
+            <th>Düzenle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductCategoryID</td>
+                <td>@item.ProductCategoryName</td>
+                <td>@item.ProductCategoryDescription</td>
+                @if (item.ProductCategoryStatus == true)
+                {
+                    <td>Aktif</td>
+                }
+                else
+                {
+                    <td>Pasif</td>
+                }
+
+                <td><a href="/Admin/Category/MedicalCategoryDisable/@item.ProductCategoryID/" class="btn btn-info">Pasif Yap</a></td>
+                <td><a href="/Admin/Category/MedicalCategoryEnable/@item.ProductCategoryID/" class="btn btn-warning">Aktif Yap</a></td>
+                <td><a href="/Admin/Category/MedicalCategoryUpdate/@item.ProductCategoryID/" class="btn btn-success">Düzenle</a></td>
+            </tr>
+        }
+    </table>
+    <br />
+    <a href="/Admin/Category/AddMedicalCategory/" class="btn btn-primary">Yeni Kategori</a>
+    <br /><br />
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+

@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrate.Writer
+﻿@model HealthProject.Models.AddProfileImage
 @{
     ViewData["Title"] = "WriterEditProfile";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -16,44 +16,47 @@
         <div class="card-body">
             <h4 class="card-title">Profilini ve Ayarlarını Düzenle</h4>
             <br />
-            @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post))
+            @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <form class="forms-sample">
-                    <div class="form-group">
-                        @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
-                        <label for="exampleInputName1">İsim Soyisim</label>
-                        @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputName1">Email</label>
-                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
-                    </div>
-                    <div class="form-group">
-                        @Html.HiddenFor(x => x.WriterPassword, new { @class = "form-control" })
-                    </div>
+        <form class="forms-sample">
+            <div class="form-group">
+                @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
+                <label for="WriterName">İsim Soyisim</label>
+                @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="WriterMail">Email</label>
+                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
+            </div>
+            <div class="form-group">
+               
+                @Html.HiddenFor(x => x.WriterImageString, new { @class = "form-control" })
+            </div>
 
-                    <div class="form-group">
-                        <label>Yazar Görseli</label>
-                        <input type="file" name="WriterImage" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                            <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-gradient-primary" type="button">Resim Seç</button>
-                            </span>
-                        </div>
-                    </div>
+            <div class="form-group">
+                <label>Yazar Görseli</label>
+                <div class="custom-file">
+                    <input id="logo" type="file" name="WriterImage" class="custom-file-input">
+                    <label for="logo" class="custom-file-label">Dosya Seç...</label>
+                </div>
+            </div>
 
 
-                    <div class="form-group">
-                        <label for="exampleTextarea1">Hakkında</label>
-                        @Html.TextAreaFor(x => x.WriterAbout, 15, 3, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
-                    </div>
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
-                    <a href="/Dashboard/Index/" class="btn btn-outline-danger">İptal Et</a>
+            <div class="form-group">
+                <label for="WriterAbout">Hakkında (Kısa)</label>
+                @Html.TextAreaFor(x => x.WriterAbout, 5, 3, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="WriterVideoUrl">Hakkında Video (Ana Sayfa)</label>
+                @Html.TextBoxFor(x => x.WriterVideoUrl, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterVideoUrl, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
+            <a href="/Dashboard/Index/" class="btn btn-outline-danger">İptal Et</a>
 
-                </form>
+        </form>
             }
             <br />
             <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal">
@@ -109,12 +112,7 @@
                         {
                             <div class="modal-body">
 
-                                <input style="visibility:hidden;" type="password" name="confirm_password1" id="confirm_password1" value="@ViewBag.Password" />
-                                <br />
-                                <label for="exampleInputName1">Eski Şifre</label>
-                                <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="" required="" />
-                                <span id='message'></span>
-                                <br />
+
                                 <label for="exampleInputName1">Yeni Şifre</label>
                                 <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />
                                 <br />
@@ -142,12 +140,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
-
-    $('#confirm_password1, #confirm_password').on('keyup', function () {
-
-        if ($('#confirm_password1').val() == $('#confirm_password').val()) {
-            $('#message').html('Şifreler Aynı').css('color', 'green');
+<script>     
             if ($('#WriterNewPassword').val() != null) {
                 $('#WriterNewPassword, #WriterNewPasswordCheck').on('keyup', function () {
                     if ($('#WriterNewPassword').val() == $('#WriterNewPasswordCheck').val()) {
@@ -159,10 +152,10 @@
                     }
                 });
             }
-        } else {
-            $('#message').html('Şifreler Farklı').css('color', 'red');
-            document.getElementById('submit').disabled = true;
-        }
 
-    });
 </script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>

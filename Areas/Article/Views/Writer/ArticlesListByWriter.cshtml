@@ -1,0 +1,60 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Articles>
+@{
+    ViewData["Title"] = "ArticlesListByWriter";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+
+<h3 class="title">Makaleleriniz</h3>
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+    <br />
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Makele Başlığı</th>
+        <th>Tarihi</th>
+        <th>Kategori</th>
+        <th>Durum</th>
+        <th>Sil</th>
+        <th>Düzenle</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        @if (item.ArticlesStatus)
+        {
+            <tr class="badge-success">
+                <td><a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
+                <td><a style="color:white;" href="/Blog/BlogReadAll/@item.ArticlesID">@item.ArticlesTitle</a></td>
+                <td>@(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))</td>
+                <td>@item.ArticleCategory.ArticleCategoryName</td>
+                <td>Aktif</td>
+                <td><a href="/Article/Writer/DeleteArticles/@item.ArticlesID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Article/Writer/EditArticles/@item.ArticlesID" class="btn btn-warning">Düzenle</a></td>
+            </tr>
+        }
+        else
+        {
+<tr class="badge-secondary">
+    <td><a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
+    <td><a style="color:white;" href="/Blog/BlogReadAll/@item.ArticlesID">@item.ArticlesTitle</a></td>
+    <td>@(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))</td>
+    <td>@item.ArticleCategory.ArticleCategoryName</td>
+    <td>Pasif</td>
+    <td><a href="/Article/Writer/DeleteArticles/@item.ArticlesID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+    <td><a href="/Article/Writer/EditArticles/@item.ArticlesID" class="btn btn-warning">Düzenle</a></td>
+</tr>
+        }
+    }
+</table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("ArticlesListByWriter", new { page }))
+
+<a href="/Article/Writer/ArticlesAddByWriter/" class="btn btn-primary">Yeni Ürün Oluştur</a>

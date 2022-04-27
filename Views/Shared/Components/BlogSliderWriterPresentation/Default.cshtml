@@ -1,0 +1,108 @@
+﻿@using EntityLayer.Concrate
+
+<head>
+
+    <link rel="stylesheet" href="~/OwlCarousel2-2.3.4/docs/assets/owlcarousel/assets/owl.carousel.min.css">
+    <script src="~/OwlCarousel2-2.3.4/docs/assets/vendors/jquery.min.js"></script>
+    <script src="~/OwlCarousel2-2.3.4/docs/assets/owlcarousel/owl.carousel.js"></script>
+</head>
+@{
+    <br />
+    <h3 class="tittle">Yazarlarımız</h3>
+    <section id="demos">
+
+
+        <div class="bottom-slider">
+            <div class="owl-carousel course_demo1 owl-theme roww">
+
+
+
+                @foreach (var item in (List<AppUser>)ViewBag.MostrarTarefas)
+                {
+
+                <div class="columnn item">
+                    <div class="cardd">
+                        <img src="~/WriterImageFiles/@item.Image" alt="" style="width: 200px; height: 200px; display: block; margin: auto;">
+                        <div id="editbtn">
+                            <button type="button" id="@item.Id" onClick="reply_click(this.id)" class="editbtn btn btn-primary play">
+
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="containerr">
+                                <h2>@item.NameSurname</h2>
+                                <p class="titlee">Yazar</p>
+                              
+                                <p><a href="/Message/SendMessage/@item.Id" class="buttonn">Mail Gönder</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                }
+
+           
+        </div>
+        </div>
+
+
+    </section>
+
+}
+<div class="modal fade" id="Modalpopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+
+    </div>
+</div>
+
+
+<script>
+    jQuery(document).ready(function ($) {
+        $('.owl-carousel').owlCarousel({
+            items: 3,
+            merge: true,
+            animateOut: 'fadeOut',
+            loop: true,
+            video: true,
+            lazyLoad: true,
+            center: true,
+            autoplay: true,
+            nav: true,
+            margin: 0,
+            autoplayTimeout: 1000,
+            responsiveClass: true,
+            URLhashListener: true,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 2,
+                    nav: false
+                },
+                1000: {
+                    items: 3,
+                    nav: true,
+                    loop: true
+                },   
+                2300: {
+                    items: 5,
+                    nav: true,
+                    loop: true
+                },  
+                3000: {
+                    items: 7,
+                    nav: true,
+                    loop: true
+                } 
+
+            }
+        });
+
+    });
+</script>
+
+<script src="~/OwlCarousel2-2.3.4/docs_src/assets/vendors/highlight.js"></script>
+<script src="~/OwlCarousel2-2.3.4/docs_src//assets/js/app.js"></script>
+<script src="~/js/site.js"></script>

@@ -15,7 +15,7 @@ namespace HealthProject.ViewComponents.Writer
         public IViewComponentResult Invoke()
         {
             var usermail = User.Identity.Name;
-            var writerID = wm.TGetByFilter(x => x.WriterMail == usermail).WriterId;
+            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
             var values = wm.GetWriterByID(writerID);
             return View(values);
         }

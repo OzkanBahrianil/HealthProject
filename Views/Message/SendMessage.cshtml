@@ -1,0 +1,76 @@
+﻿@model EntityLayer.Concrate.Message
+@{
+    ViewData["Title"] = "SendMessage";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+@if (TempData["AlertSame"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertSame"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
+    <br />
+
+}
+
+<link href="~/Admin/stylemes.css" rel="stylesheet">
+@using (Html.BeginForm("SendMessage", "Message", FormMethod.Post))
+{
+    <body>
+
+        <div class="mail-box-header">
+
+            <h2>
+                Mesaj Gönder
+            </h2>
+            <br />
+
+
+            <div class="mail-tools tooltip-demo m-t-md">
+                <h5>
+                    @if (@ViewBag.sender != null)
+                    {
+                    <span class="font-normal">Alıcı: @ViewBag.senderName   <input type="hidden" class="form-control" value="@ViewBag.sender" name="NameMail"></span>
+                    }
+                    else
+                    {
+                        <span class="font-normal">Alıcı: <input class="form-control" type="text" name="NameMail" placeholder="Alıcı Mail Veya Ad Soyad" required=""></span>
+                    }
+
+                </h5>
+
+                <h5>
+                    <span>Konu @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @required = "required" }) </span>
+
+
+                </h5>
+
+            </div>
+        </div>
+        <div class="mail-box">
+
+
+            <div class="mail-body">
+                <h5> <span class="font-normal">Mesaj</span></h5>
+                <p>
+                    @Html.TextAreaFor(x => x.MessageDetails, 15, 3, new { @class = "form-control", @required = "required" })
+                </p>
+
+            </div>
+
+            <div class="mail-body text-right tooltip-demo">
+
+                <a class="btn btn-sm btn-white" href="/Message/InBox/"><i class="fa fa-arrow-right"></i>Mesajlara Dön</a>
+                <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Gönder</button>
+            </div>
+
+
+
+        </div>
+
+    </body>
+}
+
+
+

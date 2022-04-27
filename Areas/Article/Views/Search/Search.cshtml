@@ -1,0 +1,105 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Articles>
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+
+
+
+
+
+<br />
+<h3 class="tittle">Makaleler <small style="font-size:15px;"> > @ViewBag.Search</small></h3>
+@if (Model.Count == 0)
+{
+    <br />
+    <div class="alert alert-warning">
+        <p>Aradığınız Makale Bulunamadı. <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button></p>
+
+    </div>
+
+}
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+      
+        <div class="row inner-sec">
+
+            <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+                @foreach (var item in Model)
+                {
+
+
+                    <article class="blog-grid-top">
+                        <div class="b-grid-top">
+                            <div class="blog_info_left_grid">
+
+                                <h3>
+                                    <a href="/Article/Article/ArticlesReadAll/@item.ArticlesID/">@item.ArticlesTitle </a>
+                                </h3>
+                                <p>
+                                    @item.ArticlesShortContent.Substring(0, item.ArticlesShortContent.Substring(0, 150).LastIndexOf(" "))...
+                                </p>
+
+                            </div>
+                            <br />
+                            <br />
+                            <div class="blog-info-middle">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-thumbs-up"></i> @item.ArticleCategory.ArticleCategoryName
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-comment"></i> @item.ArticlesType
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>   <br />
+                        <a href="/Article/Article/ArticlesReadAll/@item.ArticlesID/" class="btn btn-primary read-m">Daha Fazlası</a>
+
+                    </article>
+                }
+            </div>
+            @if (Model.Count!=0)
+            {
+
+           
+
+            <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
+                <div class="right-blog-info text-left">
+                    <div class="tech-btm">
+                        <img src="images/banner1.jpg" class="img-fluid" alt="">
+                    </div>
+                    <h4>Mail Bütletine Abone Olun</h4>
+                    @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
+                    <div class="tech-btm">
+                        <h4>Makale Kategorileri</h4>
+                        @await Component.InvokeAsync("ArticleCategoryList")
+                    </div>
+
+
+                </div>
+            </aside>
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page })) 
+            }
+        </div>
+    </div>
+</section>
+
+
+

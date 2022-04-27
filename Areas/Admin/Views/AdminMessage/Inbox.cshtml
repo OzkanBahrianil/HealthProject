@@ -1,0 +1,110 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Message>
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<head>
+    <link href="~/Admin/stylemes.css" rel="stylesheet">
+    <link href="~/Admin/font-awesome.css" rel="stylesheet">
+
+</head>
+
+<div id="wrapper">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-3">
+
+
+
+                <h5>Dosyalar</h5>
+                <ul class="folder-list m-b-md" style="padding: 0">
+                    <li><a href="/Admin/AdminMessage/Inbox"> <i class="mdi mdi-inbox-arrow-down"></i> Gelen Kutusu <span class="label label-warning" style="width:1px; float:right; text-align:center;">@ViewBag.InboxR</span> </a></li>
+                    <li><a href="/Admin/AdminMessage/InBoxSend"> <i class="mdi mdi-inbox-arrow-up"></i> Gönderilenler <span class="label label-warning" style="width:1px; float:right; text-align:center;">@ViewBag.InboxRS</span> </a></li>
+                    <li><a href="/Admin/AdminMessage/SendMessage"> <i class="mdi mdi-account-network"></i> Mesaj Gönder</a></li>
+
+                </ul>
+                <div class="clearfix"></div>
+
+
+            </div>
+            <div class="col-lg-9 animated fadeInRight">
+                <div class="mail-box-header">
+
+
+                    <h2>
+                        Gelen Kutusu (@ViewBag.InboxR)
+                    </h2>
+                    <div class="mail-tools tooltip-demo m-t-md">
+                        <div class="btn-group float-right fa">
+                            <br />
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBox", "AdminMessage", new { page }))
+
+
+
+                        </div>
+                        <button style="float:right;" class="btn btn-white btn-sm " title="Refresh inbox" onclick="location.reload();"><i class="mdi mdi-account-convert"></i> Refresh</button>
+
+
+                    </div>
+                </div>
+                <div class="mail-box">
+
+                    <table class="table table-hover table-mail">
+                        <tbody class="alert">
+
+                            @foreach (var item in Model)
+                            {
+                                @if (item.MessageStatus)
+                                {
+
+
+
+                                    <tr class="read">
+                                        <td class="check-mail" style=" text-align: center; ">
+                                            <a href="Admin/AdminMessage/MessageDetails/@item.MessageID">    <input type="checkbox" class="i-checks"></a>
+                                        </td>
+                                        <td><img class="rounded-circle" width="31" src="~/WriterImageFiles/@item.SenderUser.Image" /></td>
+                                        <td class="mail-ontact"><a href="/Admin/AdminMessage/MessageDetails/@item.MessageID">@item.SenderUser.NameSurname</a></td>
+                                        <td class="mail-subject"><a href="/Admin/AdminMessage/MessageDetails/@item.MessageID">@item.Subject</a></td>
+                                        <td class=""></td>
+                                        <td class="text-right mail-date">@item.MessageDate.ToShortDateString()</td>
+                                        <td><a class="btn btn-outline-primary" href="/Admin/AdminMessage/MessageDetails/@item.MessageID">Mesajı Oku</a></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="read" style="background-color: lightgray; text-align: center; ">
+                                        <td class="check-mail">
+                                            <a href="Admin/AdminMessage/MessageDetails/@item.MessageID">    <input type="checkbox" class="i-checks"></a>
+                                        </td>
+                                        <td><img class="rounded-circle" width="31" src="~/WriterImageFiles/@item.SenderUser.Image" /></td>
+                                        <td class="mail-ontact"><a href="/Admin/AdminMessage/MessageDetails/@item.MessageID">@item.SenderUser.NameSurname</a></td>
+                                        <td class="mail-subject"><a href="/Admin/AdminMessage/MessageDetails/@item.MessageID">@item.Subject</a></td>
+                                        <td class=""></td>
+                                        <td class="text-right mail-date">@item.MessageDate.ToShortDateString()</td>
+                                        <td><a class="btn btn-outline-primary" href="/Admin/AdminMessage/MessageDetails/@item.MessageID">Mesajı Oku</a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

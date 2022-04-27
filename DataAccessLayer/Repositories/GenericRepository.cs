@@ -28,8 +28,9 @@ namespace DataAccessLayer.Repositories
         public T Get(Expression<Func<T, bool>> filter)
         {
             return _Object.SingleOrDefault(filter);
-        }
-
+        }  
+        
+   
         public void Insert(T p)
         {
             var addedEntity = c.Entry(p);

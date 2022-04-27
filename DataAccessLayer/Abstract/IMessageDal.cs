@@ -10,6 +10,7 @@ namespace DataAccessLayer.Abstract
   public  interface IMessageDal : IRepository<Message>
     {
         List<Message> GetListWithMessageByWriter(int id);
+        List<Message> GetListWithMessageByWriterSend(int id);
 
         List<Message> GetListWithWriter();
     }

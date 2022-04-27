@@ -11,13 +11,20 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.EntityFremawork
 {
-   public class EfMessageDal : GenericRepository<Message>, IMessageDal
+    public class EfMessageDal : GenericRepository<Message>, IMessageDal
     {
         public List<Message> GetListWithMessageByWriter(int id)
         {
             using (var c = new Context())
             {
                 return c.Messages.Include(x => x.SenderUser).Where(x => x.ReceiverID == id).ToList();
+            }
+        }
+        public List<Message> GetListWithMessageByWriterSend(int id)
+        {
+            using (var c = new Context())
+            {
+                return c.Messages.Include(x => x.ReceiverUser).Where(x => x.SenderID == id).ToList();
             }
         }
 

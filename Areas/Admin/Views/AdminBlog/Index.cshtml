@@ -1,0 +1,95 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Blog>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
+    <br />
+
+}
+<br />
+<h3 style="Text-align:center;">Bloglar</h3>
+<br />
+<br />
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+
+        <div class="inner-sec">
+
+            <div class="left-blog-info-w3layouts-agileits text-left">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+
+
+                        <div class="col-lg-4 card" style="border:1px solid gray; margin-bottom:1px;">
+                            <br />
+                            <a href="/Admin/AdminBlog/AdminReadAll/@item.BlogID">
+                                <img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="card-img-top img-fluid" style="height:250px;" alt="">
+                            </a>
+                            <div class="card-body">
+                                <ul class="blog-icons my-4">
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))    &nbsp; &nbsp;   <i class="far fa-comment"></i> @item.Comments.Where(x => x.BlogID == item.BlogID).ToList().Count()  &nbsp;&nbsp;    <i class="fas fa-eye"></i> @item.Category.CategoryName  &nbsp;&nbsp;  <i class="far fa-star"></i>
+                                            @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })
+                                        </a>
+                                    </li>
+                        
+                                    @if (item.BlogStatus == true)
+                                    {
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-eye"></i>Aktif
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="#" class="btn-warning">
+                                                <i class="fas fa-eye"></i>Pasif
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                                <h5 class="card-title">
+                                    <a href="/Admin/AdminBlog/AdminReadAll/@item.BlogID">@item.BlogTitle</a>
+                                </h5>
+
+                                <p class="card-text mb-3">@item.BlogShortContent.Substring(0, item.BlogShortContent.Substring(0, 150).LastIndexOf(" "))...</p>
+
+                                <a href="/Admin/AdminBlog/AdminReadAll/@item.BlogID" class="btn btn-primary read-m">Devamını Oku</a>
+                                <a href="/Admin/AdminBlog/DisableBlog/@item.BlogID" class="btn btn-dark read-m">Pasif Yap</a>
+                                <a href="/Admin/AdminBlog/EnableBlog/@item.BlogID" class="btn btn-success read-m">Aktif Yap</a><br /><br />
+                                <a href="/Admin/AdminBlog/DeleteBlog/@item.BlogID" class="btn btn-danger read-m">Sil</a>
+                                <a href="/Admin/AdminBlog/EditBlog/@item.BlogID" class="btn btn-outline-secondary read-m">Güncelle</a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <br />
+
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+
+
+
+        </div>
+    </div>
+</section>
+
+
+
+

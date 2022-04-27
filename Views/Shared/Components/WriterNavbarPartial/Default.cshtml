@@ -38,9 +38,25 @@
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/Article/Writer/ArticlesListByWriter/">
+                <span class="menu-title">Makalelerim</span>
+                <i class="mdi mdi-pdf-box menu-icon"></i>
+            </a>
+        </li>
+        @if (User.IsInRole("CompanyWriter"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/MedicalProducts/Company/ProductsListByCompany/">
+                    <span class="menu-title">Medikal Ürünlerim</span>
+                    <i class="mdi mdi-call-merge menu-icon"></i>
+                </a>
+            </li>
+        }
         <li class="nav-item">
             <a class="nav-link" href="/Blog/BlogAddByWriter/">
-                <span class="menu-title">Yeni Gönderi</span>
+                <span class="menu-title">Yeni Blog Oluştur</span>
                 <i class="mdi mdi-chart-bar menu-icon"></i>
             </a>
         </li>
@@ -58,7 +74,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/Blog/Index">
+            <a class="nav-link" href="/HomePage/Index">
                 <span class="menu-title">Siteye Dön</span>
                 <i class="mdi mdi-car menu-icon"></i>
             </a>

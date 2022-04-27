@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface IWriterDal:IRepository<Writer>
+    public interface IWriterDal:IRepository<AppUser>
     {
-        Writer GetByFilterFL(Expression<Func<Writer, bool>> filter = null);
+        AppUser GetByFilterFL(Expression<Func<AppUser, bool>> filter = null);
     }
 }

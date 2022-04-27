@@ -1,0 +1,460 @@
+﻿body {
+}
+
+
+
+
+
+/* TABLES */
+.table > caption + thead > tr:first-child > td,
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > td,
+.table > thead:first-child > tr:first-child > th {
+    border-top: 0;
+}
+
+.table-bordered {
+    border: 1px solid #EBEBEB;
+}
+
+    .table-bordered > thead > tr > th,
+    .table-bordered > thead > tr > td {
+        background-color: #F5F5F6;
+        border-bottom-width: 1px;
+    }
+
+    .table-bordered > thead > tr > th,
+    .table-bordered > tbody > tr > th,
+    .table-bordered > tfoot > tr > th,
+    .table-bordered > thead > tr > td,
+    .table-bordered > tbody > tr > td,
+    .table-bordered > tfoot > tr > td {
+        border: 1px solid #e7e7e7;
+    }
+
+.table > thead > tr > th {
+    border-bottom: 1px solid #DDDDDD;
+    vertical-align: bottom;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    border-top: 1px solid #e7eaec;
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: top;
+}
+
+/* MAILBOX */
+.mail-box {
+    background-color: #ffffff;
+    border: 1px solid #e7eaec;
+    border-top: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.mail-box-header {
+    background-color: #ffffff;
+    border: 1px solid #e7eaec;
+    border-bottom: 0;
+    padding: 30px 20px 20px 20px;
+}
+
+    .mail-box-header h2 {
+        margin-top: 0;
+    }
+
+.mailbox-content .tag-list li a {
+    background: #ffffff;
+}
+
+.mail-body {
+    border-top: 1px solid #e7eaec;
+    padding: 20px;
+}
+
+.mail-text {
+    border-top: 1px solid #e7eaec;
+}
+
+    .mail-text .note-toolbar {
+        padding: 10px 15px;
+    }
+
+.mail-body .form-group {
+    margin-bottom: 5px;
+}
+
+.mail-text .note-editor .note-toolbar {
+    background-color: #F9F8F8;
+}
+
+.mail-attachment {
+    border-top: 1px solid #e7eaec;
+    padding: 20px;
+    font-size: 12px;
+}
+
+.mailbox-content {
+    background: none;
+    border: none;
+    padding: 10px;
+}
+
+.mail-ontact {
+    width: 23%;
+}
+.table-mail .mail-date {
+    padding-right: 20px;
+}
+
+.md-skin .mail-box {
+    background-color: #ffffff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    padding: 0;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.md-skin .mail-box-header {
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    padding: 30px 20px 20px 20px;
+}
+
+
+.unread td a,
+.unread td {
+    font-weight: 600;
+    color: inherit;
+}
+
+.read td a,
+.read td {
+    font-weight: normal;
+    color: inherit;
+}
+
+.unread td {
+    background-color: #f9f8f8;
+}
+.i-checks {
+    padding-left: 0;
+}
+.font-normal {
+    font-weight: 400;
+}
+
+
+.btn {
+    border-radius: 3px;
+    font-size: inherit;
+}
+
+    .btn:focus {
+        box-shadow: none;
+    }
+
+.btn-xs {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.btn-group-sm > .btn,
+.btn-sm {
+    font-size: .8rem;
+}
+
+.float-e-margins .btn {
+    margin-bottom: 5px;
+}
+
+.btn-w-m {
+    min-width: 120px;
+}
+
+.btn-primary.btn-outline {
+    color: #1ab394;
+}
+
+.btn-success.btn-outline {
+    color: #1c84c6;
+}
+
+.btn-info.btn-outline {
+    color: #23c6c8;
+}
+
+.btn-warning.btn-outline {
+    color: #f8ac59;
+}
+
+.btn-danger.btn-outline {
+    color: #ed5565;
+}
+
+.btn-white {
+    color: inherit;
+    background: white;
+    border: 1px solid #e7eaec;
+}
+.i-checks {
+    padding-left: 0;
+}
+
+
+.ibox-content h1,
+.ibox-content h2,
+.ibox-content h3,
+.ibox-content h4,
+.ibox-content h5,
+.ibox-title h1,
+.ibox-title h2,
+.ibox-title h3,
+.ibox-title h4,
+.ibox-title h5 {
+    margin-top: 5px;
+}
+.ibox-content.text-box {
+    padding-bottom: 0;
+    padding-top: 15px;
+}
+.ibox.collapsed .ibox-content {
+    display: none;
+}
+.ibox-content {
+    clear: both;
+}
+.ibox.fullscreen .ibox-content {
+    min-height: calc(100% - 48px);
+}
+
+.ibox-content > .sk-spinner {
+    display: none;
+}
+
+.ibox-content.sk-loading {
+    position: relative;
+}
+
+    .ibox-content.sk-loading:after {
+        content: '';
+        background-color: rgba(255, 255, 255, 0.7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .ibox-content.sk-loading > .sk-spinner {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+    }
+
+
+.ibox-title {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 2px 0 0;
+    color: inherit;
+    margin-bottom: 0;
+    padding: 15px 90px 8px 15px;
+    min-height: 48px;
+    position: relative;
+    clear: both;
+}
+
+.ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 0;
+}
+
+.ibox {
+    font-size: 10px;
+}
+.ibox-content h1,
+.ibox-content h2,
+.ibox-content h3,
+.ibox-content h4,
+.ibox-content h5,
+.ibox-title h1,
+.ibox-title h2,
+.ibox-title h3,
+.ibox-title h4,
+.ibox-title h5 {
+    margin-top: 5px;
+}
+.resizable-panels .ibox .ibox-content {
+    height: calc(100% - 49px);
+}
+.ibox.fullscreen .ibox-content {
+    min-height: calc(100% - 48px);
+}
+.chat-view .ibox-content {
+    padding: 0;
+}
+.article .ibox-content {
+    padding: 40px;
+}
+.product-detail .ibox-content {
+    padding: 30px 30px 50px 30px;
+}
+.ibox-content > .sk-spinner {
+    display: none;
+}
+
+.ibox-content.sk-loading {
+    position: relative;
+}
+
+    .ibox-content.sk-loading:after {
+        content: '';
+        background-color: rgba(255, 255, 255, 0.7);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .ibox-content.sk-loading > .sk-spinner {
+        display: block;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+    }
+.mailbox-content .tag-list li a {
+    background: #ffffff;
+}
+.mailbox-content {
+    background: none;
+    border: none;
+    padding: 10px;
+}
+.md-skin .mailbox-content {
+    border: none;
+    padding: 20px;
+    background: #ffffff;
+}
+.file-manager h5 {
+    text-transform: uppercase;
+}
+
+.file-manager {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.space-25 {
+    margin: 25px 0;
+}
+.folder-list li a {
+    color: #666666;
+    display: block;
+    padding: 5px 0;
+}
+
+.folder-list li {
+    border-bottom: 1px solid #e7eaec;
+    display: block;
+}
+
+    .folder-list li i {
+        margin-right: 8px;
+        color: #3d4d5d;
+
+    }
+.fa.arrow:before {
+    content: "\f104";
+}
+
+.active > a > .fa.arrow:before {
+    content: "\f107";
+}
+.glyphicon.fa {
+    font-family: "FontAwesome";
+}
+.forum-icon .fa {
+    font-size: 30px;
+    margin-top: 8px;
+    color: #9b9b9b;
+}
+
+.forum-item.active .fa {
+    color: #1ab394;
+}
+.stream .stream-badge i.fa-circle {
+    color: #ced0d1;
+}
+.ibox.collapsed .fa.fa-chevron-up:before {
+    content: "\f078";
+}
+
+.ibox.collapsed .fa.fa-chevron-down:before {
+    content: "\f077";
+}
+.jstree-open > .jstree-anchor > .fa-folder:before {
+    content: "\f07c";
+}
+.ecommerce .fa-star {
+    color: #d1dade;
+}
+
+    .ecommerce .fa-star.active {
+        color: #f8ac59;
+    }
+.m-b-md {
+    margin-bottom: 20px;
+}
+.folder-list li a {
+    color: #666666;
+    display: block;
+    padding: 5px 0;
+}
+
+.folder-list li {
+    border-bottom: 1px solid #e7eaec;
+    display: block;
+}
+
+    .folder-list li i {
+        margin-right: 8px;
+        color: #3d4d5d;
+    }
+.label-warning,
+.badge-warning {
+    background-color: #f8ac59;
+    color: #FFFFFF;
+}
+
+.label-warning-light,
+.badge-warning-light {
+    background-color: #f8ac59;
+    color: #ffffff;
+}

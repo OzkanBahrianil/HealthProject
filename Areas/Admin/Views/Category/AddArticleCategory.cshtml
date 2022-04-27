@@ -1,0 +1,24 @@
+﻿@model EntityLayer.Concrate.ArticleCategory
+@{
+    ViewData["Title"] = "AddArticleCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+<h1>Yeni Kategori Oluştur</h1>
+<br />
+@using (Html.BeginForm("AddArticleCategory", "Category", FormMethod.Post))
+{
+    @Html.Label("Kategori Başlığı")
+    @Html.TextBoxFor(x => x.ArticleCategoryName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.ArticleCategoryName)
+    <br />
+    @Html.Label("Kategori Açıklaması")
+    @Html.TextAreaFor(x => x.ArticleCategoryDescription, 10, 3, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.ArticleCategoryDescription)
+    <br />
+    <button class="btn btn-info">Ekle</button>
+}
+

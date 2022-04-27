@@ -1,0 +1,51 @@
+﻿@using EntityLayer.Concrate
+@model List<Blog>
+
+
+<head>
+    <link rel="stylesheet" href="~/web/css/jquery.desoslide.css">
+</head>
+<section class="">
+    <div class="container">
+        <div class="row inner-sec">
+            <div class="col-md-4 news-left">
+                <ul id="demo1_thumbs" class="list-inline">
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <a href="~/BlogImageFiles/@item.BlogImage">
+                                <img src="~/BlogImageFiles/@item.BlogImage" alt="" data-desoslide-caption=" <a href='/Blog/BlogReadAll/@item.BlogID/'><h3>@item.BlogTitle</h3></a>">
+                                <div class="mid-text-info">
+                                    <h4>@item.BlogTitle</h4>
+                                 
+                                    <div class="sub-meta">
+
+                                        <span>
+                                            <i class="far fa-clock"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    </ul>
+                </div> 
+                <div id="demo1_main_image" class="col-md-8 news-right"></div>
+                <div class="clearfix"> </div>
+           
+        </div>
+    </div>
+
+</section>
+<script src="~/web/js/jquery-2.2.3.min.js"></script>
+<script src="~/web/js/jquery.desoslide.js"></script>
+<script>
+    $('#demo1_thumbs').desoSlide({
+        main: {
+            container: '#demo1_main_image',
+            cssClass: 'img-responsive'
+        },
+        effect: 'sideFade',
+        caption: true
+    });
+</script>

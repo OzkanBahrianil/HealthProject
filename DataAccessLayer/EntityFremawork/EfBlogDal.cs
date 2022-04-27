@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,8 +33,23 @@ namespace DataAccessLayer.EntityFremawork
         {
             using (var c = new Context())
             {
-                return c.Blogs.Include(x => x.Category).Where(x=>x.WriterID== id).ToList();
+                return c.Blogs.Include(x => x.Category).Include(x => x.Comments).Where(x=>x.UserID == id).ToList();
             }
         }
+        public List<Blog> GetList(Expression<Func<Blog, bool>> filter)
+        {
+            using (var c = new Context())
+            {
+                return c.Blogs.Include(x=>x.Category).Include(x=>x.Comments).Where(filter).ToList();
+            }
+        }
+        public List<Blog> GetListWithUser()
+        {
+            using (var c = new Context())
+            {
+                return c.Blogs.Include(x => x.User).ToList();
+            }
+        }
+
     }
 }

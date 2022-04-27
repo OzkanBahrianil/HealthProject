@@ -19,36 +19,36 @@ namespace BusinessLayer.Concrete
             _WriterDal = writerDal;
         }
 
-        public Writer GetByIDT(int id)
+        public AppUser GetByIDT(int id)
         {
-            return _WriterDal.Get(x => x.WriterId == id);
+            return _WriterDal.Get(x => x.Id == id);
         }
 
-        public List<Writer> GetListT()
+        public List<AppUser> GetListT()
         {
             return _WriterDal.List();
         }
 
-        public List<Writer> GetWriterByID(int id)
+        public List<AppUser> GetWriterByID(int id)
         {
-            return _WriterDal.List().Where(p => p.WriterId == id).ToList();
+            return _WriterDal.List().Where(p => p.Id == id).ToList();
         }
 
-        public void TAdd(Writer t)
+        public void TAdd(AppUser t)
         {
             _WriterDal.Insert(t);
         }
 
-        public void TDelete(Writer t)
+        public void TDelete(AppUser t)
         {
             _WriterDal.Delete(t);
         }
 
-        public void TUpdate(Writer t)
+        public void TUpdate(AppUser t)
         {
             _WriterDal.Update(t);
         }
-        public Writer TGetByFilter(Expression<Func<Writer, bool>> filter)
+        public AppUser TGetByFilter(Expression<Func<AppUser, bool>> filter)
         {
             return _WriterDal.GetByFilterFL(filter);
         }

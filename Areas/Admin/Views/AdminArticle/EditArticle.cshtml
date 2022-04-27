@@ -1,0 +1,90 @@
+﻿@model HealthProject.Areas.Article.Models.AddArticlesPdf
+
+@{
+    ViewData["Title"] = "EditArticle";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<h1>Düzenleme Sayfası</h1>
+<br />
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+@using (Html.BeginForm("EditArticle", "AdminArticle", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.HiddenFor(x => x.ArticlesID, new { @class = "form-control" })
+
+    @Html.Label("Makale Başlığı")
+    @Html.TextBoxFor(x => x.ArticlesTitle, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesTitle)
+    <br />
+
+    @Html.Label("Makalenin Yazarları")
+    @Html.TextBoxFor(x => x.ArticlesWritersName, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesWritersName)
+    <br />
+
+    @Html.Label("Makalenin Türü")
+    @Html.TextBoxFor(x => x.ArticlesType, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesType)
+    <br />
+
+    @Html.Label("Makalenin Tarihi")
+    @Html.TextBoxFor(x => x.ArticlesPublishDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesPublishDate)
+    <br />
+    @Html.HiddenFor(x => x.ArticlesPdfString)
+    <div class="form-group">
+        <label>Makale Pdf</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="ArticlesPdf" class="custom-file-input">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+
+
+    @Html.Label("Makalenin Kategorisi")
+    @Html.DropDownListFor(x => x.ArticleCategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
+    <br />
+    @Html.Label("Makalenin Kısa Tanıtımı")
+    @Html.TextAreaFor(x => x.ArticlesShortContent, 10, 3, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesShortContent)
+    <br />
+    @Html.Label("Makale Hakkında")
+    @Html.TextAreaFor(x => x.ArticlesContent, 15, 3, new { @class = "form-control", id = "summernote", @required = "required" })
+    @Html.ValidationMessageFor(x => x.ArticlesContent)
+    <br />
+    <button class="btn btn-success">Güncelle</button>
+}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'İçeriği Giriniz...',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
+

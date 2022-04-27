@@ -1,0 +1,64 @@
+﻿@using EntityLayer.Concrate
+@model List<Message>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle waves-effect waves-dark"
+       href="#"
+       id="2"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <i class="font-24 mdi mdi-comment-processing">
+            @if (ViewBag.NewMessageCount > 0)
+            {
+                <span class="fas fa-exclamation"></span>
+
+            }
+            else
+            {
+                <span class=""></span>
+            }
+            </i>
+
+    </a>
+    <ul class="
+                    dropdown-menu dropdown-menu-end
+                    list-style-none
+                    mailbox
+                    animated
+                    bounceInDown
+                  "
+        aria-labelledby="2">
+
+        <li>
+            <div class="">
+                @foreach (var item in Model)
+                {
+
+                    <a href="/Admin/AdminMessage/MessageDetails/@item.MessageID" class="link border-top">
+                        <div class="d-flex no-block align-items-center p-10">
+                            <span style="background-color:white; border:none;" class="
+                                btn btn-success btn-circle
+                                d-flex
+                                align-items-center
+                                justify-content-center
+                              ">
+                                <img style="width:40px;" class="fs-4" src="~/WriterImageFiles/@item.SenderUser.Image"  alt="image" />
+                            </span>
+                            <div class="ms-2">
+                                <h6 class="mb-0">Gönderen: @item.SenderUser.NameSurname</h6>
+                                <span class="mail-desc">@item.SenderUser.Email</span>
+                                <p class="text-gray mb-0"> @item.MessageDate.ToShortDateString() </p>
+                            </div>
+
+                        </div>
+                    </a>
+
+                }
+                <a href="/Admin/AdminMessage/Inbox/" class="btn btn-outline-dark">Bütün Mesajlar</a>
+            </div>
+        </li>
+
+    </ul>
+</li>

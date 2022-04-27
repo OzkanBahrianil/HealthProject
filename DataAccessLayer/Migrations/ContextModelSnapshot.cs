@@ -49,34 +49,182 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Abouts");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrate.Admin", b =>
+            modelBuilder.Entity("EntityLayer.Concrate.AppRole", b =>
                 {
-                    b.Property<int>("AdminID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AdminImageURL")
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminName")
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("About")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminPassword")
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminRole")
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminShortDescription")
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NameSurname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminUsername")
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AdminID");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Admins");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.ArticleCategory", b =>
+                {
+                    b.Property<int>("ArticleCategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ArticleCategoryDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleCategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ArticleCategoryStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ArticleCategoryID");
+
+                    b.ToTable("ArticleCategories");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.Articles", b =>
+                {
+                    b.Property<int>("ArticlesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleCategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ArticlesContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticlesPdf")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ArticlesPublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ArticlesShortContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ArticlesStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ArticlesTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticlesType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticlesWritersName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArticlesID");
+
+                    b.HasIndex("ArticleCategoryID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Blog", b =>
@@ -110,14 +258,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("WriterID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("BlogID");
 
                     b.HasIndex("CategoryID");
 
-                    b.HasIndex("WriterID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Blogs");
                 });
@@ -199,6 +347,38 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrate.CommentProduct", b =>
+                {
+                    b.Property<int>("CommentProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CommentProductContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CommentProductDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("CommentProductStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CommentProductTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommentProductUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("CommentProduct");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrate.Contact", b =>
                 {
                     b.Property<int>("ContactID")
@@ -210,6 +390,9 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ContactMail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactMessage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ContactStatus")
@@ -224,6 +407,55 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("ContactID");
 
                     b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.MedicalProduct", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductCategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductCompanyWebsite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ProductRealiseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductShortContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ProductStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProductStyle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductThumbnailImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductID");
+
+                    b.HasIndex("ProductCategoryID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("MedicalProducts");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Message", b =>
@@ -308,34 +540,172 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrate.Writer", b =>
+            modelBuilder.Entity("EntityLayer.Concrate.Presentation", b =>
                 {
-                    b.Property<int>("WriterId")
+                    b.Property<int>("PresentationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("WriterAbout")
+                    b.Property<string>("PresentationDetails")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WriterImage")
+                    b.Property<string>("PresentationImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WriterMail")
+                    b.Property<string>("PresentationSendUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WriterName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WriterPassword")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("WriterStatus")
+                    b.Property<bool>("PresentationStatus")
                         .HasColumnType("bit");
 
-                    b.HasKey("WriterId");
+                    b.Property<string>("PresentationTitle")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Writers");
+                    b.HasKey("PresentationID");
+
+                    b.ToTable("Presentations");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.ProductCategory", b =>
+                {
+                    b.Property<int>("ProductCategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProductCategoryDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductCategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ProductCategoryStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ProductCategoryID");
+
+                    b.ToTable("ProductCategory");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.Articles", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.ArticleCategory", "ArticleCategory")
+                        .WithMany("Articles")
+                        .HasForeignKey("ArticleCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrate.AppUser", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArticleCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Blog", b =>
@@ -346,15 +716,15 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrate.Writer", "Writer")
+                    b.HasOne("EntityLayer.Concrate.AppUser", "User")
                         .WithMany("Blogs")
-                        .HasForeignKey("WriterID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("Writer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Comment", b =>
@@ -368,19 +738,118 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Blog");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrate.CommentProduct", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.MedicalProduct", "Product")
+                        .WithMany("CommentProducts")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.MedicalProduct", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.ProductCategory", "ProductCategory")
+                        .WithMany("MedicalProducts")
+                        .HasForeignKey("ProductCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrate.AppUser", "User")
+                        .WithMany("MedicalProduct")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrate.Message", b =>
                 {
-                    b.HasOne("EntityLayer.Concrate.Writer", "ReceiverUser")
+                    b.HasOne("EntityLayer.Concrate.AppUser", "ReceiverUser")
                         .WithMany("WriterReceiver")
                         .HasForeignKey("ReceiverID");
 
-                    b.HasOne("EntityLayer.Concrate.Writer", "SenderUser")
+                    b.HasOne("EntityLayer.Concrate.AppUser", "SenderUser")
                         .WithMany("WriterSender")
                         .HasForeignKey("SenderID");
 
                     b.Navigation("ReceiverUser");
 
                     b.Navigation("SenderUser");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrate.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("EntityLayer.Concrate.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.AppUser", b =>
+                {
+                    b.Navigation("Articles");
+
+                    b.Navigation("Blogs");
+
+                    b.Navigation("MedicalProduct");
+
+                    b.Navigation("WriterReceiver");
+
+                    b.Navigation("WriterSender");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrate.ArticleCategory", b =>
+                {
+                    b.Navigation("Articles");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrate.Blog", b =>
@@ -393,13 +862,14 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Blogs");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrate.Writer", b =>
+            modelBuilder.Entity("EntityLayer.Concrate.MedicalProduct", b =>
                 {
-                    b.Navigation("Blogs");
+                    b.Navigation("CommentProducts");
+                });
 
-                    b.Navigation("WriterReceiver");
-
-                    b.Navigation("WriterSender");
+            modelBuilder.Entity("EntityLayer.Concrate.ProductCategory", b =>
+                {
+                    b.Navigation("MedicalProducts");
                 });
 #pragma warning restore 612, 618
         }

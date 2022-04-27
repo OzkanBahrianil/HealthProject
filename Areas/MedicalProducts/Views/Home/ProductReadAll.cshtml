@@ -1,0 +1,121 @@
+﻿@model IEnumerable<EntityLayer.Concrate.MedicalProduct>
+    @{
+        ViewData["Title"] = "ProductReadAll";
+        Layout = "~/Views/Shared/UserLayout.cshtml";
+    }
+
+
+    <section class="main-content-w3layouts-agileits">
+        <div class="container">
+            <h3 class="tittle">Medikal Ürünler</h3>
+            <div class="row inner-sec">
+
+                <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+
+
+                    <article class="blog-grid-top">
+                        @foreach (var item in Model)
+                        {
+
+
+                            <div class="b-grid-top">
+                                <div class="blog_info_left_grid">
+                                    <a href="#">
+                                        <img src="~/MedicalProductImageFiles/@item.ProductImage" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="blog-info-middle">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-calendar-alt"></i> @(((DateTime)item.ProductRealiseDate).ToString("dd-MMM-yyyy"))
+                                            </a>
+                                        </li>
+                                        <li class="mx-2">
+                                            <a href="#">
+                                                <i class="far fa-heart"></i> @item.ProductStyle
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-comment"></i> @item.CommentProducts.Where(x => x.ProductID == item.ProductID).ToList().Count()
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                &nbsp; <i class="far fa-map"></i> @item.ProductCategory.ProductCategoryName
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3>
+                                <a href="#">@item.ProductTitle</a>
+                            </h3>
+                            <p>
+                                @Html.Raw(item.ProductContent)
+                            </p>
+                            <a href="@item.ProductCompanyWebsite" class="btn btn-primary read-m">Ürün Web Sitesi</a>
+                        }
+                    </article>
+                    @await Component.InvokeAsync("CommentListByProduct", new { id = ViewBag.i })
+
+                    @await Html.PartialAsync("~/Areas/MedicalProducts/Views/CommentProduct/PartialAddCommentProduct.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddCommentProduct", ViewBag.i } })
+
+                </div>
+
+                <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
+                    <div class="right-blog-info text-left">
+                        <div class="tech-btm">
+                            <img src="~/web/images/banner1.jpg" class="img-fluid" alt="">
+                        </div>
+                        <h4>Mail Bütletine Abone Olun</h4>
+                        @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
+                    <div class="tech-btm">
+                        <h4>Ürün Kategorileri</h4>
+                        @await Component.InvokeAsync("ProductCategoryList")
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="tech-btm">
+                                <h4>Yazar</h4>
+
+                                <div class="blog-grids row mb-3">
+                                    <div class="col-md-6" style="margin-left:22.5%;">
+                                        <a href="#">
+                                            <img src="~/WriterImageFiles/@item.User.Image" class="img-fluid" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 blog-grid-top">
+
+                                        <h5>
+                                            <br />
+                                            <a href="#">@item.User.NameSurname</a>
+                                        </h5>
+                                        <div class="sub-meta" style="text-align:justify;">
+                                            <span>
+
+                                                @item.User.About
+                                            </span>
+                                            <br />
+                                            <div style="text-align:center">
+                                                <a href="/Message/SendMessage/@item.UserID" class="btn btn-secondary">Mesaj Gönder</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    </div>
+                </aside>
+
+
+            </div>
+        </div>
+    </section>

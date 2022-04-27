@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrate.Writer
+﻿@model UserSignUpViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/UserLayout.cshtml";
@@ -15,33 +15,37 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="WriterName">Adınız soyadınız</label>
-                            @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control" })
+                            <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="WriterMail">Mail Adresi</label>
-                            @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required  = "required", @type = "email" })
-                            @Html.ValidationMessageFor(x => x.WriterMail, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(x => x.Mail, new { @class = "form-control",  @type = "email" })
+                            <span asp-validation-for="@Model.Mail" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="WriterPassword mb-2">Şifre</label>
-                            @Html.PasswordFor(x => x.WriterPassword, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(x => x.WriterPassword,  "", new { @class = "text-danger" })
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control"})
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
                         </div>
+                  
                         <div class="form-group col-md-6">
-                            <label for="confirm_password mb-2">Şifreyi Doğrula</label>
-                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" />
-                            <span id='message'></span>
+                            <label for="WriterPassword mb-2">Şifre Tekrar</label>
+                            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+                            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                         </div>
-
 
                     </div>
-                    <button type="submit" id="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+                    
                     <p>
                         <a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
                     </p>
+                    <button type="submit" id="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+                    <div class=" text-danger" asp-validation-summary="All">
+
+                    </div>
                 }
 
             </div>
@@ -55,15 +59,15 @@
         });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        $('#WriterPassword, #confirm_password').on('keyup', function () {
-            if ($('#WriterPassword').val() == $('#confirm_password').val()) {
-                $('#message').html('Şifreler Aynı').css('color', 'green');
-                document.getElementById('submit').disabled = false;
-            } else {
-                $('#message').html('Şifreler Farklı').css('color', 'red');
-                document.getElementById('submit').disabled = true;
-            }
-        });
-    </script>
+    @*<script>
+            $('#WriterPassword, #confirm_password').on('keyup', function () {
+                if ($('#WriterPassword').val() == $('#confirm_password').val()) {
+                    $('#message').html('Şifreler Aynı').css('color', 'green');
+                    document.getElementById('submit').disabled = false;
+                } else {
+                    $('#message').html('Şifreler Farklı').css('color', 'red');
+                    document.getElementById('submit').disabled = true;
+                }
+            });
+        </script>*@
 </section>

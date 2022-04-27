@@ -1,0 +1,93 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Articles>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
+    <br />
+
+}
+
+
+<section class="main-content-w3layouts-agileits">
+    <br />
+    <h3 style="text-align:center;">Makaleler</h3>
+    <br />
+    <br />
+    <div class="inner-sec">
+
+        <div class="col-lg-12 left-blog-info-w3layouts-agileits text-left">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+
+
+
+                    <div class="col-lg-4 card" style="border:1px solid gray; margin-bottom:1px;">
+                        <br />
+                        <h3>
+                          @item.ArticlesTitle
+                        </h3>
+                        <p>
+                            @item.ArticlesShortContent.Substring(0, item.ArticlesShortContent.Substring(0, 150).LastIndexOf(" "))...
+                        </p>
+
+
+                        <div class="blog-info-middle">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))&nbsp;&nbsp;
+                                    </a>   <a href="#">
+                                        <i class="far fa-thumbs-up"></i> @item.ArticleCategory.ArticleCategoryName&nbsp;&nbsp;
+                                    </a>   <a href="#">
+                                        <i class="far fa-heart"></i> @item.ArticlesType&nbsp;&nbsp;
+                                    </a>
+
+
+                                    @if (item.ArticlesStatus == true)
+                                    {
+
+                                        <a href="#">
+                                            <i class="fas fa-eye"></i>Aktif
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+
+                                        <a href="#" class="btn-warning">
+                                            <i class="fas fa-eye"></i>Pasif
+                                        </a>
+
+                                    }
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="/Admin/AdminArticle/ArticlesReadAll/@item.ArticlesID/" class="btn btn-primary read-m">Devamını Oku</a>
+                        <a href="/Admin/AdminArticle/DisableArticle/@item.ArticlesID" class="btn btn-dark read-m">Pasif Yap</a>
+                        <a href="/Admin/AdminArticle/EnableArticle/@item.ArticlesID" class="btn btn-success read-m">Aktif Yap</a>
+                        <a href="/Admin/AdminArticle/DeleteArticle/@item.ArticlesID" class="btn btn-danger read-m">Sil</a>
+                        <a href="/Admin/AdminArticle/EditArticle/@item.ArticlesID" class="btn btn-secondary read-m">Güncelle</a>
+                        <br />
+                    </div>
+
+                }
+            </div>
+        </div>
+
+        <br />
+
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    </div>
+
+</section>

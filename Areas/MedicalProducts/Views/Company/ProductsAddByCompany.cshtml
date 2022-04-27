@@ -1,0 +1,89 @@
+﻿@model HealthProject.Areas.MedicalProducts.Models.AddProductImage
+@{
+    ViewData["Title"] = "ProductsAddByCompany";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+
+
+<h1>Yeni Gönderi Oluştur</h1>
+<br />
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+@using (Html.BeginForm("ProductsAddByCompany", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Label("Ürünün Adı")
+    @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control", @required = "required" })
+    <br />
+    @Html.Label("Ürünün Üretim Şekli")
+    @Html.TextBoxFor(x => x.ProductStyle, new { @class = "form-control", @required = "required" })
+    <br />
+    @Html.Label("Şirketinizin Web Adresi")
+    @Html.TextBoxFor(x => x.ProductCompanyWebsite, new { @class = "form-control", @required = "required" })
+    <br />
+
+    @Html.Label("Ürünün Piyasaya Çıkış Tarihi")
+    @Html.TextBoxFor(x => x.ProductCompanyWebsite,"{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", type = "date" })
+
+    <br />
+    <div class="form-group">
+        <label>Ürün Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="ProductImage" class="custom-file-input" required="">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Ürün Küçük Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="ProductThumbnailImage" class="custom-file-input" required="">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+    @Html.Label("Ürün Kategorisi")
+    @Html.DropDownListFor(x => x.ProductCategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
+    <br />
+    @Html.Label("Ürün Kısa Tanıtımı")
+    @Html.TextAreaFor(x => x.ProductShortContent, 10, 3, new { @class = "form-control", @required = "required" })
+
+    <br />
+    @Html.Label("Ürün Hakkında")
+    @Html.TextAreaFor(x => x.ProductContent, 25, 5, new { @class = "form-control", id = "summernote", @required = "required" })
+
+    <br />
+    <button class="btn btn-info">Ekle</button>
+
+}
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Ürün İçeriğini giriniz...',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
+
+

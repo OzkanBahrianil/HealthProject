@@ -1,0 +1,24 @@
+﻿@model EntityLayer.Concrate.ProductCategory
+@{
+    ViewData["Title"] = "MedicalCategoryUpdate";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+<h1>Kategori Güncelle</h1>
+<br />
+@using (Html.BeginForm("MedicalCategoryUpdate", "Category", FormMethod.Post))
+{@Html.HiddenFor(x => x.ProductCategoryID, new { @class = "form-control" })
+@Html.Label("Kategori Başlığı")
+@Html.TextBoxFor(x => x.ProductCategoryName, new { @class = "form-control" })
+@Html.ValidationMessageFor(x => x.ProductCategoryName)
+<br />
+@Html.Label("Kategori Açıklaması")
+@Html.TextAreaFor(x => x.ProductCategoryDescription, 10, 3, new { @class = "form-control" })
+@Html.ValidationMessageFor(x => x.ProductCategoryDescription)
+<br />
+<button class="btn btn-info">Güncelle</button>
+}
+

@@ -23,7 +23,16 @@ namespace BusinessLayer.Concrete
             return _CategoryDal.Get(x => x.CategoryID == id);
         }
 
+        public List<Category> GetCategoryListWithBlog()
+        {
+            return _CategoryDal.GetListWithBlog().Where(x => x.CategoryStatus == true).ToList();
+        }
+
         public List<Category> GetListT()
+        {
+            return _CategoryDal.List().Where(x => x.CategoryStatus == true).ToList();
+        }   
+        public List<Category> GetListTAdmin()
         {
             return _CategoryDal.List();
         }

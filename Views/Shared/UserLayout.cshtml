@@ -10,8 +10,7 @@
     <title>Sağlık Proje</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <meta name="keywords" content="Weblog a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
 
     <script>
         addEventListener("load", function () {
@@ -22,7 +21,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             window.scrollTo(0, 1);
         }
     </script>
+   
+
     <link href="~/web/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    
     <link rel="stylesheet" href="~/web/css/single.css">
     <link href="~/web/css/style.css" rel='stylesheet' type='text/css' />
     <link href="~/web/css/fontawesome-all.css" rel="stylesheet">
@@ -32,17 +34,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 
 <body>
-    <!--Header-->
+  
 
     <header>
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
                 <div class="col-md-4 logo text-left">
-                    <a class="navbar-brand" href="/Blog/Index/">
+                    <a class="navbar-brand" href="/HomePage/Index/">
                         <i class="fab fa-linode"></i> Health Blog
                     </a>
                 </div>
-                @await Html.PartialAsync("Partial2")
+        
+                @await Component.InvokeAsync("UserWelcome")
                 <div class="col-md-4 log-icons text-right">
 
                     <ul class="social_list1 mt-3">
@@ -74,21 +77,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
 
-        @await Html.PartialAsync("Partial1")
+        @await Component.InvokeAsync("BlogListByCategoryWithHeader")
+
     </header>
-    <!--//header-->
-    <!--/banner-->
-    <!--//banner-->
-    <!--/main-->
+
     @RenderBody()
-    <!--//main-->
-    <!--footer-->
+
     @await Html.PartialAsync("Partial3")
-    <!---->
-    <!-- js -->
+
     <script src="~/web/js/jquery-2.2.3.min.js"></script>
-    <!-- //js -->
-    <!--/ start-smoth-scrolling -->
+
     <script src="~/web/js/move-top.js"></script>
     <script src="~/web/js/easing.js"></script>
     <script>
@@ -101,7 +99,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         });
     </script>
-    <!--// end-smoth-scrolling -->
+ 
 
     <script>
         $(document).ready(function () {
@@ -124,7 +122,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <span id="toTopHover" style="opacity: 1;"> </span>
     </a>
 
-    <!-- //Custom-JavaScript-File-Links -->
     <script src="~/web/js/bootstrap.js"></script>
 
 

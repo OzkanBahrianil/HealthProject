@@ -1,0 +1,33 @@
+﻿@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+
+}
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+
+}
+<div class="comment-top">
+    <h4>Bir Yorum Yapın</h4>
+    <div class="comment-bottom">
+        <form action="/MedicalProducts/CommentProduct/PartialAddCommentProduct/" method="post">
+            <input class="form-control" type="text" name="CommentProductUserName" placeholder="Adınız ve Soyadınız" required="">
+
+
+            <input class="form-control" type="text" name="CommentProductTitle" placeholder="Konu" required="">
+
+            <input class="form-control" style="display: none;" type="text" name="ProductID" placeholder="Konu" value="@ViewData["PartialAddCommentProduct"]" required="">
+
+            <textarea class="form-control" name="CommentProductContent" placeholder="Mesajınız..." required=""></textarea>
+
+            <button type="submit" id="button1" class="btn btn-primary submit">Yorum Yap</button>
+        </form>
+    </div>
+</div>
+
+

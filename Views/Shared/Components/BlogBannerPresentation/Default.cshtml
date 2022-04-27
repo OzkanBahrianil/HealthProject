@@ -1,0 +1,60 @@
+﻿@using EntityLayer.Concrate
+@model List<Presentation>
+<head>
+    <link href="~/css/cssslider.css" rel="stylesheet" />
+
+</head>
+
+
+
+
+<div class="banner slideshow-container">
+    @foreach (var item in Model)
+    {
+
+
+        <div class="carousel slide relative mySlides">
+            <img src="~/PresentationImageFiles/@item.PresentationImage" id="myVideo" />
+
+            <div class="contentSlider">
+                <h1>@item.PresentationTitle</h1>
+                <small>@item.PresentationDetails</small>
+                <br />
+                <br />
+                <a href="@item.PresentationSendUrl" class="myBtn">Sayfaya Git</a>
+            </div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    }
+</div>
+
+
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+</script>

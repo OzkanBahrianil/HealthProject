@@ -16,6 +16,7 @@ namespace HealthProject.Controllers
     public class CommentController : Controller
     {
         CommentManeger cm = new CommentManeger(new EfCommentDal());
+   
         public IActionResult Index()
         {
             return View();
@@ -34,8 +35,9 @@ namespace HealthProject.Controllers
             if (result.IsValid)
             {
                 p.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.CommentStatus = true;    
+                p.CommentStatus = false;    
                 cm.TAdd(p);
+                TempData["AlertMessage"] = "Yorum Ekleme Başarılı. Onay Verildikten Sonra Yorum'u Görebilirsiniz.!!!";
                 return RedirectToAction("BlogReadAll", "Blog", new { @id = id });
             }
             else
@@ -52,6 +54,7 @@ namespace HealthProject.Controllers
 
 
         }
-
+ 
+ 
     }
 }

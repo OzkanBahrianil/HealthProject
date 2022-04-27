@@ -1,0 +1,125 @@
+﻿@model IEnumerable<EntityLayer.Concrate.Blog>
+
+@{
+    ViewData["Title"] = "AdminReadAll";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<head>
+
+
+    <link href="~/web/css/style.css" rel='stylesheet' type='text/css' />
+
+</head>
+
+<!DOCTYPE html>
+<html lang="zxx">
+<body>
+
+
+
+    <section class="banner-bottom">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12 left-blog-info-w3layouts-agileits text-left">
+                    @foreach (var item in Model)
+                    {
+                        <div class="blog-grid-top">
+                            <div class="b-grid-top">
+                                <div class="blog_info_left_grid">
+                                    <a href="#">
+                                        <img src="~/BlogImageFiles/@item.BlogImage" class="img-fluid" style="height:600px;" width="1300" alt="">
+                                    </a>
+                                </div>
+                                <div class="blog-info-middle">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-calendar-alt"></i>  @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-comment"></i> @ViewBag.CommentCount Yorum
+                                            </a>
+                                        </li>     
+                                        
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-star"></i>
+                                                @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3>
+                                <a href="#">@item.BlogTitle</a>
+                            </h3>
+                            <p>
+                                @Html.Raw(item.BlogContent)
+                            </p>
+                            <a href="/Admin/AdminBlog/Index/" class="btn btn-primary read-m">Bloglar</a>
+                            <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Bloğu Gör</a>
+                        </div>
+                    }
+
+
+                    @await Component.InvokeAsync("CommentListByAdmin", new { id = ViewBag.i })
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+    @section scripts{
+        <script>
+
+            function reply_click(clicked_id) {
+                let id = clicked_id;
+                $.ajax({
+
+                    dataType: "json",
+                    type: "post",
+                    url: "/Admin/Comment/DeleteCommentBlog/",
+                    data: { CommentId: id },
+                    success: function (func) {
+                        alert("Silme İşlemi Başarılı.!!!");
+                        location.reload();
+                    }
+                });
+            };
+        </script>
+        <script>
+
+            function reply_clickU(clicked_id) {
+                let id = clicked_id;
+                $.ajax({
+
+                    dataType: "json",
+                    type: "post",
+                    url: "/Admin/Comment/ApproveCommentBlog/",
+                    data: { CommentId: id },
+                    success: function (func) {
+                        alert("Güncelleme İşlemi Başarılı.!!!");
+                        location.reload();
+                    }
+                });
+            };
+        </script>
+
+    }
+</body>
+
+</html>

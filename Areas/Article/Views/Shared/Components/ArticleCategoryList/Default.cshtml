@@ -1,0 +1,16 @@
+﻿@using EntityLayer.Concrate
+@model List<ArticleCategory>
+
+
+<ul class="list-group single">
+    @foreach (var item in Model)
+    {
+
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/Article/Article/ArticlesListByCategory/@item.ArticleCategoryID/" style="color:black;">@item.ArticleCategoryName</a>
+
+        </li>
+    }
+</ul>
+

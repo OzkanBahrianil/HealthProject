@@ -13,7 +13,7 @@ namespace HealthProject.ViewComponents.Category
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
         public IViewComponentResult Invoke()
         {
-            var values = cm.GetListT();
+            var values = cm.GetCategoryListWithBlog();
             return View(values);
         }
     }

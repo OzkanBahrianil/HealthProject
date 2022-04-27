@@ -34,6 +34,11 @@ namespace BusinessLayer.Concrete
             return _MessageDal.GetListWithMessageByWriter(id);
 
 
+        }     public List<Message> GetInboxLinstByWriterSend(int id)
+        {
+            return _MessageDal.GetListWithMessageByWriterSend(id);
+
+
         }
 
         public List<Message> GetListT()

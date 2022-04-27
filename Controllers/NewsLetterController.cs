@@ -5,6 +5,7 @@ using EntityLayer.Concrate;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace HealthProject.Controllers
             return PartialView();
         }
         [HttpPost]
-        public ActionResult SubscribeMail(NewsLetter p)
+        public IActionResult SubscribeMail(NewsLetter p)
         {
             NewsLetterValidation bv = new NewsLetterValidation();
             ValidationResult result = bv.Validate(p);
@@ -45,4 +46,8 @@ namespace HealthProject.Controllers
 
 
     }
+
+
+
 }
+

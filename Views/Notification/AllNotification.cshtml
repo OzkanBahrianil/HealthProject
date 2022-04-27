@@ -6,8 +6,7 @@
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<link href="~/inspinia-gh-pages/css/animate.css" rel="stylesheet">
-<link href="~/inspinia-gh-pages/css/stylemes.css" rel="stylesheet">
+
 <div class="col-lg-12">
     <div class="ibox ">
         <div class="ibox-title">
@@ -15,26 +14,24 @@
 
         </div>
         <div class="ibox-content">
-            <table class="table table-borderless">
+            <table class="table table-responsive-md" style="text-align:center; ">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Konu</th>
-                        <th>Bildirim Türü</th>
+                        <th>Bildirim İçeriği</th>
+                        <th>Bildirimin Türü</th>
                         <th>Bildirim Zamanı</th>
-
-
                     </tr>
                 </thead>
                 @foreach (var item in Model)
                 {
-                    <tbody>
-                        <tr class="alert alert-dismissable" style="background-color:@item.NotificationColor;">
-                            <td style="@item.NotificationTypeSymbol"></td>
+                    <tbody class="alert" >
+                        <tr class="alert alert-dismissable">
+                            <td class="nav-profile-image"> <img src="~/NotificationImageFiles/@item.NotificationTypeSymbol" alt="image"/>  </td>
                             <td>
                                 @item.NotificationDetails
                             </td>
-                            <td>
+                            <td  style="background-color:@item.NotificationColor; border-radius:10px;  padding: 0.6em 1em; color:white;">
                                 @item.NotificationType
                             </td>
                             <td>
@@ -47,11 +44,10 @@
 
                 }
             </table>
-            @if (Model.Count > 20)
-            {
+       
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("AllNotification", new { page }))
 
-            }
+         
 
         </div>
     </div>

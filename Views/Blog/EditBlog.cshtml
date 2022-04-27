@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrate.Blog
+﻿@model HealthProject.Models.AddBlogImage
 @{
     ViewData["Title"] = "EditBlog";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -6,7 +6,14 @@
 
 <h1>Düzenleme Sayfası</h1>
 <br />
-@using (Html.BeginForm("EditBlog", "Blog", FormMethod.Post))
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+@using (Html.BeginForm("EditBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     @Html.HiddenFor(x => x.BlogID, new { @class = "form-control" })
@@ -15,14 +22,23 @@
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.BlogTitle)
     <br />
-    @Html.Label("Blog Thumpnail Url")
-    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control", @required = "required" })
-    @Html.ValidationMessageFor(x => x.BlogThumbnailImage)
-    <br />
-    @Html.Label("Blog Görseli")
-    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control", @required = "required" })
-    @Html.ValidationMessageFor(x => x.BlogImage)
-    <br />
+    @Html.HiddenFor(x => x.BlogThumbnailImageString)
+    @Html.HiddenFor(x => x.BlogImageString)
+    <div class="form-group">
+        <label>Blog Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="BlogImage" class="custom-file-input">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Blog Küçük Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="BlogThumbnailImage" class="custom-file-input">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+
     @Html.Label("Kategori")
     @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
     <br />
@@ -35,26 +51,28 @@
     @Html.ValidationMessageFor(x => x.BlogContent)
     <br />
     <button class="btn btn-success">Güncelle</button>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-    <script>
-        $('#summernote').summernote({
-            placeholder: 'Hello stand alone ui',
-            tabsize: 2,
-            height: 120,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    </script>
 }
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>

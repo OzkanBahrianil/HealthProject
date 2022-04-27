@@ -23,10 +23,14 @@
     </div>
     <br />
 }
+<br />
+<h3 class="tittle">Bloglar</h3>
+
+@await Component.InvokeAsync("BlogHeaderImage")
 
 <section class="main-content-w3layouts-agileits">
     <div class="container">
-        <h3 class="tittle">Bloglar</h3>
+
         <div class="inner-sec">
 
             <div class="left-blog-info-w3layouts-agileits text-left">
@@ -46,10 +50,17 @@
                                             <i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
                                         </a>
                                     </li>
-                                    <li class="mx-2">
+                                    <li>
                                         <a href="#">
-                                            <i class="far fa-comment"></i>                                         
-                                                @item.Comments.Where(x=>x.BlogID ==item.BlogID).ToList().Count()                                        
+                                            <i class="far fa-comment"></i>
+                                            @item.Comments.Where(x => x.BlogID == item.BlogID).ToList().Count()
+                                        </a>
+                                    </li>      
+                                    
+                                    <li >
+                                        <a href="#">
+                                            <i class="far fa-star"></i>
+                                            @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })
                                         </a>
                                     </li>
                                     <li>
@@ -65,15 +76,35 @@
 
                                 <p class="card-text mb-3">@item.BlogShortContent.Substring(0, item.BlogShortContent.Substring(0, 150).LastIndexOf(" "))...</p>
 
-                                <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Devamını Oku</a>
+                                <a href="/Blog/BlogReadAll/@item.BlogID" class="btn btn-primary read-m">Devamını Oku</a>
                             </div>
                         </div>
                     }
 
                 </div>
             </div>
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            <br />
+       
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            
+
 
         </div>
     </div>
 </section>
+
+
+
+<script type="text/javascript">
+    function reply_click(clicked_id) {
+        $.ajax({
+                    url: "@Url.Action("WriterVideo", "Blog")",
+            data: { id: clicked_id},
+                    success: function (data) {
+                        $(".modal-dialog").html(data);
+                        $("#Modalpopup").modal('show');
+                    }
+                });
+    }
+</script>
+

@@ -1,0 +1,61 @@
+﻿@using EntityLayer.Concrate
+@model List<Articles>
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <div class="row inner-sec">
+
+            <div class="col-lg-12 left-blog-info-w3layouts-agileits text-left">
+                @foreach (var item in Model)
+                {
+
+
+                    <article class="blog-grid-top">
+                        <div class="b-grid-top">
+                            <div class="blog_info_left_grid">
+
+                                <h3>
+                                    <a href="/Article/Article/ArticlesReadAll/@item.ArticlesID/">@item.ArticlesTitle </a>
+                                </h3>
+                                <p>
+                                    @item.ArticlesShortContent.Substring(0, item.ArticlesShortContent.Substring(0, 150).LastIndexOf(" "))...
+                                </p>
+
+                            </div>
+                            <br />
+                            <br />
+                            <div class="blog-info-middle">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-thumbs-up"></i> @item.ArticleCategory.ArticleCategoryName
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-comment"></i> @item.ArticlesType
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>   <br />
+                        <a href="/Article/Article/ArticlesReadAll/@item.ArticlesID/" class="btn btn-primary read-m">Daha Fazlası</a>
+
+                    </article>
+                }
+            </div>
+
+
+         
+      
+        </div>
+    </div>
+</section>

@@ -1,0 +1,36 @@
+﻿@model UpdatePasswordViewModel
+
+@{
+    ViewData["Title"] = "Re";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+
+
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Şifremi Güncelle</h3>
+        @if (ViewBag.State == null || ViewBag.State==false)
+        {
+            <div class="row inner-sec">
+                <div class="login p-5 bg-light mx-auto mw-100">
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="Password">Şifre</label>
+                            <input type="password" class="form-control" asp-for="@Model.Password" id="" aria-describedby="password" placeholder="" required="">
+                        </div>
+                        <button type="submit" class="btn btn-primary submit mb-4">Şifreyi Güncelle</button>
+                        <p><a href="/Login/Index/">Vazgeç</a></p>
+
+                        <small style="color:darkred;">@ViewBag.Hata</small>
+                    </form>
+                    <div asp-validation-summary="All"></div>
+                </div>
+            </div>
+            
+        }
+
+    </div>
+</section>

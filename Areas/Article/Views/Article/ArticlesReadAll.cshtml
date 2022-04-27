@@ -1,0 +1,130 @@
+﻿@model IEnumerable<EntityLayer.Concrate.Articles>
+@{
+    ViewData["Title"] = "ArticlesReadAll";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Makaleler</h3>
+        <div class="row inner-sec">
+
+            <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+
+                @foreach (var item in Model)
+                {
+
+
+                    <article class="blog-grid-top">
+                        <div class="b-grid-top">
+                            <div class="blog_info_left_grid">
+
+                                <a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi-file-pdf"></i></a>
+                                <h3>
+                                    <a href="#">@item.ArticlesTitle </a>
+                                </h3>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+                            <div class="blog-info-middle">
+                           
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-list-alt"></i> @item.ArticleCategory.ArticleCategoryName
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-angle-right"></i> @item.ArticlesType
+                                        </a>
+                                    </li>
+                                    <br />
+                                   
+                                    <li>
+
+                                        <a href="#">
+
+                                            <i class="far fa-user"></i> @item.ArticlesWritersName
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                       
+
+
+                        </div>
+
+
+                    </article>
+                    <p>
+
+                       @Html.Raw(item.ArticlesContent)
+                    </p>
+                }
+            </div>
+
+            <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
+                <div class="right-blog-info text-left">
+                    <div class="tech-btm">
+                        <img src="~/web/images/banner1.jpg" class="img-fluid" alt="">
+                    </div>
+                    <h4>Mail Bütletine Abone Olun</h4>
+                    @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
+
+                <div class="tech-btm">
+                    <h4>Makale Kategorileri</h4>
+                    @await Component.InvokeAsync("ArticleCategoryList")
+
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="tech-btm">
+                            <h4>Yazar</h4>
+
+                            <div class="blog-grids row mb-3">
+                                <div class="col-md-6" style="margin-left:22.5%;">
+                                    <a href="#">
+                                        <img src="~/WriterImageFiles/@item.User.Image" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="col-md-12 blog-grid-top">
+
+                                    <h5>
+                                        <br />
+                                        <a href="#">@item.User.NameSurname</a>
+                                    </h5>
+                                    <div class="sub-meta" style="text-align:justify;">
+                                        <span>
+
+                                            @item.User.About
+                                        </span>
+                                        <br />
+                                        <div style="text-align:center">
+                                            <a href="/Message/SendMessage/@item.UserID" class="btn btn-secondary">Mesaj Gönder</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                </div>
+            </aside>
+
+
+        </div>
+    </div>
+</section>

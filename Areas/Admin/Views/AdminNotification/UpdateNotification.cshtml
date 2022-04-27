@@ -1,0 +1,32 @@
+﻿@model EntityLayer.Concrate.Notification
+@{
+    ViewData["Title"] = "UpdateNotification";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Düzenleme Sayfası</h1>
+
+@using (Html.BeginForm("UpdateNotification", "AdminNotification", FormMethod.Post))
+{
+
+    @Html.HiddenFor(x => x.NotificationID, new { @class = "form-control" })
+
+    @Html.Label("Bildirim Tipi")
+    @Html.TextBoxFor(x => x.NotificationType, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.NotificationType)
+    <br />
+
+    @Html.Label("Bildirim Sembol (.png)")
+    @Html.TextBoxFor(x => x.NotificationTypeSymbol, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.NotificationTypeSymbol)
+    <br />
+    @Html.Label("Bildirim Detay")
+    @Html.TextBoxFor(x => x.NotificationDetails, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.NotificationDetails)
+    <br />
+    @Html.Label("Renk")
+    @Html.TextBoxFor(x => x.NotificationColor, new { @class = "form-control", @required = "required", type = "color" })
+    @Html.ValidationMessageFor(x => x.NotificationDetails)
+    <br />
+    <button class="btn btn-success">Güncelle</button>
+}

@@ -25,10 +25,18 @@ namespace BusinessLayer.Concrete
 
         public List<Comment> GetCommentListByIdBlog(int id)
         {
+            return _CommentDal.List().Where(p => p.BlogID == id).ToList().Where(x => x.CommentStatus == true).ToList();
+        }
+        public List<Comment> GetCommentListByIdBlogAdmin(int id)
+        {
             return _CommentDal.List().Where(p => p.BlogID == id).ToList();
         }
 
         public List<Comment> GetListT()
+        {
+            return _CommentDal.List().Where(x => x.CommentStatus == true).ToList();
+        }
+        public List<Comment> GetListTAdmin()
         {
             return _CommentDal.List();
         }

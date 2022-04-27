@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HealthProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Moderator")]
     public class WidgetController : Controller
     {
         public IActionResult Index()

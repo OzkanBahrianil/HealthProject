@@ -1,0 +1,45 @@
+﻿@using EntityLayer.Concrate
+@model List<Notification>
+
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       id="navbarDropdown"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+        <i class="mdi mdi-bell font-24"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu dropdown-menu-end
+                    list-style-none
+                    mailbox"
+        aria-labelledby="navbarDropdown">
+        <li>
+            <div class="">
+                @foreach (var item in Model)
+                {
+
+                    <a href="/Admin/AdminNotification/Index/" class="link border-top">
+                        <div class="d-flex no-block align-items-center p-10">
+                            <span style="background-color:white;" class="
+                                btn btn-success btn-circle
+                                d-flex
+                                align-items-center
+                                justify-content-center
+                              ">
+                                <img style="width:35px;" class="fs-4" src="~/NotificationImageFiles/@item.NotificationTypeSymbol" />
+                            </span>
+                            <div class="ms-2">
+                                <h5 class="mb-0" style="background-color:@item.NotificationColor;  border-radius:10px;  padding: 0.6em 1em; color:white;">@item.NotificationType</h5>
+                                <span class="mail-desc">@item.NotificationDetails.Substring(0, item.NotificationDetails.Substring(0, 22).LastIndexOf(""))...</span>
+                            </div>
+                        </div>
+                    </a>
+
+                }
+            </div>
+        </li>
+
+    </ul>
+</li>

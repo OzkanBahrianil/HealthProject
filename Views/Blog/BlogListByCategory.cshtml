@@ -1,0 +1,77 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Blog>
+
+@{
+    ViewData["Title"] = "BlogListByCategory";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+<br />
+<h3 class="tittle">Bloglar<small style="font-size:15px;"> > @ViewBag.CategoryName</small></h3>
+@if (Model.Count == 0)
+{
+    <div class="alert alert-warning">
+        <p>Aradığınız Blog Bulunamadı.(Henüz Bu kategoriye Blog Eklenmemiştir.)</p>
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
+
+}
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+
+        <div class="inner-sec">
+
+            <div class="left-blog-info-w3layouts-agileits text-left">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+
+
+                        <div class="col-lg-4 card">
+                            <a href="/Blog/BlogReadAll/@item.BlogID/">
+                                <img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="card-img-top img-fluid" alt="">
+                            </a>
+                            <div class="card-body">
+                                <ul class="blog-icons my-4">
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-comment"></i>
+                                            @item.Comments.Where(x => x.BlogID == item.BlogID).ToList().Count()
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-eye"></i> @item.Category.CategoryName
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <h5 class="card-title">
+                                    <a href="/Blog/BlogReadAll/@item.BlogID/">@item.BlogTitle</a>
+                                </h5>
+
+                                <p class="card-text mb-3">@item.BlogShortContent.Substring(0, item.BlogShortContent.Substring(0, 150).LastIndexOf(" "))...</p>
+
+                                <a href="/Blog/BlogReadAll/@item.BlogID/" class="btn btn-primary read-m">Devamını Oku</a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <br />
+        
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByCategory", new { page }))
+
+         
+
+
+        </div>
+    </div>
+</section>

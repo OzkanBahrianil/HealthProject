@@ -17,10 +17,12 @@
 
 <table class="table table-bordered">
     <tr>
-      
+        <th></th>
         <th>Blog Başlığı</th>
         <th>Oluşturulma Tarihi</th>
         <th>Kategori</th>
+        <th>Yorum Sayısı</th>
+        <th>Blog Puanı</th>
         <th>Durum</th>
         <th>Sil</th>
         <th>Düzenle</th>
@@ -30,10 +32,12 @@
         @if (item.BlogStatus)
         {
             <tr class="badge-success">
-
-                <td>@item.BlogTitle</td>
+                <td><img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="mr-2" alt="image"></td>
+                <td><a style="color:white;" href="/Blog/BlogReadAll/@item.BlogID">@item.BlogTitle</a></td>
                 <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.Category.CategoryName</td>
+                <td>@item.Comments.Count</td>
+                <td>    @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })</td>
                 <td>Aktif</td>
                 <td><a href="/Blog/DeleteBlog/@item.BlogID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
                 <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning">Düzenle</a></td>
@@ -42,10 +46,12 @@
         else
         {
             <tr class="badge-secondary">
-                <th>@item.BlogID</th>
-                <td>@item.BlogTitle</td>
+                <td><img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="mr-2" alt="image"></td>
+                <td><a style="color:white;" href="/Blog/BlogReadAll/@item.BlogID">@item.BlogTitle</a></td>
                 <td>@(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.Category.CategoryName</td>
+                <td>@item.Comments.Count</td>
+                <td>    @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })</td>
                 <td>Pasif</td>
                 <td><a href="/Blog/DeleteBlog/@item.BlogID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
                 <td><a href="/Blog/EditBlog/@item.BlogID" class="btn btn-warning">Düzenle</a></td>
@@ -53,8 +59,7 @@
         }
     }
 </table>
-@if (Model.Count > 10)
-{
-    @Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByWriter", new { page }))
-}
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByWriter", new { page }))
+
 <a href="/Blog/BlogAddByWriter/" class="btn btn-primary">Yeni Blog Oluştur</a>

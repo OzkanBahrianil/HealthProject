@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EntityLayer.Concrate.Articles>
+
+@{
+    ViewData["Title"] = "ArticlesReadAll";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 style="text-align:center;">Makaleler</h3>
+        <div class="row inner-sec">
+
+            <div class="col-lg-12 left-blog-info-w3layouts-agileits text-left">
+
+                @foreach (var item in Model)
+                {
+
+
+                    <article class="blog-grid-top">
+                        <div class="b-grid-top">
+                            <div class="blog_info_left_grid">
+
+                                <a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf"></i></a>    <br />
+                                <h3>
+                                    <a style="color:black;" href="#">@item.ArticlesTitle </a>
+                                </h3>
+
+                            </div>
+                            <div class="blog-info-middle">
+
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i>  @(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy")) &nbsp;&nbsp;<i class="far fa-list-alt"></i> @item.ArticleCategory.ArticleCategoryName&nbsp;&nbsp; <i class="far fa-heart"></i> @item.ArticlesType&nbsp;&nbsp;<i class="far fa-user"></i> @item.ArticlesWritersName
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    </article>
+                    <p>
+
+                        @Html.Raw(item.ArticlesContent)
+                    </p>
+
+                    <a href="/Admin/AdminArticle/Index/" class="btn btn-primary read-m">Makaleler</a>
+                    <a href="/Article/Article/ArticlesReadAll/@item.ArticlesID/" class="btn btn-primary read-m">Makaleyi Gör</a>
+                }
+            </div>
+
+      
+
+        </div>
+    </div>
+</section>

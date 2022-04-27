@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.EntityFremawork
 {
-    public class EfWriterDal:GenericRepository<Writer>, IWriterDal
+    public class EfWriterDal:GenericRepository<AppUser>, IWriterDal
     {
-        public Writer GetByFilterFL(Expression<Func<Writer, bool>> filter = null)
+        public AppUser GetByFilterFL(Expression<Func<AppUser, bool>> filter = null)
         {
             using var c = new Context();
             if (filter == null)
-                return c.Set<Writer>().FirstOrDefault();
+                return c.Set<AppUser>().FirstOrDefault();
             else
-                return c.Set<Writer>().FirstOrDefault(filter);
+                return c.Set<AppUser>().FirstOrDefault(filter);
         }
     }
 }

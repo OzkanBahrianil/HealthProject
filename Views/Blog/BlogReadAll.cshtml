@@ -21,7 +21,7 @@
                         <div class="blog-grid-top">
                             <div class="b-grid-top">
                                 <div class="blog_info_left_grid">
-                                    <a href="single.html">
+                                    <a href="#">
                                         <img src="~/BlogImageFiles/@item.BlogImage" class="img-fluid" alt="">
                                     </a>
                                 </div>
@@ -34,12 +34,12 @@
                                         </li>
                                         <li class="mx-2">
                                             <a href="#">
-                                                <i class="far fa-thumbs-up"></i> 0 Likes
+                                                <i class="far fa-star"></i>@(((decimal)ViewBag.raytingstar).ToString())
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="far fa-comment"></i> @ViewBag.CommentCount Comments
+                                                <i class="far fa-comment"></i> @ViewBag.CommentCount Yorum
                                             </a>
                                         </li>
 
@@ -48,7 +48,7 @@
                             </div>
 
                             <h3>
-                                <a href="single.html">@item.BlogTitle</a>
+                                <a href="#">@item.BlogTitle</a>
                             </h3>
                             <p>
                                 @Html.Raw(item.BlogContent)
@@ -62,8 +62,7 @@
                     @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddComment", ViewBag.i } })
                 </div>
 
-                <!--//left-->
-                <!--right-->
+
                 <aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
                     <div class="right-blog-info text-left">
                         <div class="tech-btm">
@@ -76,58 +75,74 @@
 
                         @foreach (var item in Model)
                         {
-                            @await Component.InvokeAsync("WriterLastBlog", new { id = item.WriterID })
-                        }
-                        <div class="single-gd my-5 tech-btm">
-                            <h4>Our Progress</h4>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="single-gd tech-btm">
-                            <h4>Son Eklenen Post</h4>
-                            <div class="blog-grids">
-                                <div class="blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="~/web/images/b1.jpg" class="img-fluid" alt="">
-                                    </a>
-                                </div>
-                                <div class="blog-grid-right">
+                            @await Component.InvokeAsync("WriterLastBlog", new { id = item.UserID })
+                            <div class="tech-btm">
+                                <h4>Yazar</h4>
 
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                    </h5>
+                                <div class="blog-grids row mb-3">
+                                    <div class="col-md-6" style="margin-left:22.5%;">
+                                        <a href="#">
+                                            <img src="~/WriterImageFiles/@item.User.Image" class="img-fluid" alt="">
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12 blog-grid-top">
+
+                                        <h5>
+                                            <br />
+                                            <a href="#">@item.User.NameSurname</a>
+                                        </h5>
+                                        <div class="sub-meta" style="text-align:justify;">
+                                            <span>
+
+                                                @item.User.About
+                                            </span>
+                                            <br />
+                                            <div style="text-align:center">
+                                                <a href="/Message/SendMessage/@item.UserID" class="btn btn-secondary">Mesaj Gönder</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="clearfix"> </div>
                             </div>
-                        </div>
+                        }
                     </div>
 
                 </aside>
-                <!--//right-->
+
             </div>
         </div>
     </section>
 
+    <script type="text/javascript">
+        function CRateOut(rating) {
+            for (var i = 1; i <= rating; i++) {
+                $("#span" + i).attr('class', 'fa fa-star-o');
+            }
+        }
+        function CRateOver(rating) {
+            for (var i = 1; i <= rating; i++) {
+                $("#span" + i).attr('class', 'fa fa-star checked');
+            }
+        }
+        function CRateClick(rating) {
+            $("#lblRating").val(rating);
+            for (var i = 1; i <= rating; i++) {
+                $("#span" + i).attr('class', 'fa fa-star checked');
+            }
+            for (var i = rating + 1; i <= 5; i++) {
+                $("#span" + i).attr('class', 'fa fa-star-o');
+            }
+        }
+        function CRateSelected() {
+            var rating = $("#lblRating").val();
+            for (var i = 1; i <= rating; i++) {
+                $("#span" + i).attr('class', 'fa fa-star checked');
+            }
+        }
 
-
+    </script>
 </body>
 
 </html>
