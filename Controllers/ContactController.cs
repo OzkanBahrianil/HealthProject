@@ -14,20 +14,22 @@ namespace HealthProject.Controllers
     public class ContactController : Controller
     {
         ContactManeger cm = new ContactManeger(new EfContactDal());
+        AboutManeger abm = new AboutManeger(new EfAboutDal());
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var values = abm.GetListT().FirstOrDefault();
+            return View(values);
         }
         [HttpPost]
         public IActionResult Index(Contact p)
         {
             p.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             p.ContactStatus = true;
-            cm.TAdd(p); 
+            cm.TAdd(p);
             TempData["AlertMessage"] = "Mesajınız Başarı ile Gönderilmiştir...!";
             return RedirectToAction("Index", "Contact");
-           
+
         }
     }
 }

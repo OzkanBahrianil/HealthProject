@@ -1,8 +1,48 @@
-﻿
+﻿@using EntityLayer.Concrate
+@model List<About>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<body>
+    <section class="main-content-w3layouts-agileits">
+        <div style="text-align:center;">
+            <h3 class="tittle">Hakkımızda</h3>
+            <div class="row inner-sec">
 
+                <div class="col-lg-12 left-blog-info-w3layouts-agileits text-left">
+                    <div class="blog-grid-top">
+                        @foreach (var item in Model)
+                        {
+                            <div class="blog_info_left_grid">
+                                <a href="#">
+                                    <img src="~/AboutImageFiles/@item.AboutImage" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                            <br />
+                            <h3>
+                                Biz kimiz & Misyonumuz & Vizyonumuz
+                            </h3>
+                            <br />
+
+
+
+                            <p style="text-align: justify;">
+                                @item.AboutDetails
+                            </p>
+                            <br /> <br />
+                            <a href="/Admin/AdminAbout/EditAbout/@item.AboutID" class="btn btn-secondary">Düzenle</a>
+
+                        }
+                    </div>
+
+                </div>
+
+              
+
+            </div>
+        </div>
+    </section>
+</body>

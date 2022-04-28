@@ -1,0 +1,71 @@
+﻿@model HealthProject.Areas.Admin.Models.AddAboutImage
+@{
+    ViewData["Title"] = "EditAbout";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessage"]
+    </div>
+    <br />
+}
+
+
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Hakkımda Düzenle</h4>
+            <br />
+            @using (Html.BeginForm("EditAbout", "AdminAbout", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <form class="forms-sample">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.AboutID, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.AboutImageString, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hakkında Görseli</label>
+                        <div class="custom-file">
+                            <input id="logo" type="file" name="AboutImage" class="custom-file-input">
+                            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="WriterAbout">Hakkında</label>
+                        @Html.TextAreaFor(x => x.AboutDetails, 5, 3, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(x => x.AboutDetails, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="WriterVideoUrl">Map Lokasyonu</label>
+                        @Html.TextAreaFor(x => x.AboutMapLocation, 5, 3, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(x => x.AboutMapLocation, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
+                    <a href="/Admin/AdminAbout/Index" class="btn btn-outline-danger">İptal Et</a>
+
+                </form>
+            }
+  
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
