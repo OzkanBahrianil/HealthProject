@@ -1,0 +1,18 @@
+﻿@model List<RoleAssignViewModel>
+@if (Model != null)
+{
+    <td width="340">
+
+      
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+            <input class="form-check-input" type="checkbox" asp-for="@Model[i].Exists" disabled/> <label style="color:black;" class="form-check-label" for="@Model[i].Exists">@Model[i].Name &nbsp; &nbsp;</label>
+
+        }
+
+    </td>
+
+}
+

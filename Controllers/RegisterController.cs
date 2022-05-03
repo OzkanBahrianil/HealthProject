@@ -45,7 +45,7 @@ namespace HealthProject.Controllers
                     UserName = p.Mail,
                     NameSurname = p.NameSurname,
                     Image = "User.png",
-                    Status = true,
+                    Status = false,
                     About = "-"
                 };
 

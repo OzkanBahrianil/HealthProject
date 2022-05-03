@@ -14,7 +14,7 @@ namespace HealthProject.ViewComponents.Writer
         public IViewComponentResult Invoke()
         {
            
-            var values = nm.GetListT();
+            var values = nm.GetListT().OrderByDescending(x=>x.NotificationTime).Where(y=>y.NotificationStatus==true).Take(3).ToList();
             ViewBag.WriterNotificationCount = values.Where(x => x.NotificationStatus == true).ToList().Count();
             return View(values);
         }

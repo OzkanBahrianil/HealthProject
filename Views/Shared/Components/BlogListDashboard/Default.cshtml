@@ -11,6 +11,8 @@
                             <tr>
                                <th></th>
                                 <th>Başlık</th>
+                                <th>Yorum Sayısı</th>
+                                <th>Puan</th>
                                 <th>Kategori</th>
                                 <th>Tarih</th>
                                 <th>Detaylar</th>
@@ -23,14 +25,19 @@
 
                                 <tr>
                                     <td>
-                                        <img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="mr-2" alt="image">
+                                        <img src="~/BlogImageFiles/@item.BlogThumbnailImage" class="mr-2 adminDS" alt="image">
                                     </td>
                                     <td>
                                         @item.BlogTitle
-                                    </td>
-
+                                    </td>  
                                     <td>
-                                        <label class="badge badge-gradient-success">@item.Category.CategoryName</label>
+                                        @item.Comments.Count()
+                                    </td>
+                                    <td>
+                                        @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })
+                                    </td>
+                                    <td>
+                                        <label class="badge badge-gradient-success adminDSK">@item.Category.CategoryName</label>
                                     </td>
                                     <td> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))</td>
                                     <td> <a href="/Blog/BlogReadAll/@item.BlogID" class="btn btn-dark">Detayı Gör</a> </td>

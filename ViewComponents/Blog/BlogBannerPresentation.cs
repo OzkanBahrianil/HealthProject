@@ -11,10 +11,12 @@ namespace HealthProject.ViewComponents.Blog
     public class BlogBannerPresentation:ViewComponent
     {
 
-        PresentationManeger pm = new PresentationManeger(new EfPresentationDal());
+        PresentationManeger pm = new PresentationManeger(new EfPresentationDal()); 
+        AboutManeger abm = new AboutManeger(new EfAboutDal());
         public IViewComponentResult Invoke()
         {
             var values = pm.GetListT().Where(x => x.PresentationStatus == true).ToList();
+            ViewBag.About = abm.GetListT().FirstOrDefault().AboutDetails;
             return View(values);
         }
     }

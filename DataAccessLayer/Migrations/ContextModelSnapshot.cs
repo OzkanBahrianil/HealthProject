@@ -547,7 +547,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("PresentationImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PresentationSendUrl")
+                    b.Property<string>("PresentationShortDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PresentationStatus")

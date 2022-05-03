@@ -3,4 +3,562 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+<head>
+    <link href="~/css/cssHome.css" rel="stylesheet" />
+</head>
+<section class="project-section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-md-flex align-items-center">
+                        <div>
+                            <h4 class="card-title">Dashboard</h4>
+                            <h5 class="card-subtitle">Site Analizi</h5>
+                        </div>
+                    </div>
+                    <div class="row">
 
+                        <div class="col-lg-9">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="bg-primary p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.BlogFalseCount</h5>
+                                        <small class="font-light">Aktif Olmayan Blog Sayısı</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4">
+                                    <div class="bg-primary p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.ArticleFalseCount</h5>
+                                        <small class="font-light">Aktif Olmayan Makale Sayısı</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4">
+                                    <div class="bg-primary p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.ProductFalseCount</h5>
+                                        <small class="font-light">Aktif Olmayan Medikal Ürün Sayısı</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <div class="bg-secondary p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.BlogCommentFalse</h5>
+                                        <small class="font-light">Yeni Blog Yorum Sayısı(Pasif)</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <div class="bg-secondary p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.ProductCommentFalse</h5>
+                                        <small class="font-light">Yeni Medikal Ürün Yorum Sayısı(Pasif)</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <div class="bg-warning p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllUsersMainFalse</h5>
+                                        <small class="font-light">Aktif Olmayan Yazar Sayısı(Ana Sayfa Sunum)</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-4 mt-3">
+                                    <div class="bg-danger p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllContactTrue</h5>
+                                        <small class="font-light">Okunmamış İletişim Sayısı</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 mt-3">
+                                    <div class="bg-info p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllActiveCategoryBlog</h5>
+                                        <small class="font-light">Bloglar Aktif Kategori</small>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <div class="bg-info p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllActiveCategoryArticle</h5>
+                                        <small class="font-light">Makaleler Aktif Kategori</small>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <div class="bg-info p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllActiveCategoryProduct</h5>
+                                        <small class="font-light">Medikal Ürünler Aktif Kategori</small>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.SubscribeActive</h5>
+                                        <small class="font-light">Bülten Abone Sayısı (Aktif)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllUsers</h5>
+                                        <small class="font-light">Toplam Kullanıcı</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-account fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.Writers</h5>
+                                        <small class="font-light">Toplam Yazar</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mt-3">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-table fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.BlogCount</h5>
+                                        <small class="font-light">Toplam Blog</small>
+                                    </div>
+                                </div>     <div class="col-6 mt-3">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-table fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.ArticleCount</h5>
+                                        <small class="font-light">Toplam Makale</small>
+                                    </div>
+                                </div>     <div class="col-6 mt-3">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-table fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.ProductCount</h5>
+                                        <small class="font-light">Toplam Medikal Ürün</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 mt-3">
+                                    <div class="bg-dark p-10 text-white text-center">
+                                        <i class="mdi mdi-tag fs-3 mb-1 font-16"></i>
+                                        <h5 class="mb-0 mt-1">@ViewBag.AllComments</h5>
+                                        <small class="font-light">Toplam Yorum</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+
+                    <h3 class="project-title-chance col-lg-12 footer-grid-agileits-w3ls" style="text-align:center;">
+                        <a class="bn5 btn project-item active outer-shadow" data-target=".Grafikler">Grafikler</a>
+                        <a class="bn5 btn project-item" data-target=".Blog">Bloglar</a>
+                        <a class="bn5 btn project-item" data-target=".Medikal">Medikal Ürünler</a>
+                        <a class="bn5 btn project-item " data-target=".Makale">Makaleler</a>
+                    </h3>
+                    <br />
+                    <div class="fortest active Grafikler">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div id="chartdiv" style=" height: 350px;">
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div id="chartdiv2" style=" height: 350px;">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div id="chartdiv3" style=" height: 350px;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div id="chartdiv4" style=" height: 350px;">
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div id="chartdiv5" style=" height: 350px;">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div id="chartdiv6" style=" height: 350px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fortest Blog">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h6 style="text-align:center;">Aktif Blog Süreleri(Max 10)</h6>
+                                <div style="height: 500px; "  id="chartdivblog">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @await Component.InvokeAsync("BlogListDashboard")
+                            @await Component.InvokeAsync("CategoryListDashboard")
+                        </div>
+                    </div>
+                    <div class="fortest Medikal">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h6 style="text-align:center;">Aktif En Eski Medikal Ürünler(Max 10)</h6>
+                                <div style="height: 500px; " id="chartdivProduct">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @await Component.InvokeAsync("ProductListDashboard")
+                            @await Component.InvokeAsync("CategoryListDashboardProduct")
+                        </div>
+                    </div>
+                    <div class="fortest Makale">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h6 style="text-align:center;">Aktif Makale Süreleri(Max 10)</h6>
+                                <div style="height: 500px; " id="chartdivArticle">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @await Component.InvokeAsync("ArticlesListDashboard")
+                            @await Component.InvokeAsync("CategoryListDashboardArticle")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script type="text/javascript">
+    (() => {
+        const aboutSection = document.querySelector(".project-section"),
+            tabscontainer = document.querySelector(".project-title-chance");
+        tabscontainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("project-item") && !event.target.classList.contains("active")) {
+                const target = event.target.getAttribute("data-target");
+                const target2 = event.target.getAttribute("data-parent");
+                tabscontainer.querySelector(".active").classList.remove("outer-shadow", "active");
+                event.target.classList.add("active", "outer-shadow");
+                var liElements = document.querySelectorAll(".fortest");
+                if (liElements.length > 0) {
+                    for (var i = 0; i < liElements.length; i++) {
+                        liElements[i].classList.remove("active")
+                        aboutSection.querySelector(target).classList.add("active");
+                    }
+                }
+            }
+        })
+    })();
+
+
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.load('current', { 'packages': ['timeline'] });
+    google.charts.setOnLoadCallback(DrawonLoad);
+    function DrawonLoad() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetPiechartBlogJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'categoryname');
+                    data.addColumn('number', 'categorycount');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].categoryname, Data[i].categorycount]);
+                    }
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+                    chart.draw(data,
+                        {
+                            title: "Kategorilere Göre Blog Sayısı",
+                            position: "top",
+                            fontsize: "20px",
+                        });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetPiechartProductJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'categorynameproduct');
+                    data.addColumn('number', 'categorycountproduct');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].categorynameproduct, Data[i].categorycountproduct]);
+                    }
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv2'));
+                    chart.draw(data,
+                        {
+                            title: "Kategorilere Göre Medikal Ürün Sayısı",
+                            position: "top",
+                            fontsize: "20px",
+                        });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetPiechartArticleJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'categorynamearticle');
+                    data.addColumn('number', 'categorycountarticle');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].categorynamearticle, Data[i].categorycountarticle]);
+                    }
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv3'));
+                    chart.draw(data,
+                        {
+                            title: "Kategorilere Göre Makale Sayısı",
+                            position: "top",
+                            fontsize: "20px",
+                        });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetLineBlogCommentJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'name');
+                    data.addColumn('number', 'commentcount');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].name, Data[i].commentcount]);
+                    }
+                    var chart = new google.visualization.BarChart(document.getElementById('chartdiv4'));
+                    chart.draw(data,
+                        {
+                            title: 'En Fazla Yorum Alan Bloglar (İlk 5)',
+                            width: 400,
+                            height: 300,
+                            legend: 'none'
+
+                        });
+
+
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetLineProductCommentJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'name');
+                    data.addColumn('number', 'commentcount');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].name, Data[i].commentcount]);
+                    }
+                    var chart = new google.visualization.BarChart(document.getElementById('chartdiv5'));
+                    chart.draw(data,
+                        {
+                            title: 'En Fazla Yorum Alan Medikal Ürünler (İlk 5)',
+                            width: 400,
+                            height: 300,
+                            legend: 'none'
+
+                        });
+
+
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetchartBlogRaytingJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'blogname');
+                    data.addColumn('number', 'raytingcount');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].blogname, Data[i].raytingcount]);
+                    }
+                    var chart = new google.visualization.BarChart(document.getElementById('chartdiv6'));
+                    chart.draw(data,
+                        {
+                            title: 'En Fazla Puan Alan Bloglar (İlk 5)',
+                            width: 400,
+                            height: 300,
+                            legend: 'none'
+
+                        });
+
+
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetchartBlogJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'title');
+                    data.addColumn('date', 'day');
+                    data.addColumn('date', 'month');
+
+                    for (var i = 0; i < Data.length; i++) {
+
+                        data.addRow([Data[i].title, new Date(Data[i].year, Data[i].month, Data[i].day), new Date(  @DateTime.Now.Year, @DateTime.Now.Month,@DateTime.Now.Day)]);
+                    }
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chartdivblog'));
+
+        chart.draw(data,
+            {
+
+                width: 1500,
+                height: 500,
+                avoidOverlappingGridLines: false,
+                timeline: {
+
+                    groupByRowLabel: true,
+                    rowLabelStyle: { color: 'transparent' },
+                      colorByRowLabel: true
+                }
+            });
+    },
+    error: function () {
+        alert("Error loading data! Please try again.");
+    }
+            });
+
+
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetchartArticleJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'title');
+                    data.addColumn('date', 'day');
+                    data.addColumn('date', 'month');
+
+                    for (var i = 0; i < Data.length; i++) {
+
+                        data.addRow([Data[i].title, new Date(Data[i].year, Data[i].month, Data[i].day), new Date( @DateTime.Now.Year, @DateTime.Now.Month,@DateTime.Now.Day)]);
+                    }
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chartdivArticle'));
+
+        chart.draw(data,
+            {
+
+                width: 1500,
+                height: 500,
+                avoidOverlappingGridLines: false,
+                timeline: {
+
+                    groupByRowLabel: true,
+                    rowLabelStyle: { color: 'transparent' },
+                      colorByRowLabel: true
+                }
+            });
+    },
+    error: function () {
+        alert("Error loading data! Please try again.");
+    }
+            });
+
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/AdminDashboard/GetchartProductJSON/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'title');
+                    data.addColumn('date', 'day');
+                    data.addColumn('date', 'month');
+
+                    for (var i = 0; i < Data.length; i++) {
+
+                        data.addRow([Data[i].title, new Date(Data[i].year, Data[i].month, Data[i].day), new Date(  @DateTime.Now.Year, @DateTime.Now.Month,@DateTime.Now.Day)]);
+                    }
+
+    var chart = new google.visualization.Timeline(document.getElementById('chartdivProduct'));
+
+        chart.draw(data,
+            {
+
+                width: 1500,
+                height: 500,
+                avoidOverlappingGridLines: false,
+                timeline: {
+
+                    groupByRowLabel: true,
+                    rowLabelStyle: { color: 'transparent' },
+                      colorByRowLabel: true
+                }
+            });
+    },
+    error: function () {
+        alert("Error loading data! Please try again.");
+    }
+            });
+        })
+    }
+</script>

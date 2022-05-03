@@ -36,7 +36,10 @@ namespace BusinessLayer.Concrete
         {
             return _ArticlesDal.List().Where(x => x.ArticlesStatus == true).ToList();
         }
-
+        public List<Articles> GetListTAdmin()
+        {
+            return _ArticlesDal.List().ToList();
+        }
         public void TAdd(Articles t)
         {
             _ArticlesDal.Insert(t);

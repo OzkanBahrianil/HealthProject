@@ -35,7 +35,10 @@ namespace BusinessLayer.Concrete
         {
             return _MedicalProductDal.List().Where(x => x.ProductStatus == true).ToList();
         }
-
+        public List<MedicalProduct> GetListTAdmin()
+        {
+            return _MedicalProductDal.List().ToList();
+        }
         public void TAdd(MedicalProduct t)
         {
             _MedicalProductDal.Insert(t);

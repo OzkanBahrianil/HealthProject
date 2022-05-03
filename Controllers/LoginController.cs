@@ -1,5 +1,9 @@
-﻿using DataAccessLayer.Concrete;
+﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using FluentValidation.Results;
 using HealthProject.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,6 +27,7 @@ namespace HealthProject.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
+        NewsLetterManeger nlm = new NewsLetterManeger(new EfNewsLetterDal());
         private readonly SignInManager<AppUser> _signInManager;
         readonly UserManager<AppUser> _userManager;
 
@@ -62,10 +67,10 @@ namespace HealthProject.Controllers
                     }
                     else
                     {
-TempData["AlertLogin"] = "Hata Giriş İşlemi Başarısız! Kullanıcı Adı veya Şifreniz Yanlış.";
+                        TempData["AlertLogin"] = "Hata Giriş İşlemi Başarısız! Kullanıcı Adı veya Şifreniz Yanlış.";
                     }
-                    
-               
+
+
                     return RedirectToAction("Index", "Login");
                 }
             }
@@ -165,6 +170,17 @@ TempData["AlertLogin"] = "Hata Giriş İşlemi Başarısız! Kullanıcı Adı ve
                 await _userManager.UpdateSecurityStampAsync(user);
                 TempData["AlertUpdate"] = "Email Başarılı Bir Şekilde Doğrulanmıştır. Giriş Yapabilirsiniz...!";
                 await _userManager.AddToRoleAsync(user, "User");
+
+                NewsLetter news = new NewsLetter();
+                news.Mail = user.Email;
+                news.MailStatus = true;
+                NewsLetterValidation bv = new NewsLetterValidation();
+                ValidationResult resultvalidate = bv.Validate(news);
+                if (resultvalidate.IsValid)
+                {
+                    nlm.TAdd(news);
+                }
+
                 return RedirectToAction("Index");
             }
             else
@@ -172,7 +188,7 @@ TempData["AlertLogin"] = "Hata Giriş İşlemi Başarısız! Kullanıcı Adı ve
                 TempData["AlertUpdate"] = "Email Doğrulanmadı.";
                 return RedirectToAction("Index");
             }
-       
+
 
         }
     }

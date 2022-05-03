@@ -1,0 +1,70 @@
+﻿@model HealthProject.Areas.Admin.Models.AddPresentationImage
+@{
+    ViewData["Title"] = "EditPresentation";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+<h1>Düzenleme Sayfası</h1>
+<br />
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+@using (Html.BeginForm("EditPresentation", "Presentation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.HiddenFor(x => x.PresentationID, new { @class = "form-control" })
+
+    @Html.Label("Tanıtım Başlığı")
+    @Html.TextBoxFor(x => x.PresentationTitle, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.PresentationTitle)
+    <br />
+    @Html.HiddenFor(x => x.PresentationImageString)
+    <div class="form-group">
+        <label>Tanıtım Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="PresentationImage" class="custom-file-input">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+    @Html.Label("Tanıtım Detayı Kısa")
+    @Html.TextAreaFor(x => x.PresentationShortDetails, 10, 3, new { @class = "form-control", @required = "required" })
+    @Html.ValidationMessageFor(x => x.PresentationShortDetails)
+    <br />
+
+    @Html.Label("Tanıtım Detayı")
+    @Html.TextAreaFor(x => x.PresentationDetails, 15, 3, new { @class = "form-control", id = "summernote", @required = "required" })
+    @Html.ValidationMessageFor(x => x.PresentationDetails)
+    <br />
+    <button class="btn btn-success">Güncelle</button>
+}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'İçeriğini giriniz...',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>

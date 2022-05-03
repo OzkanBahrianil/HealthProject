@@ -20,9 +20,10 @@
     <tr>
         <th></th>
         <th>Ürün Başlığı</th>
-        <th>Oluşturulma Tarihi</th>
+        <th>Üretim Tarihi</th>
         <th>Kategori</th>
         <th>Durum</th>
+        <th>Yorum Sayısı</th>
         <th>Sil</th>
         <th>Düzenle</th>
     </tr>
@@ -36,6 +37,7 @@
                 <td>@(((DateTime)item.ProductRealiseDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.ProductCategory.ProductCategoryName</td>
                 <td>Aktif</td>
+                <td>@item.CommentProducts.Count()</td>
                 <td><a href="/MedicalProducts/Company/DeleteProducts/@item.ProductID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
                 <td><a href="/MedicalProducts/Company/EditProducts/@item.ProductID" class="btn btn-warning">Düzenle</a></td>
             </tr>
@@ -48,6 +50,7 @@
                 <td>@(((DateTime)item.ProductRealiseDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.ProductCategory.ProductCategoryName</td>
                 <td>Pasif</td>
+                <td>@item.CommentProducts.Count()</td>
                 <td><a href="/MedicalProducts/Company/DeleteProducts/@item.ProductID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
                 <td><a href="/MedicalProducts/Company/EditProducts/@item.ProductID" class="btn btn-warning">Düzenle</a></td>
             </tr>

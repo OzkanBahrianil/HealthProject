@@ -14,7 +14,7 @@ namespace HealthProject.ViewComponents.Blog
         BlogManeger bm = new BlogManeger(new EfBlogDal());
         public IViewComponentResult Invoke()
         {
-            var values = bm.GetBlogListWithCategory().OrderByDescending(x=>x.BlogCreateDate).Take(10).ToList();
+            var values = bm.GetBlogListWithCategoryWithComments().OrderByDescending(x=>x.BlogCreateDate).Take(10).ToList();
             return View(values);
         }
     }

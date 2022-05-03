@@ -1,0 +1,66 @@
+﻿@model HealthProject.Areas.Admin.Models.AddPresentationImage
+@{
+    ViewData["Title"] = "PresentationAdd";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Yeni Tanıtım Oluştur</h1>
+<br />
+@if (TempData["AlertMessageAdd"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Başarısız...!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageAdd"]
+    </div>
+    <br />
+}
+
+@using (Html.BeginForm("PresentationAdd", "Presentation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Label("Sunum Başlığı")
+    @Html.TextBoxFor(x => x.PresentationTitle, new { @class = "form-control", @required = "required" })
+
+    <br />
+    <div class="form-group">
+        <label>Tanıtım Görseli</label>
+        <div class="custom-file">
+            <input id="logo" type="file" name="PresentationImage" class="custom-file-input" required="">
+            <label for="logo" class="custom-file-label">Dosya Seç...</label>
+        </div>
+    </div>
+
+    <br />
+    @Html.Label("Sunum Detayı Kısa")
+    @Html.TextAreaFor(x => x.PresentationShortDetails, 10, 3, new { @class = "form-control", @required = "required" })
+    <br />
+    @Html.Label("Sunum Detayı")
+    @Html.TextAreaFor(x => x.PresentationDetails, 15, 3, new { @class = "form-control", id = "summernote", @required = "required" })
+    <br />
+    <button class="btn btn-info">Ekle</button>
+
+}
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.custom-file-input').on('change', function () {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });</script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'İçeriğini giriniz...',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+

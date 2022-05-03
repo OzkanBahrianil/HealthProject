@@ -109,7 +109,7 @@ namespace HealthProject.Controllers
 
                 if (w.Image.Contains(".png"))
                 {
-                    w.Status = true;
+                    w.Status = false;
                     var resultasyc = await _userManeger.UpdateAsync(w);
                     return RedirectToAction("Index", "Dashboard");
                 }
@@ -145,7 +145,7 @@ namespace HealthProject.Controllers
 
             p.Email = profileImage.WriterMail;
             p.UserName = profileImage.WriterMail;
-            p.Status = true;
+       
 
             WriterValidationEmailChange writerValidation = new WriterValidationEmailChange();
             ValidationResult result = writerValidation.Validate(p);

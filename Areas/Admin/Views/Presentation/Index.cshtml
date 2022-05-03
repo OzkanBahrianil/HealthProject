@@ -1,0 +1,66 @@
+﻿@using EntityLayer.Concrate
+@model List<Presentation>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<h1>Tanıtımlar (Ana Sayfa) </h1>
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+    <br />
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Tanıtım Başlığı</th>
+        <th>Tanıtım Detayı</th>
+        <th>Kısa Tanıtım</th>
+        <th>Durum</th>
+        <th>Sil</th>
+        <th>Düzenle</th>
+
+        <th>Aktif Yap</th>
+        <th>Pasif Yap</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        @if (item.PresentationStatus)
+        {
+            <tr class="bg-success" style="color:white;">
+                <td style="text-align:center;"><img src="~/PresentationImageFiles/@item.PresentationImage" class="mr-2" width="100" alt="image"></td>
+                <td><a style="color:white;" href="/Presentation/PresentationRead/@item.PresentationID">@item.PresentationTitle</a></td>
+                <td> @Html.Raw(item.PresentationDetails)</td>
+                <td> @item.PresentationShortDetails</td>
+                <td>Aktif</td>
+                <td><a href="/Admin/Presentation/DeletePresentation/@item.PresentationID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Admin/Presentation/EditPresentation/@item.PresentationID" class="btn btn-warning">Düzenle</a></td>
+                <td><a href="/Admin/Presentation/EnablePresentation/@item.PresentationID" class="btn btn-outline-primary">Aktif Yap</a></td>
+                <td><a href="/Admin/Presentation/DisablePresentation/@item.PresentationID" class="btn btn-outline-warning">Pasif Yap</a></td>
+            </tr>
+        }
+        else
+        {
+<tr class="bg-warning" style="color:white;">
+    <td style="text-align:center;"><img src="~/PresentationImageFiles/@item.PresentationImage" class="mr-2" width="100" alt="image"></td>
+    <td><a style="color:white;" href="#">@item.PresentationTitle</a></td>
+    <td> @Html.Raw(item.PresentationDetails)</td>
+    <td> @item.PresentationShortDetails</td>
+    <td>Pasif</td>
+    <td><a href="/Admin/Presentation/DeletePresentation/@item.PresentationID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+    <td><a href="/Admin/Presentation/EditPresentation/@item.PresentationID" class="btn btn-outline-info">Düzenle</a></td>
+    <td><a href="/Admin/Presentation/EnablePresentation/@item.PresentationID" class="btn btn-outline-primary">Aktif Yap</a></td>
+    <td><a href="/Admin/Presentation/DisablePresentation/@item.PresentationID" class="btn btn-info">Pasif Yap</a></td>
+</tr>
+        }
+    }
+</table>
+
+
+
+<a href="/Admin/Presentation/PresentationAdd/" class="btn btn-primary">Yeni Tanıtım Oluştur</a>

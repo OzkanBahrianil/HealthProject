@@ -1,0 +1,21 @@
+﻿@model EntityLayer.Concrate.AppUser
+
+<div class="modal-content" style="width:600px; " id="Modaltest">
+
+    <div class="modal-body">
+        <h3>@Model.NameSurname</h3> <br />
+        <small>@Model.About</small><br />
+        <h6>Tanıtım Videosu</h6>  <br />
+
+        <div >
+
+            @Html.Raw(Model.VideoUrl)
+
+        </div>
+    </div>
+
+</div>
+
+
+
+

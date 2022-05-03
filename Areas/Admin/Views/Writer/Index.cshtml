@@ -1,26 +1,140 @@
-﻿
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.AppUser>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 
-<h1>Yazar Bölümü</h1>
-<br />
-<div>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessage"]
+        <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+    </div>
     <br />
-    <input type="text" id="WriterID" placeholder="Yazar ID değeri" class="form-control" /> <br />
-</div>
-<button type="button" id="btngetlist" class="btn btn-outline-primary">Yazar Listesi</button>
-<button type="button" id="btngetbyıd" class="btn btn-outline-primary">Yazar Getir</button>
-<button type="button" id="btndeletebyıd" class="btn btn-outline-primary">Yazar Sil</button>
-<br />
-<div id="writerlist"></div>
-<br />
-<div id="writerget"></div>
+
+}
+<body>
+    <div class="@*page-wrapper*@">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kullanıcılar</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>İsim Soyisim</th>
+                                        <th>Email</th>
+                                        <th>Roller</th>
+                                        <th>Email Durumu</th>
+
+                                        <th>Ana Sayfa Durum</th>
+                                        <th>Video ve Hakkında</th>
+                                        <th>Durum Ana Sayfa</th>
+                                        <th>Durum Ana Sayfa</th>
+                                        <th>Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+
+
+                                    <tr>
+                                        <td><img width="35" src="~/WriterImageFiles/@item.Image" alt="Image" /></td>
+                                        <td>@item.Id</td>
+                                        <td>@item.NameSurname</td>
+                                        <td>@item.Email</td>
+                                        @await Component.InvokeAsync("WriterRoleList", new { id = item.Id })
+                                        <td>@item.EmailConfirmed</td>
+                                        @if (item.Status)
+                                        {
+                                            <td style="background-color:green; color:white;">Aktif (Ana Sayfa)</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color:darkred; color:white;">Pasif (Ana Sayfa)</td>
+                                        }
+
+                                        <td><button type="button" id="@item.Id" onClick="reply_click(this.id)" class="btn btn-outline-primary">Videosunu Gör</button></td>
+                                        <td><a href="/Admin/Writer/WriterApprove/@item.Id" class="btn btn-outline-primary">Aktif Yap</a></td>
+                                        <td><a href="/Admin/Writer/WriterDeactive/@item.Id" class="btn btn-outline-info">Pasif Yap</a></td>
+                                        <td><a href="/Admin/Writer/WriterBan/@item.Id" class="btn btn-outline-warning">Banla (Sil)</a></td>
+
+
+                                    </tr>
+                                    }
+                            </table>
+                            <br />
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                        </div>
+                       
+                    </div>
+                </div>  
+            </div>
+          
+        </div>
+    </div>
+    <div class="modal fade" id="Modalpopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+
+        </div>
+    </div>
+
+
+</body>
+
+<script type="text/javascript">
+    function reply_click(clicked_id) {
+        $.ajax({
+                    url: "@Url.Action("WriterVideo", "Writer")",
+            data: { id: clicked_id},
+                    success: function (data) {
+                        $(".modal-dialog").html(data);
+                        $("#Modalpopup").modal('show');
+                    }
+                });
+    }
+</script>
 
 
 
-@section scripts{ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@section scripts{
     <script>
         $("#btngetlist").click(function () {
             $.ajax({
@@ -62,16 +176,16 @@
         $("#btndeletebyıd").click(x => {
             let id = $("#WriterID").val();
             $.ajax({
-    
+
                 dataType: "json",
                 type: "post",
                 url: "/Admin/Writer/WriterDelete/",
                 data: { WriterId: id },
                 success: function (func) {
-                    alert("Silme İşlemi Başarılı.!!!"); 
+                    alert("Silme İşlemi Başarılı.!!!");
                 }
             });
         });
     </script>
 
-    }
+    }*@

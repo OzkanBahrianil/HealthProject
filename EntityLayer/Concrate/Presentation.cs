@@ -12,10 +12,11 @@ namespace EntityLayer.Concrate
         [Key]
         public int PresentationID { get; set; }
         public string PresentationTitle { get; set; }
+        public string PresentationShortDetails { get; set; }
         public string PresentationDetails { get; set; }
         public bool PresentationStatus { get; set; }
         public string PresentationImage { get; set; }
-        public string PresentationSendUrl { get; set; }
+   
     }
 }
 

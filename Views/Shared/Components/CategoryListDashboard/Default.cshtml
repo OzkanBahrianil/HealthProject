@@ -9,31 +9,32 @@
                     <table class="table">
                         <thead>
                             <tr>
-                               
+
                                 <th> Kategori Adı</th>
                                 <th> Kategori Durumu</th>
+                                <th> Kategori Açıklaması</th>
                                 <th> Aktif Blog Durumu</th>
                                 <th> Bloglara Git</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                             <tr>
-                                
+
                                 <td> @item.CategoryName </td>
                                 @if (item.CategoryStatus)
                                 {
-                            <td> Aktif   </td>
+                                    <td> Aktif   </td>
 
                                 }
                                 else
                                 {
                                     <td> Pasif </td>
                                 }
+                                <td> @item.CategoryDescription </td>
 
-                                
 
                                 <td>
                                     <div class="progress">

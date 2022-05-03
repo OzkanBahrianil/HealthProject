@@ -179,20 +179,41 @@ namespace HealthProject.Controllers
         public IActionResult DeleteBlog(int id)
         {
             var blogvalue = bm.GetByIDT(id);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
+            if (blogvalue != null)
+            {
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", blogvalue.BlogImage);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
+
+                if (blogvalue.UserID == writerID)
+                {
+
+
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", blogvalue.BlogImage);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", blogvalue.BlogThumbnailImage);
+                    if (System.IO.File.Exists(path2))
+                    {
+                        System.IO.File.Delete(path2);
+                    }
+                    bm.TDelete(blogvalue);
+                    TempData["AletrMessage"] = "Silme İşlemi Başarılı...!";
+                    return RedirectToAction("BlogListByWriter");
+                }
+                else
+                {
+                    TempData["AletrMessage"] = "Yetkiniz Yoktur...!";
+                    return RedirectToAction("BlogListByWriter");
+                }
             }
-            var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", blogvalue.BlogThumbnailImage);
-            if (System.IO.File.Exists(path2))
+            else
             {
-                System.IO.File.Delete(path2);
+                TempData["AletrMessage"] = "Böyle bir blog yoktur.!";
+                return RedirectToAction("BlogListByWriter");
             }
-            bm.TDelete(blogvalue);
-            TempData["AletrMessage"] = "Silme İşlemi Başarılı...!";
-            return RedirectToAction("BlogListByWriter");
 
         }
 
@@ -235,7 +256,6 @@ namespace HealthProject.Controllers
             w.UserID = writerID;
             BlogValidation bv = new BlogValidation();
             ValidationResult result = bv.Validate(w);
-            TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
             List<SelectListItem> CategoryValue = (from x in cm.GetListT()
                                                   select new SelectListItem
                                                   {

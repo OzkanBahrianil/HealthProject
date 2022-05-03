@@ -47,7 +47,10 @@ namespace BusinessLayer.Concrete
         {
             return _BlogDal.List().Where(x => x.BlogStatus == true).ToList();
         }
-
+        public List<Blog> GetListTAdmin()
+        {
+            return _BlogDal.List().ToList();
+        }
         public List<Blog> GetListWriterBlog(int id)
         {
           
