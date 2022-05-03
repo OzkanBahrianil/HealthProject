@@ -31,4 +31,7 @@ These Layers:<br/>
 + Writer panel<br/>
 + User interface panel<br/>
 
+ <h2> They will be included in the project</h2>
++ Elasticsearch <br/>
++ SignalR<br/>
 </small>
