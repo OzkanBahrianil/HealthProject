@@ -7,7 +7,7 @@
 }
 
 
-<h3 class="title">Makaleleriniz</h3>
+<h3 class="title">Makaleleriniz<small> >@ViewData["CurrentFilterSearch"]</small></h3>
 @if (TempData["AletrMessage"] != null)
 {
     <div class="alert alert-success">
@@ -16,15 +16,103 @@
     <br />
 }
 
-<table class="table table-bordered">
+<div>
+    <form class="d-flex align-items-center h-100" method="get">
+        <div class="input-group">
+            <div class="input-group-prepend bg-transparent">
+                <i style="color:black;" class="input-group-text border-0 mdi mdi-magnify"></i>
+            </div>
+            <input type="text" class="form-control bg-transparent border-0" value="@ViewData["CurrentFilterSearch"]" name="SearchString" placeholder="Ara...">
+        </div>
+    </form>
+</div>
+<table class="table table-responsive-lg table-bordered">
     <tr>
         <th></th>
-        <th>Makele Başlığı</th>
-        <th>Tarihi</th>
-        <th>Kategori</th>
-        <th>Durum</th>
+        <th>
+            <a style="color:black;" asp-action="ArticlesListByWriter" asp-route-sortOrder="@ViewData["TitleSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Makale Başlığı</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Title")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "TitleDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="ArticlesListByWriter" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Tarihi</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Date")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "DateDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="ArticlesListByWriter" asp-route-sortOrder="@ViewData["CategorySortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Category")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "CategoryDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="ArticlesListByWriter" asp-route-sortOrder="@ViewData["StatusParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Durum</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Status")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "StatusDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        
         <th>Sil</th>
         <th>Düzenle</th>
+        <th>Görüntüle</th>
     </tr>
     @foreach (var item in Model)
     {
@@ -38,23 +126,25 @@
                 <td>Aktif</td>
                 <td><a href="/Article/Writer/DeleteArticles/@item.ArticlesID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
                 <td><a href="/Article/Writer/EditArticles/@item.ArticlesID" class="btn btn-warning">Düzenle</a></td>
+                <td><a href="/Blog/BlogReadAll/@item.ArticlesID" class="btn btn-primary">Görüntüle</a></td>
             </tr>
         }
         else
         {
-<tr class="badge-secondary">
-    <td><a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
-    <td><a style="color:white;" href="/Blog/BlogReadAll/@item.ArticlesID">@item.ArticlesTitle</a></td>
-    <td>@(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))</td>
-    <td>@item.ArticleCategory.ArticleCategoryName</td>
-    <td>Pasif</td>
-    <td><a href="/Article/Writer/DeleteArticles/@item.ArticlesID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
-    <td><a href="/Article/Writer/EditArticles/@item.ArticlesID" class="btn btn-warning">Düzenle</a></td>
-</tr>
+            <tr class="badge-secondary">
+                <td><a href="~/ArticlesPdf/@item.ArticlesPdf" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
+                <td><a style="color:white;" href="/Blog/BlogReadAll/@item.ArticlesID">@item.ArticlesTitle</a></td>
+                <td>@(((DateTime)item.ArticlesPublishDate).ToString("dd-MMM-yyyy"))</td>
+                <td>@item.ArticleCategory.ArticleCategoryName</td>
+                <td>Pasif</td>
+                <td><a href="/Article/Writer/DeleteArticles/@item.ArticlesID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz');" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Article/Writer/EditArticles/@item.ArticlesID" class="btn btn-warning">Düzenle</a></td>
+                <td><a href="#" class="btn btn-info">Görüntüle (Pasif)</a></td>
+            </tr>
         }
     }
 </table>
 
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("ArticlesListByWriter", new { page }))
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("ArticlesListByWriter", new { page, SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
 
 <a href="/Article/Writer/ArticlesAddByWriter/" class="btn btn-primary">Yeni Ürün Oluştur</a>

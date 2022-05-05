@@ -28,7 +28,14 @@ namespace BusinessLayer.Concrete
         {
             return _NewsLetterDal.List();
         }
-
+        public List<NewsLetter> Search( string key)
+        {
+          key = key.ToLower();
+            return _NewsLetterDal.List().Where(p => p.Mail.ToLower().Contains(key)
+            || p.MailID.ToString().ToLower().Contains(key)
+            || p.MailStatus.ToString().ToLower().Contains(key)).ToList();
+        }
+       
         public void TAdd(NewsLetter t)
         {
             _NewsLetterDal.Insert(t);

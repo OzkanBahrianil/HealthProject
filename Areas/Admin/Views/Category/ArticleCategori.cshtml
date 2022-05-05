@@ -33,7 +33,7 @@
     <tr>
         <th>#</th>
         <th>
-            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Adı</a>
+            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori Adı</a>
             @if (ViewData["CurrentSort"] != null)
             {
 
@@ -49,7 +49,7 @@
             }
         </th>
         <th>
-            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["AboutSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Açıklaması</a>
+            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["AboutSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori Açıklaması</a>
 
             @if (ViewData["CurrentSort"] != null)
             {
@@ -93,5 +93,5 @@
 <a href="/Admin/Category/AddArticleCategory/" class="btn btn-primary">Yeni Kategori</a>
 <br />
 <br />
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page , SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("ArticleCategori", new { page , SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
 

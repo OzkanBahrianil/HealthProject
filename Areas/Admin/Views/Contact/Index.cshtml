@@ -16,17 +16,95 @@
     <br />
 
 }
-
+<div class="row">
+    <ul class="navbar-nav float-start me-auto" style="margin-left:15px;">
+        <li class="nav-item search-box">
+            <a class="nav-link waves-effect waves-dark"
+               href="javascript:void(0)">
+                <i class="mdi mdi-magnify fs-4"></i>
+            </a>
+            <a>Ara</a>
+            <form method="get" class="app-search position-absolute">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search &amp; enter" value="@ViewData["CurrentFilterSearch"]" name="SearchString" />
+                <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+            </form>
+        </li>
+    </ul>
+</div>
+<h5 class="card-title">İletişim Mesajları <small>>@ViewData["CurrentFilterSearch"]</small></h5>
 <div class="accordion" id="accordionExample">
+
     <div class="card mb-0 table-responsive">
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Konu</th>
-                    <th scope="col">Mail Adresi</th>
-                    <th scope="col">Kullanıcı Adı</th>
-                    <th scope="col">Tarih</th>
+                    <th scope="col"></th>
+                    <th>
+                        <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["SubjectSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Konu</a>
+                        @if (ViewData["CurrentSort"] != null)
+                        {
+
+
+                            @if (ViewData["CurrentSort"].ToString() == "Subject")
+                            {
+                                <i class="fas fa-arrow-up"></i>
+                            }
+                            else if (ViewData["CurrentSort"].ToString() == "SubjectDesc")
+                            {
+                                <i class="fas fa-arrow-down"></i>
+                            }
+                        }
+                    </th>
+                    <th>
+                        <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["MailSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Mail Adresi</a>
+                        @if (ViewData["CurrentSort"] != null)
+                        {
+
+
+                            @if (ViewData["CurrentSort"].ToString() == "Mail")
+                            {
+                                <i class="fas fa-arrow-up"></i>
+                            }
+                            else if (ViewData["CurrentSort"].ToString() == "MailDesc")
+                            {
+                                <i class="fas fa-arrow-down"></i>
+                            }
+                        }
+                    </th>
+                    <th>
+                        <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kullanıcı Adı</a>
+                        @if (ViewData["CurrentSort"] != null)
+                        {
+
+
+                            @if (ViewData["CurrentSort"].ToString() == "Name")
+                            {
+                                <i class="fas fa-arrow-up"></i>
+                            }
+                            else if (ViewData["CurrentSort"].ToString() == "NameDesc")
+                            {
+                                <i class="fas fa-arrow-down"></i>
+                            }
+                        }
+                    </th>
+                    <th>
+                        <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Tarih</a>
+                        @if (ViewData["CurrentSort"] != null)
+                        {
+
+
+                            @if (ViewData["CurrentSort"].ToString() == "Date")
+                            {
+                                <i class="fas fa-arrow-up"></i>
+                            }
+                            else if (ViewData["CurrentSort"].ToString() == "DateDesc")
+                            {
+                                <i class="fas fa-arrow-down"></i>
+                            }
+                        }
+                    </th>
                     <th scope="col">Oku</th>
                     <th scope="col">Sil</th>
                 </tr>
@@ -88,6 +166,7 @@
                 }
             }
         </table>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
     </div>
 </div>
 

@@ -80,5 +80,12 @@ namespace BusinessLayer.Concrete
         {
             return _ArticlesDal.GetListWithCategoryByWriter(id);
         }
+        public List<Articles> GetListWithCategoryByWriterbmFSearch(string key , int id)
+        {
+            key = key.ToLower();
+            return _ArticlesDal.GetListWithCategoryByWriter(id).Where(p => p.ArticlesTitle.ToLower().Contains(key)
+            || p.ArticlesWritersName.ToString().ToLower().Contains(key)
+            || p.ArticlesShortContent.ToString().ToLower().Contains(key)).ToList();
+        }
     }
 }

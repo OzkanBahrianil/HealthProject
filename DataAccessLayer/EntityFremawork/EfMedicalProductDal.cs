@@ -18,7 +18,7 @@ namespace DataAccessLayer.EntityFremawork
         {
             using (var c = new Context())
             {
-                return c.MedicalProducts.Include(x => x.ProductCategory).Include(x => x.CommentProducts).ToList();
+                return c.MedicalProducts.Include(x => x.ProductCategory).Include(x => x.CommentProducts).Include(x=>x.User).ToList();
             }
         }
         public List<MedicalProduct> GetListWithCategoryCommentByCompany(int id)

@@ -39,7 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <a style="color:black;"  asp-action="UserRoleList" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">İsim Soyisim</a>
+                                            <a style="color:black;"  asp-action="UserRoleList" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">İsim Soyisim</a>
                                             @if (ViewData["CurrentSort"] != null)
                                             {
 
@@ -55,7 +55,7 @@
                                             }
                                         </th>
                                         <th>
-                                            <a style="color:black;" asp-action="UserRoleList" asp-route-sortOrder="@ViewData["MailSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Email</a>
+                                            <a style="color:black;" asp-action="UserRoleList" asp-route-sortOrder="@ViewData["MailSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Email</a>
 
                                             @if (ViewData["CurrentSort"] != null)
                                             {

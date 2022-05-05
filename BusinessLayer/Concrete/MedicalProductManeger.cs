@@ -26,6 +26,14 @@ namespace BusinessLayer.Concrete
         {
             return _MedicalProductDal.GetListWithCategoryComment();
         }
+        public List<MedicalProduct> Search(string key)
+        {
+            key = key.ToLower();
+            return _MedicalProductDal.GetListWithCategoryComment().Where(p => p.ProductTitle.ToLower().Contains(key)
+            || p.ProductShortContent.ToLower().Contains(key)
+            || p.ProductStatus.ToString().ToLower().Contains(key)
+            || p.User.UserName.ToLower().Contains(key)).ToList();
+        }
         public MedicalProduct GetByIDT(int id)
         {
             return _MedicalProductDal.Get(x => x.ProductID == id);

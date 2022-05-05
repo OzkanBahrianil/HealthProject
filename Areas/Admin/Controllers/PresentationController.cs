@@ -186,11 +186,6 @@ namespace HealthProject.Areas.Admin.Controllers
             }
 
 
-
-
-
-
-
         }
         [HttpGet]
         public IActionResult DisablePresentation(int id)

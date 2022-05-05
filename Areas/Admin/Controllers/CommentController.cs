@@ -78,10 +78,21 @@ namespace HealthProject.Areas.Admin.Controllers
             return Json(values);
         }
 
-        public IActionResult IndexProduct(int page = 1)
+
+        public IActionResult IndexProduct(string SearchString, int page = 1)
         {
-            var values = cpm.GetListTAdmin().Where(y => y.CommentProductStatus == false).OrderByDescending(x => x.CommentProductDate).ToList().ToPagedList(page, 20);
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = cpm.SearchAdmin(SearchString).Where(y => y.CommentProductStatus == false).OrderByDescending(x => x.CommentProductDate).ToList().ToPagedList(page, 20);
+                return View(values);
+            }
+            else
+            {
+                var values = cpm.GetListTAdmin().Where(y => y.CommentProductStatus == false).OrderByDescending(x => x.CommentProductDate).ToList().ToPagedList(page, 20);
+                return View(values);
+            }
+
         }
         [HttpGet]
         public IActionResult DeleteCommentProductFalse(int id)

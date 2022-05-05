@@ -14,21 +14,67 @@
     <br />
 
 }
-
+<div class="row">
+    <ul class="navbar-nav float-start me-auto" style="margin-left:15px;">
+        <li class="nav-item search-box">
+            <a class="nav-link waves-effect waves-dark"
+               href="javascript:void(0)">
+                <i class="mdi mdi-magnify fs-4"></i>
+            </a>
+            <a>Ara</a>
+            <form method="get" class="app-search position-absolute">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search &amp; enter" value="@ViewData["CurrentFilterSearch"]" name="SearchString" />
+                <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+            </form>
+        </li>
+    </ul>
+</div>
 <body>
     <div class="@*page-wrapper*@">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Aboneler</h5>
+                        <h5 class="card-title">Aboneler<small> >@ViewData["CurrentFilterSearch"]</small></h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Mail Adresi</th>
-                                        <th>Durum</th>
+                                        <th></th>
+                                        <th>
+                                            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["MailSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Mail Adresi</a>
+                                            @if (ViewData["CurrentSort"] != null)
+                                            {
+
+
+                                                @if (ViewData["CurrentSort"].ToString() == "Mail")
+                                                {
+                                                    <i class="fas fa-arrow-up"></i>
+                                                }
+                                                else if (ViewData["CurrentSort"].ToString() == "MailDesc")
+                                                {
+                                                    <i class="fas fa-arrow-down"></i>
+                                                }
+                                            }
+                                        </th>
+                                        <th>
+                                            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["StatusSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Durum</a>
+                                            @if (ViewData["CurrentSort"] != null)
+                                            {
+
+
+                                                @if (ViewData["CurrentSort"].ToString() == "Status")
+                                                {
+                                                    <i class="fas fa-arrow-up"></i>
+                                                }
+                                                else if (ViewData["CurrentSort"].ToString() == "StatusDesc")
+                                                {
+                                                    <i class="fas fa-arrow-down"></i>
+                                                }
+                                            }
+                                        </th>
                                         <th>Pasif Yap</th>
                                         <th>Aktif Yap</th>
 
@@ -110,7 +156,7 @@
         </div>
     </div>
 
-    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
 
 </body>
 

@@ -39,8 +39,9 @@ namespace HealthProject.Areas.Admin.Controllers
             }
           
         }
-        public IActionResult AdminReadAll(int id)
+        public IActionResult AdminReadAll(int id, int page= 1)
         {
+            ViewBag.page = page;
             ViewBag.CommentCount = cmt.GetCommentListByIdBlogAdmin(id).Count();
             ViewBag.i = id;
             var values = bm.GetBlogListByIdAdmin(id);

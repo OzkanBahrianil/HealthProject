@@ -18,24 +18,89 @@
 
 }
 <body>
+    <div class="row">
+        <ul class="navbar-nav float-start me-auto" style="margin-left:15px;">
+            <li class="nav-item search-box">
+                <a class="nav-link waves-effect waves-dark"
+                   href="javascript:void(0)">
+                    <i class="mdi mdi-magnify fs-4"></i>
+                </a>
+                <a>Ara</a>
+                <form method="get" class="app-search position-absolute">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search &amp; enter" value="@ViewData["CurrentFilterSearch"]" name="SearchString" />
+                    <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+                </form>
+            </li>
+        </ul>
+    </div>
     <div class="@*page-wrapper*@">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Kullanıcılar</h5>
+                        <h5 class="card-title">Kullanıcılar <small> >@ViewData["CurrentFilterSearch"]</small></h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th></th>
-                                        <th>İsim Soyisim</th>
-                                        <th>Email</th>
+                                        <th>
+                                            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">İsim Soyisim</a>
+                                            @if (ViewData["CurrentSort"] != null)
+                                            {
+
+
+                                                @if (ViewData["CurrentSort"].ToString() == "Name")
+                                                {
+                                                    <i class="fas fa-arrow-up"></i>
+                                                }
+                                                else if (ViewData["CurrentSort"].ToString() == "NameDesc")
+                                                {
+                                                    <i class="fas fa-arrow-down"></i>
+                                                }
+                                            }
+                                        </th>
+                                        <th>
+                                            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["MailSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Email</a>
+                                            @if (ViewData["CurrentSort"] != null)
+                                            {
+
+
+                                                @if (ViewData["CurrentSort"].ToString() == "Mail")
+                                                {
+                                                    <i class="fas fa-arrow-up"></i>
+                                                }
+                                                else if (ViewData["CurrentSort"].ToString() == "MailDesc")
+                                                {
+                                                    <i class="fas fa-arrow-down"></i>
+                                                }
+                                            }
+                                        </th>
+
+
                                         <th>Roller</th>
                                         <th>Telefon Numarası</th>
                                         <th>Email Durumu</th>
-                                        <th>Ana Sayfa Durum</th>
+                                        <th>
+                                            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["StatusSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Ana Sayfa Durum</a>
+                                            @if (ViewData["CurrentSort"] != null)
+                                            {
+
+
+                                                @if (ViewData["CurrentSort"].ToString() == "Status")
+                                                {
+                                                    <i class="fas fa-arrow-up"></i>
+                                                }
+                                                else if (ViewData["CurrentSort"].ToString() == "StatusDesc")
+                                                {
+                                                    <i class="fas fa-arrow-down"></i>
+                                                }
+                                            }
+                                        </th>
+
                                         <th>Video ve Hakkında</th>
                                         <th>Durum Ana Sayfa</th>
                                         <th>Durum Ana Sayfa</th>
@@ -47,47 +112,47 @@
                                     {
 
 
-                                    <tr>
-                                        <td><img width="35" src="~/WriterImageFiles/@item.Image" alt="Image" /></td>
-                                        <td>@item.Id</td>
-                                        <td>@item.NameSurname</td>
-                                        <td>@item.Email</td>
-                                        @await Component.InvokeAsync("WriterRoleList", new { id = item.Id })
-                                        <td>@item.PhoneNumber</td>
-                                      @if (item.EmailConfirmed)
-                                      {
-                                          <td>Onaylandı</td>
-                                      }
-                                      else
-                                      {
-                                          <td>Onaylanmadı</td>
-                                      }
-                                        @if (item.Status)
-                                        {
-                                            <td style="background-color:green; color:white;">Aktif (Ana Sayfa)</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="background-color:darkred; color:white;">Pasif (Ana Sayfa)</td>
-                                        }
+                                        <tr>
+                                            <td><img width="35" src="~/WriterImageFiles/@item.Image" alt="Image" /></td>
+                                            <td>@item.Id</td>
+                                            <td>@item.NameSurname</td>
+                                            <td>@item.Email</td>
+                                            @await Component.InvokeAsync("WriterRoleList", new { id = item.Id })
+                                            <td>@item.PhoneNumber</td>
+                                            @if (item.EmailConfirmed)
+                                            {
+                                                <td>Onaylandı</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Onaylanmadı</td>
+                                            }
+                                            @if (item.Status)
+                                            {
+                                                <td style="background-color:green; color:white;">Aktif (Ana Sayfa)</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="background-color:darkred; color:white;">Pasif (Ana Sayfa)</td>
+                                            }
 
-                                        <td><button type="button" id="@item.Id" onClick="reply_click(this.id)" class="btn btn-outline-primary">Videosunu Gör</button></td>
-                                        <td><a href="/Admin/Writer/WriterApprove/@item.Id" class="btn btn-outline-primary">Aktif Yap</a></td>
-                                        <td><a href="/Admin/Writer/WriterDeactive/@item.Id" class="btn btn-outline-info">Pasif Yap</a></td>
-                                        <td><a href="/Admin/Writer/WriterBan/@item.Id" class="btn btn-outline-warning">Banla (Sil)</a></td>
+                                            <td><button type="button" id="@item.Id" onClick="reply_click(this.id)" class="btn btn-outline-primary">Videosunu Gör</button></td>
+                                            <td><a href="/Admin/Writer/WriterApprove/@item.Id" class="btn btn-outline-primary">Aktif Yap</a></td>
+                                            <td><a href="/Admin/Writer/WriterDeactive/@item.Id" class="btn btn-outline-info">Pasif Yap</a></td>
+                                            <td><a href="/Admin/Writer/WriterBan/@item.Id" class="btn btn-outline-warning">Banla (Sil)</a></td>
 
 
-                                    </tr>
+                                        </tr>
                                     }
                             </table>
                             <br />
-                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
                         </div>
-                       
+
                     </div>
-                </div>  
+                </div>
             </div>
-          
+
         </div>
     </div>
     <div class="modal fade" id="Modalpopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

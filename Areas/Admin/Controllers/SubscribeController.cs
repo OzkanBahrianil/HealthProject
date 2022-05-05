@@ -19,11 +19,71 @@ namespace HealthProject.Areas.Admin.Controllers
     public class SubscribeController : Controller
     {
         NewsLetterManeger nlm = new NewsLetterManeger(new EfNewsLetterDal());
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string sortOrder, string SearchString, int page = 1)
         {
-          var values = nlm.GetListT().OrderByDescending(x=>x.MailStatus).ToPagedList(page, 9);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["MailSortParam"] = sortOrder == "Mail" ? "MailDesc" : "Mail";
+            ViewData["StatusSortParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
+
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+
+                var values = nlm.Search(SearchString);
+                switch (sortOrder)
+                {
+                    case "Mail":
+                        values = values.OrderBy(x => x.Mail).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Mail).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.MailStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.MailStatus).ToList();
+                        break;
+
+                    default:
+                        values = values.OrderByDescending(s => s.MailID).ToList();
+                        break;
+
+
+                }
+                return View(values.ToPagedList(page, 9));
+            }
+            else
+            {
+                var values = nlm.GetListT();
+                switch (sortOrder)
+                {
+                    case "Mail":
+                        values = values.OrderBy(x => x.Mail).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Mail).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.MailStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.MailStatus).ToList();
+                        break;
+
+                    default:
+                        values = values.OrderByDescending(s => s.MailID).ToList();
+                        break;
+
+
+                }
+                return View(values.ToPagedList(page, 9));
+            }
+
+
         }
+
         [HttpPost]
         public IActionResult MailSend(NewsLetterMail p)
         {
@@ -46,11 +106,11 @@ namespace HealthProject.Areas.Admin.Controllers
                 smp.Host = "smtp.gmail.com";
                 smp.EnableSsl = true;
                 smp.Send(mail);
-                
+
             }
             TempData["AletrMessage"] = "Mail Gönderme İşlemi Başarılı...!";
             return RedirectToAction("Index");
-            
+
         }
     }
 }

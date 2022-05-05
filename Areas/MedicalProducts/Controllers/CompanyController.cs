@@ -27,6 +27,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
 
         public IActionResult ProductsListByCompany(int page = 1)
         {
+
             var usermail = User.Identity.Name;
             var CompanyID = wm.TGetByFilter(x => x.Email == usermail).Id;
             var values = mpm.GetListWithCategoryCommentBCompanybmF(CompanyID).ToPagedList(page, 10);

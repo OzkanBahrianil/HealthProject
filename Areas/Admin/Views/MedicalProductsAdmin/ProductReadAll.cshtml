@@ -54,7 +54,7 @@
                         <a href="/MedicalProducts/Home/ProductReadAll/@item.ProductID/" class="btn btn-primary read-m">Medikal Ürünü Gör</a>
                     }
                 </article>
-                @await Component.InvokeAsync("CommentListByProductAdmin", new { id = ViewBag.i })
+                @await Component.InvokeAsync("CommentListByProductAdmin", new { id = ViewBag.i, page = ViewBag.page })
 
             </div>
 

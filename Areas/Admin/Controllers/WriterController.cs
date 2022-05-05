@@ -29,10 +29,88 @@ namespace HealthProject.Areas.Admin.Controllers
             _userManeger = userManeger;
         }
         [Authorize(Roles = "Admin, Moderator")]
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string sortOrder, string SearchString, int page = 1)
         {
-            var values = wm.GetListT().OrderByDescending(x => x.Status).ToList().ToPagedList(page, 9);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "NameDesc" : "Name";
+            ViewData["MailSortParam"] = sortOrder == "Mail" ? "MailDesc" : "Mail";
+            ViewData["StatusSortParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = wm.Search(SearchString);
+                switch (sortOrder)
+                {
+
+                    case "Mail":
+                        values = values.OrderBy(x => x.Email).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Email).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.NameSurname).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.NameSurname).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.Status).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.Status).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.Id).ToList();
+                        break;
+
+
+                }
+
+                return View(values.ToPagedList(page, 9));
+            }
+            else
+            {
+                var values = wm.GetListT();
+                switch (sortOrder)
+                {
+
+                    case "Mail":
+                        values = values.OrderBy(x => x.Email).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Email).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.NameSurname).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.NameSurname).ToList();
+                        break;
+                    case "PhoneStatus":
+                        values = values.OrderBy(s => s.PhoneNumberConfirmed).ToList();
+                        break;
+                    case "PhoneStatusDesc":
+                        values = values.OrderByDescending(s => s.PhoneNumberConfirmed).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.Status).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.Status).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.Id).ToList();
+                        break;
+
+
+                }
+
+                return View(values.ToPagedList(page, 9));
+            }
+
+
         }
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]

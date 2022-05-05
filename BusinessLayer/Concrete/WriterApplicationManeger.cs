@@ -34,6 +34,18 @@ namespace BusinessLayer.Concrete
         {
             return _WriterApplicationDal.GetListWithUser();
         }
+        public List<WriterApplication> Search(string key)
+        {
+            key = key.ToLower();
+            return _WriterApplicationDal.GetListWithUser().Where(p => p.User.NameSurname.ToLower().Contains(key)
+            || p.User.Email.ToString().ToLower().Contains(key)
+            || p.ApplicationStatus.ToString().ToLower().Contains(key)
+            || p.ApplicationUniversity.ToString().ToLower().Contains(key)
+            || p.ApplicationUniversityDepartment.ToString().ToLower().Contains(key)
+            || p.ApplicationDate.ToString().ToLower().Contains(key)
+            || p.ApplicationCoverLetter.ToString().ToLower().Contains(key)).ToList();
+        }
+
         public void TAdd(WriterApplication t)
         {
             _WriterApplicationDal.Insert(t);

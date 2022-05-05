@@ -25,10 +25,22 @@ namespace HealthProject.Areas.Admin.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index( string SearchString, int page = 1)
         {
-            var values = wap.GetListTWithUser().Where(x => x.ApplicationStatus == true).OrderByDescending(x => x.ApplicationDate).ToList().ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = wap.Search(SearchString).Where(x => x.ApplicationStatus == true).OrderByDescending(y => y.ApplicationDate).ToList();
+                return View(values.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = wap.GetListTWithUser().Where(x => x.ApplicationStatus == true).OrderByDescending(y=>y.ApplicationDate).ToList();
+                return View(values.ToPagedList(page, 10));
+            }
+
         }
 
         public IActionResult WriterApplicationRefuse(int id)

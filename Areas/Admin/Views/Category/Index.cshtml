@@ -29,7 +29,7 @@
     <tr>
         <th></th>
         <th>
-            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Adı</a>
+            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori Adı</a>
             @if (ViewData["CurrentSort"] != null)
             {
 
@@ -45,7 +45,7 @@
             }
         </th>
         <th>
-            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["AboutSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Açıklaması</a>
+            <a style="color:black;" asp-action="Index" asp-route-sortOrder="@ViewData["AboutSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori Açıklaması</a>
 
             @if (ViewData["CurrentSort"] != null)
             {

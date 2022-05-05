@@ -25,12 +25,94 @@ namespace HealthProject.Areas.Article.Controllers
         ArticlesManeger atm = new ArticlesManeger(new EfArticlesDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
 
-        public IActionResult ArticlesListByWriter(int page = 1)
+        public IActionResult ArticlesListByWriter(string sortOrder, string SearchString, int page = 1)
         {
             var usermail = User.Identity.Name;
             var WriterID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = atm.GetListWithCategoryByWriterbmF(WriterID).ToPagedList(page, 10);
-            return View(values);
+
+
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParam"] = sortOrder == "Title" ? "TitleDesc" : "Title";
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "DateDesc" : "Date";
+            ViewData["CategorySortParam"] = sortOrder == "Category" ? "CategoryDesc" : "Category";
+            ViewData["StatusParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
+          
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = atm.GetListWithCategoryByWriterbmFSearch(SearchString, WriterID);
+
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.ArticlesTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.ArticlesTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.ArticlesPublishDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.ArticlesPublishDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.ArticleCategory.ArticleCategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.ArticleCategory.ArticleCategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.ArticlesStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.ArticlesStatus).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ArticlesID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = atm.GetListWithCategoryByWriterbmF(WriterID);
+
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.ArticlesTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.ArticlesTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.ArticlesPublishDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.ArticlesPublishDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.ArticleCategory.ArticleCategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.ArticleCategory.ArticleCategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.ArticlesStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.ArticlesStatus).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ArticlesID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+
+
+
 
 
 

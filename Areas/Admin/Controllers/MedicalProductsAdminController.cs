@@ -24,14 +24,24 @@ namespace HealthProject.Areas.Admin.Controllers
         MedicalProductManeger mpm = new MedicalProductManeger(new EfMedicalProductDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string SearchString, int page = 1)
         {
-            var values = mpm.GetProductListWithCategoryWithCommentsAdmin().OrderByDescending(x => x.ProductID).ToPagedList(page, 9);
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = mpm.Search(SearchString).OrderByDescending(x => x.ProductID).ToPagedList(page, 9);
+                return View(valuesSearch);
+            }
+            else
+            {
+                var values = mpm.GetProductListWithCategoryWithCommentsAdmin().OrderByDescending(x => x.ProductID).ToPagedList(page, 9);
+                return View(values);
+            }
+
         }
-        public IActionResult ProductReadAll(int id)
+        public IActionResult ProductReadAll(int id, int page = 1)
         {
-     
+            ViewBag.page = page;
             ViewBag.i = id;
             var values = mpm.TGetByFilterAdmin(x => x.ProductID == id);
             return View(values);

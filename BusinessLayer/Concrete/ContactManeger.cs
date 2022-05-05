@@ -28,7 +28,15 @@ namespace BusinessLayer.Concrete
         {
             return _ContactDal.List();
         }
+        public List<Contact> Search(string key)
+        {
+            key = key.ToLower();
+            return _ContactDal.List().Where(p => p.ContactUserName.ToLower().Contains(key)
+            || p.ContactMail.ToLower().Contains(key)
+            || p.ContactStatus.ToString().ToLower().Contains(key)
+            || p.ContactSubject.ToString().ToLower().Contains(key)).ToList();
 
+        }
         public void TAdd(Contact t)
         {
             _ContactDal.Insert(t);
