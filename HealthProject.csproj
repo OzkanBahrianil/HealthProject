@@ -1126,6 +1126,7 @@
     <Folder Include="wwwroot\BlogImageFiles\" />
     <Folder Include="wwwroot\MedicalProductImageFiles\" />
     <Folder Include="wwwroot\ArticlesPdf\" />
+    <Folder Include="wwwroot\WriterApplicationPdf\" />
   </ItemGroup>
 
 </Project>

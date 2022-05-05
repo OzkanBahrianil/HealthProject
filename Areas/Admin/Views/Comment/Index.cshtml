@@ -11,9 +11,27 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
+                    <ul class="navbar-nav float-start me-auto" style="margin-left:15px;">
+                        <li class="nav-item search-box">
+                            <a class="nav-link waves-effect waves-dark"
+                               href="javascript:void(0)">
+                                <i class="mdi mdi-magnify fs-4"></i>
+                            </a>
+                            <a>Ara</a>
+                            <form method="get" class="app-search position-absolute">
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Search &amp; enter" value="@ViewData["CurrentFilter"]" name="SearchString" />
+                                <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <br />
+
                     <div class="card-body">
-                        <h4 class="card-title">Yorumlar</h4>
+                        <h4 class="card-title">Yorumlar <small> >@ViewData["CurrentFilter"]</small></h4>
                     </div>
+
                     @foreach (var item in Model)
                     {
 
@@ -29,16 +47,16 @@
                                 <div class="comment-text w-100">
                                     <h6 class="font-medium">@item.CommentUserName  </h6><h6 class="font-medium" style="text-align:left;">Konu: @item.CommentTitle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skor: @item.BlogScore</h6>
                                     <span class="mb-3 d-block">
-                                      @item.CommentContent
+                                        @item.CommentContent
                                     </span>
                                     <div class="comment-footer">
                                         <span class="text-muted float-end"> @(((DateTime)item.CommentDate).ToString("dd-MMM-yyyy"))</span>
                                         <a type="button" href="/Admin/Comment/DeleteComment/@item.CommentID/"
-                                                class="btn btn-cyan btn-sm text-white">
+                                           class="btn btn-cyan btn-sm text-white">
                                             Sil
                                         </a>
                                         <a type="button" href="/Admin/Comment/ApproveComment/@item.CommentID/"
-                                                class="btn btn-success btn-sm text-white">
+                                           class="btn btn-success btn-sm text-white">
                                             Onayla
                                         </a>
 
@@ -50,7 +68,7 @@
                         </div>
                     }
                 </div>
-
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilter"] }))
             </div>
 
         </div>

@@ -41,6 +41,14 @@ namespace BusinessLayer.Concrete
             return _CommentDal.List();
         }
 
+        public List<Comment> SearchAdmin(string key)
+        {
+            key = key.ToLower();
+            return _CommentDal.List().Where(p => p.CommentTitle.ToLower().Contains(key)
+            || p.CommentStatus.ToString().ToLower().Contains(key)
+            || p.CommentUserName.ToString().ToLower().Contains(key)
+            || p.CommentContent.ToLower().Contains(key)).ToList();
+        }
         public void TAdd(Comment t)
         {
            _CommentDal.Insert(t);

@@ -17,30 +17,53 @@ namespace HealthProject.Areas.Admin.Controllers
     {
         MessageManeger mm = new MessageManeger(new EfMessageDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
-        public IActionResult InBox(int page = 1)
+        public IActionResult InBox(string SearchString, int page = 1)
         {
-
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
-            ViewBag.InboxR = values.Count();
-            var valuesSend = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
-            ViewBag.InboxRS = valuesSend.Count();
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = mm.SearchInbox(writerID, SearchString).ToPagedList(page, 12);
+                var values = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
+                ViewBag.InboxR = values.Count();
+                var valuesSend = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                ViewBag.InboxRS = valuesSend.Count();
+                return View(valuesSearch);
+            }
+            else
+            {
+
+                var values = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
+                ViewBag.InboxR = values.Count();
+                var valuesSend = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                ViewBag.InboxRS = valuesSend.Count();
+                return View(values);
+            }
         }
-        public IActionResult InBoxSend(int page = 1)
+        public IActionResult InBoxSend(string SearchString, int page = 1)
         {
-
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = mm.SearchSend(writerID, SearchString).ToPagedList(page, 12);
+                var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                var valuesReceived = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
+                ViewBag.InboxR = valuesReceived.Count();
+                ViewBag.InboxRS = values.Count();
+                return View(valuesSearch);
+            }
+            else
+            {
 
-
-            var valuesReceived = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
-            ViewBag.InboxR = valuesReceived.Count();
-
-            ViewBag.InboxRS = values.Count();
-            return View(values);
+                var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                var valuesReceived = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
+                ViewBag.InboxR = valuesReceived.Count();
+                ViewBag.InboxRS = values.Count();
+                return View(values);
+            }
         }
 
         public IActionResult MessageDetails(int id)
@@ -63,11 +86,11 @@ namespace HealthProject.Areas.Admin.Controllers
         {
             if (id.HasValue)
             {
-            var ReceiverMail = wm.TGetByFilter(x => x.Id == id).Email;
-            ViewBag.sender = ReceiverMail;
+                var ReceiverMail = wm.TGetByFilter(x => x.Id == id).Email;
+                ViewBag.sender = ReceiverMail;
 
             }
-           
+
             return View();
         }
 

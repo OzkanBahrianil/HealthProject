@@ -7,9 +7,11 @@
         <small>@Model.About</small><br />
         <h6>Tanıtım Videosu</h6>  <br />
 
-        <div >
-
-            @Html.Raw(Model.VideoUrl)
+        <div>
+            <iframe width="560" height="315"
+                    src="@Model.VideoUrl" title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
 
         </div>
     </div>

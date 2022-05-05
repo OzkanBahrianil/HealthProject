@@ -19,7 +19,25 @@
 
 <section class="main-content-w3layouts-agileits">
     <br />
-    <h3 style="text-align:center;">Makaleler</h3>
+    <h3 style="text-align:center;">Makaleler <small> >@ViewData["CurrentFilter"]</small></h3>
+    <br />
+
+    <ul class="navbar-nav float-start me-auto">
+        <li class="nav-item search-box">
+            <a class="nav-link waves-effect waves-dark"
+               href="javascript:void(0)">
+                <i class="mdi mdi-magnify fs-4"></i>
+            </a>
+            <a >Ara</a>
+            <form method="get" class="app-search position-absolute">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search &amp; enter" value="@ViewData["CurrentFilter"]" name="SearchString" />
+                <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+            </form>
+        </li>
+    </ul>
+    <br />
     <br />
     <br />
     <div class="inner-sec">
@@ -34,7 +52,7 @@
                     <div class="col-lg-4 card" style="border:1px solid gray; margin-bottom:1px;">
                         <br />
                         <h3>
-                          @item.ArticlesTitle
+                            @item.ArticlesTitle
                         </h3>
                         <p>
                             @item.ArticlesShortContent.Substring(0, item.ArticlesShortContent.Substring(0, 150).LastIndexOf(" "))...
@@ -87,7 +105,7 @@
 
         <br />
 
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilter"] }))
     </div>
 
 </section>

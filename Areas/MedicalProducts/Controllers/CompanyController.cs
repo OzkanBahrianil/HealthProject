@@ -28,15 +28,11 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
         public IActionResult ProductsListByCompany(int page = 1)
         {
             var usermail = User.Identity.Name;
-            var CompanyID = wm.TGetByFilter(x => x.Email == usermail).Id;  
+            var CompanyID = wm.TGetByFilter(x => x.Email == usermail).Id;
             var values = mpm.GetListWithCategoryCommentBCompanybmF(CompanyID).ToPagedList(page, 10);
             return View(values);
 
-            
-       
-
-           
-        } 
+        }
 
         [HttpGet]
         public IActionResult ProductsAddByCompany()
@@ -97,26 +93,27 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
                     p.ProductThumbnailImage.CopyTo(streamThumbnail);
                     w.ProductThumbnailImage = newImageNameThumbnail;
                 }
-                if (w.ProductImage !=null && w.ProductThumbnailImage!=null)
+                if (w.ProductImage != null && w.ProductThumbnailImage != null)
                 {
 
-               
-                if (w.ProductImage.Contains(".png") && w.ProductThumbnailImage.Contains(".png"))
-                {
-                    mpm.TAdd(w);
-                    TempData["AletrMessage"] = "Ekleme İşlemi Başarılı...!";
-                    return RedirectToAction("ProductsListByCompany", "Company");
+
+                    if (w.ProductImage.Contains(".png") && w.ProductThumbnailImage.Contains(".png"))
+                    {
+                        mpm.TAdd(w);
+                        TempData["AletrMessage"] = "Ekleme İşlemi Başarılı...!";
+                        return RedirectToAction("ProductsListByCompany", "Company");
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+
+                        ViewBag.cv = CategoryValue;
+                    }
                 }
                 else
                 {
                     TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
 
-                    ViewBag.cv = CategoryValue;
-                } }
-                else
-                {
-                    TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
-           
                     ViewBag.cv = CategoryValue;
                 }
                 return View();
@@ -137,49 +134,84 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
         }
         public IActionResult DeleteProducts(int id)
         {
-            var blogvalue = mpm.GetByIDT(id);
+            var productvalue = mpm.GetByIDT(id);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", blogvalue.ProductImage);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
-            var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", blogvalue.ProductThumbnailImage);
-            if (System.IO.File.Exists(path2))
-            {
-                System.IO.File.Delete(path2);
-            }
-            mpm.TDelete(blogvalue);
-            TempData["AletrMessage"] = "Silme İşlemi Başarılı...!";
-            return RedirectToAction("ProductsListByCompany");
 
+            if (productvalue != null)
+            {
+
+
+                if (productvalue.UserID == writerID)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", productvalue.ProductImage);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", productvalue.ProductThumbnailImage);
+                    if (System.IO.File.Exists(path2))
+                    {
+                        System.IO.File.Delete(path2);
+                    }
+                    mpm.TDelete(productvalue);
+                    TempData["AletrMessage"] = "Silme İşlemi Başarılı...!";
+                    return RedirectToAction("ProductsListByCompany");
+                }
+                else
+                {
+                    TempData["AletrMessage"] = "Yetkiniz Yoktur...!";
+                    return RedirectToAction("ProductsListByCompany");
+                }
+            }
+            else
+            {
+                TempData["AletrMessage"] = "Yetkiniz Yoktur...!";
+                return RedirectToAction("ProductsListByCompany");
+            }
         }
 
         [HttpGet]
         public IActionResult EditProducts(int id)
         {
-            var blogvalue = mpm.GetByIDT(id);
+            var value = mpm.GetByIDT(id);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
+            if (value != null)
+            {
+                if (value.UserID == writerID)
+                {
 
-
-            List<SelectListItem> CategoryValue = (from x in pcm.GetListT()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.ProductCategoryName,
-                                                      Value = x.ProductCategoryID.ToString()
-                                                  }).ToList();
-            ViewBag.cv = CategoryValue;
-            AddProductImage addProductImage = new AddProductImage();
-            addProductImage.ProductID = blogvalue.ProductID;
-            addProductImage.ProductTitle = blogvalue.ProductTitle;
-            addProductImage.ProductImageString = blogvalue.ProductImage;
-            addProductImage.ProductRealiseDate = blogvalue.ProductRealiseDate;
-            addProductImage.ProductStyle = blogvalue.ProductStyle;
-            addProductImage.ProductThumbnailImageString = blogvalue.ProductThumbnailImage;
-            addProductImage.ProductShortContent = blogvalue.ProductShortContent;
-            addProductImage.ProductContent = blogvalue.ProductContent;
-            addProductImage.ProductCategoryID = blogvalue.ProductCategoryID;
-            addProductImage.ProductCompanyWebsite = blogvalue.ProductCompanyWebsite;
-            return View(addProductImage);
+                    List<SelectListItem> CategoryValue = (from x in pcm.GetListT()
+                                                          select new SelectListItem
+                                                          {
+                                                              Text = x.ProductCategoryName,
+                                                              Value = x.ProductCategoryID.ToString()
+                                                          }).ToList();
+                    ViewBag.cv = CategoryValue;
+                    AddProductImage addProductImage = new AddProductImage();
+                    addProductImage.ProductID = value.ProductID;
+                    addProductImage.ProductTitle = value.ProductTitle;
+                    addProductImage.ProductImageString = value.ProductImage;
+                    addProductImage.ProductRealiseDate = value.ProductRealiseDate;
+                    addProductImage.ProductStyle = value.ProductStyle;
+                    addProductImage.ProductThumbnailImageString = value.ProductThumbnailImage;
+                    addProductImage.ProductShortContent = value.ProductShortContent;
+                    addProductImage.ProductContent = value.ProductContent;
+                    addProductImage.ProductCategoryID = value.ProductCategoryID;
+                    addProductImage.ProductCompanyWebsite = value.ProductCompanyWebsite;
+                    return View(addProductImage);
+                }
+                else
+                {
+                    return RedirectToAction("ProductsListByCompany");
+                }
+            }
+            else
+            {
+                return RedirectToAction("ProductsListByCompany");
+            }
         }
         [HttpPost]
         public IActionResult EditProducts(AddProductImage p)

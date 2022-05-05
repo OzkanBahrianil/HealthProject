@@ -24,10 +24,19 @@ namespace HealthProject.Areas.Admin.Controllers
         BlogManeger bm = new BlogManeger(new EfBlogDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
         CommentManeger cmt = new CommentManeger(new EfCommentDal());
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string SearchString, int page = 1)
         {
-            var values = bm.GetBlogListWithCategoryWithCommentsAdmin().OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = bm.Search(SearchString).OrderByDescending(x => x.BlogStatus).ToPagedList(page, 9);
+                return View(valuesSearch);
+            }
+            else
+            {
+                var values = bm.GetBlogListWithCategoryWithCommentsAdmin().OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
+                return View(values);
+            }
           
         }
         public IActionResult AdminReadAll(int id)

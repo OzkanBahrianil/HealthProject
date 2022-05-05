@@ -9,15 +9,60 @@
 
 
 
-
+<ul class="navbar-nav float-start me-auto">
+    <li class="nav-item search-box">
+        <a class="nav-link waves-effect waves-dark"
+           href="javascript:void(0)">
+            <i class="mdi mdi-magnify fs-4"></i>
+        </a>
+        <a>Ara</a>
+        <form method="get" class="app-search position-absolute">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search &amp; enter" value="@ViewData["CurrentFilterSearch"]" name="SearchString" />
+            <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+        </form>
+    </li>
+</ul>
 <br />
-<h1>Makale Kategori</h1>
+<br />
+<br />
+<h1>Makale Kategori <small>>@ViewData["CurrentFilterSearch"]</small></h1>
 <br />
 <table class="table table-bordered">
     <tr>
         <th>#</th>
-        <th>Kategori Adı</th>
-        <th>Kategori Açıklaması</th>
+        <th>
+            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Adı</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Name")
+                {
+                    <i class="fas fa-arrow-up"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "NameDesc")
+                {
+                    <i class="fas fa-arrow-down"></i>
+                }
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="ArticleCategori" asp-route-sortOrder="@ViewData["AboutSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Kategori Açıklaması</a>
+
+            @if (ViewData["CurrentSort"] != null)
+            {
+                @if (ViewData["CurrentSort"].ToString() == "About")
+                {
+                    <i class="fas fa-arrow-up"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "AboutDesc")
+                {
+                    <i class="fas fa-arrow-down"></i>
+                }
+            }
+        </th>
         <th>Durum</th>
         <th>Pasif Yap</th>
         <th>Aktif Yap</th>
@@ -48,5 +93,5 @@
 <a href="/Admin/Category/AddArticleCategory/" class="btn btn-primary">Yeni Kategori</a>
 <br />
 <br />
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page , SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
 

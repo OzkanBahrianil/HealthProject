@@ -27,14 +27,7 @@ namespace HealthProject.Controllers
             _userManeger = userManeger;
         }
 
-        public IActionResult Index()
-        {
-            var usermail = User.Identity.Name;
-            ViewBag.v = usermail;
-            var writerName = wm.TGetByFilter(x => x.Email == usermail);
-            ViewBag.WriterName = writerName.NameSurname;
-            return View();
-        }
+
 
 
 
@@ -68,7 +61,6 @@ namespace HealthProject.Controllers
             var w = await _userManeger.FindByEmailAsync(usermail);
             w.About = p.WriterAbout;
             w.VideoUrl = p.WriterVideoUrl;
-
             w.NameSurname = p.WriterName;
             WriterValidation writerValidation = new WriterValidation();
             ValidationResult result = writerValidation.Validate(w);
@@ -110,7 +102,8 @@ namespace HealthProject.Controllers
                 if (w.Image.Contains(".png"))
                 {
                     w.Status = false;
-                    var resultasyc = await _userManeger.UpdateAsync(w);
+                    await _userManeger.UpdateAsync(w);
+                    await _userManeger.UpdateSecurityStampAsync(w);
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
@@ -140,9 +133,6 @@ namespace HealthProject.Controllers
 
             var usermail = User.Identity.Name;
             var p = await _userManeger.FindByEmailAsync(usermail);
-
-
-
             p.Email = profileImage.WriterMail;
             p.UserName = profileImage.WriterMail;
        
@@ -152,7 +142,8 @@ namespace HealthProject.Controllers
             if (result.IsValid)
             {
 
-                var resultasyc = await _userManeger.UpdateAsync(p);
+                await _userManeger.UpdateAsync(p);
+                await _userManeger.UpdateSecurityStampAsync(p);
                 return RedirectToAction("LogOut", "Login");
             }
             else
@@ -172,15 +163,16 @@ namespace HealthProject.Controllers
             var usermail = User.Identity.Name;
             var p = await _userManeger.FindByEmailAsync(usermail);
 
-            p.PasswordHash = profileImage.WriterPassword;
+          
 
             WriterValidationPasswordChange writerValidation = new WriterValidationPasswordChange();
             ValidationResult result = writerValidation.Validate(p);
             if (result.IsValid)
-            {
+            {  p.PasswordHash = profileImage.WriterPassword;
                 p.PasswordHash = _userManeger.PasswordHasher.HashPassword(p, profileImage.WriterPassword);
 
-                var resultasyc = await _userManeger.UpdateAsync(p);
+                await _userManeger.UpdateAsync(p);
+                await _userManeger.UpdateSecurityStampAsync(p);
                 return RedirectToAction("LogOut", "Login");
             }
             else

@@ -30,14 +30,14 @@ namespace HealthProject.Areas.Admin.Controllers
             _roleManeger = roleManeger;
             _userManeger = userManeger;
         }
-    
+
 
         public IActionResult Index()
         {
             var values = _roleManeger.Roles.ToList();
             return View(values);
-        }    
-        public async Task<IActionResult> AddRole(RoleViewModel p )
+        }
+        public async Task<IActionResult> AddRole(RoleViewModel p)
         {
             if (ModelState.IsValid)
             {
@@ -76,8 +76,9 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult UpdateRole(int Id)
         {
-            var values = _roleManeger.Roles.FirstOrDefault(x=>x.Id == Id);
-            RoleUpdateViewModel model = new RoleUpdateViewModel{
+            var values = _roleManeger.Roles.FirstOrDefault(x => x.Id == Id);
+            RoleUpdateViewModel model = new RoleUpdateViewModel
+            {
                 Id = values.Id,
                 Name = values.Name
             };
@@ -96,27 +97,83 @@ namespace HealthProject.Areas.Admin.Controllers
             else
             {
                 TempData["AlertMessage"] = "Hatalı Giriş Yaptınız";
-              
+
             }
             return View(values);
         }
 
-        public IActionResult UserRoleList(int page = 1)
+        public IActionResult UserRoleList(string sortOrder, string SearchString, int page = 1)
         {
-            var values = wm.GetListT().ToPagedList(page, 10);
-            return View(values);
+
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "NameDesc" : "Name";
+            ViewData["MailSortParam"] = sortOrder == "Mail" ? "MailDesc" : "Mail";
+
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+
+                var values = wm.Search(SearchString);
+                switch (sortOrder)
+                {
+                    case "Mail":
+                        values = values.OrderBy(x => x.Email).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Email).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.NameSurname).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.NameSurname).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.Id).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 9));
+            }
+            else
+            {
+                var values = wm.GetListT();
+                switch (sortOrder)
+                {
+                    case "Mail":
+                        values = values.OrderBy(x => x.Email).ToList();
+                        break;
+                    case "MailDesc":
+                        values = values.OrderByDescending(x => x.Email).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.NameSurname).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.NameSurname).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.Id).ToList();
+                        break;
+
+
+                }
+                return View(values.ToPagedList(page, 9));
+            }
+
+
         }
-      
- 
+
+
 
         [HttpPost]
         public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> model)
         {
-            
-            
+
+
             foreach (var item in model)
             {
-                var userId = item.UserId ;
+                var userId = item.UserId;
                 var user = _userManeger.Users.FirstOrDefault(x => x.Id == userId);
                 if (item.Exists)
                 {

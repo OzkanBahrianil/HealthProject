@@ -27,6 +27,16 @@ namespace BusinessLayer.Concrete
         {
             return _ArticlesDal.GetListWithArticlesCategory();
         }
+        public List<Articles> Search(string key)
+        {
+            key = key.ToLower();
+            return _ArticlesDal.GetListWithArticlesCategory().Where(p => p.ArticlesTitle.ToLower().Contains(key) 
+            || p.ArticlesShortContent.ToLower().Contains(key) 
+            || p.ArticlesStatus.ToString().ToLower().Contains(key) 
+            || p.User.UserName.ToLower().Contains(key) 
+            || p.ArticlesType.ToLower().Contains(key) 
+            || p.ArticlesWritersName.ToLower().Contains(key)).ToList();
+        }
         public Articles GetByIDT(int id)
         {
             return _ArticlesDal.Get(x => x.ArticlesID == id);

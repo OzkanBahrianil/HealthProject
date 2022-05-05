@@ -223,22 +223,40 @@ namespace HealthProject.Controllers
         public IActionResult EditBlog(int id)
         {
             var blogvalue = bm.GetByIDT(id);
-            List<SelectListItem> CategoryValue = (from x in cm.GetListT()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.CategoryName,
-                                                      Value = x.CategoryID.ToString()
-                                                  }).ToList();
-            ViewBag.cv = CategoryValue;
-            AddBlogImage addBlogImage = new AddBlogImage();
-            addBlogImage.BlogID = blogvalue.BlogID;
-            addBlogImage.BlogTitle = blogvalue.BlogTitle;
-            addBlogImage.BlogImageString = blogvalue.BlogImage;
-            addBlogImage.BlogThumbnailImageString = blogvalue.BlogThumbnailImage;
-            addBlogImage.BlogShortContent = blogvalue.BlogShortContent;
-            addBlogImage.BlogContent = blogvalue.BlogContent;
-            addBlogImage.CategoryID = blogvalue.CategoryID;
-            return View(addBlogImage);
+            var usermail = User.Identity.Name;
+            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
+            if (blogvalue != null)
+            {
+                if (blogvalue.UserID == writerID)
+                {
+                    List<SelectListItem> CategoryValue = (from x in cm.GetListT()
+                                                          select new SelectListItem
+                                                          {
+                                                              Text = x.CategoryName,
+                                                              Value = x.CategoryID.ToString()
+                                                          }).ToList();
+                    ViewBag.cv = CategoryValue;
+                    AddBlogImage addBlogImage = new AddBlogImage();
+                    addBlogImage.BlogID = blogvalue.BlogID;
+                    addBlogImage.BlogTitle = blogvalue.BlogTitle;
+                    addBlogImage.BlogImageString = blogvalue.BlogImage;
+                    addBlogImage.BlogThumbnailImageString = blogvalue.BlogThumbnailImage;
+                    addBlogImage.BlogShortContent = blogvalue.BlogShortContent;
+                    addBlogImage.BlogContent = blogvalue.BlogContent;
+                    addBlogImage.CategoryID = blogvalue.CategoryID;
+                    return View(addBlogImage);
+
+                }
+                else
+                {
+                    return RedirectToAction("BlogListByWriter","Blog");
+                }
+            }
+            else
+            {
+                return RedirectToAction("BlogListByWriter", "Blog");
+            }
+
         }
         [HttpPost, Authorize(Roles = "Writer")]
         public IActionResult EditBlog(AddBlogImage p)
@@ -314,7 +332,7 @@ namespace HealthProject.Controllers
                     }
                     else
                     {
-
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
                         ViewBag.cv = CategoryValue;
                         return View();
                     }

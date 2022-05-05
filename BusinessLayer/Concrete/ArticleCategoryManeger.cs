@@ -36,6 +36,15 @@ namespace BusinessLayer.Concrete
             return _ArticleCategoryDal.List();
         }
 
+        public List<ArticleCategory> Search(string key)
+        {
+            key = key.ToLower();
+            return _ArticleCategoryDal.List().Where(p => p.ArticleCategoryName.ToLower().Contains(key)
+            || p.ArticleCategoryDescription.ToLower().Contains(key)
+            || p.ArticleCategoryStatus.ToString().ToLower().Contains(key)).ToList();
+
+        }
+
         public void TAdd(ArticleCategory t)
         {
             _ArticleCategoryDal.Insert(t);

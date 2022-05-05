@@ -44,7 +44,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<BlogRayting> BlogRaytings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
-
+        public DbSet<WriterApplication> WriterApplications { get; set; }
         public DbSet<MedicalProduct> MedicalProducts { get; set; }
         public DbSet<CommentProduct> CommentProduct { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }

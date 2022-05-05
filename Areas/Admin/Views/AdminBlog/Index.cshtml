@@ -17,7 +17,24 @@
 
 }
 <br />
-<h3 style="Text-align:center;">Bloglar</h3>
+<h3 style="Text-align:center;">Bloglar  <small> >@ViewData["CurrentFilter"]</small></h3>
+<br />
+<ul class="navbar-nav float-start me-auto">
+    <li class="nav-item search-box">
+        <a class="nav-link waves-effect waves-dark"
+           href="javascript:void(0)">
+            <i class="mdi mdi-magnify fs-4"></i>
+        </a>
+        <a>Ara</a>
+        <form method="get" class="app-search position-absolute">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search &amp; enter" value="@ViewData["CurrentFilter"]" name="SearchString" />
+            <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+        </form>
+    </li>
+</ul>
+<br />
 <br />
 <br />
 <section class="main-content-w3layouts-agileits">
@@ -82,7 +99,7 @@
             </div>
             <br />
 
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, SearchString = ViewData["CurrentFilter"] }))
 
 
 

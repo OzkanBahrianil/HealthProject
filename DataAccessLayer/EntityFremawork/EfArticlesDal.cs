@@ -18,7 +18,7 @@ namespace DataAccessLayer.EntityFremawork
         {
             using (var c = new Context())
             {
-                return c.Articles.Include(x => x.ArticleCategory).ToList();
+                return c.Articles.Include(x => x.ArticleCategory).Include(y=>y.User).ToList();
             }
         }
         public List<Articles> GetListWithCategoryByWriter(int id)

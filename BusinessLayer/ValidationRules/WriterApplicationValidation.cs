@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.ValidationRules
 {
-   public class ContactValidation : AbstractValidator<Contact>
+  public  class WriterApplicationValidation : AbstractValidator<WriterApplication>
     {
-        public ContactValidation()
+        public WriterApplicationValidation()
         {
-            
+
         }
     }
 }

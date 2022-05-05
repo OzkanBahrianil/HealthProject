@@ -20,9 +20,8 @@ namespace HealthProject.Controllers
         public IActionResult Index()
         {
            
-            Context c = new Context();
-            var username = User.Identity.Name;
-            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            Context c = new Context();  
+            var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
             ViewBag.v1 = c.Blogs.Count().ToString();
             ViewBag.v2 = c.Blogs.Where(x => x.UserID == writerID).Count().ToString();

@@ -23,11 +23,24 @@ namespace HealthProject.Areas.Admin.Controllers
         ArticlesManeger atm = new ArticlesManeger(new EfArticlesDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
         ArticleCategoryManeger acm = new ArticleCategoryManeger(new EfArticleCategoryDal());
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string SearchString, int page = 1)
         {
-            var values = atm.GetArticlesListWithArticlesCategoryAdmin().OrderByDescending(x => x.ArticlesStatus).ToPagedList(page, 9);
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = atm.Search(SearchString).OrderByDescending(x => x.ArticlesStatus).ToPagedList(page, 9);
+                return View(valuesSearch);
+            }
+            else
+            {
+                var values = atm.GetArticlesListWithArticlesCategoryAdmin().OrderByDescending(x => x.ArticlesStatus).ToPagedList(page, 9);
+                return View(values);
+            }
+
+
+
         }
+
         public IActionResult ArticlesReadAll(int id)
         {
 

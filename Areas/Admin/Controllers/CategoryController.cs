@@ -20,10 +20,61 @@ namespace HealthProject.Areas.Admin.Controllers
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
         ProductCategoryManeger pcm = new ProductCategoryManeger(new EfProductCategoryDal());
         ArticleCategoryManeger acm = new ArticleCategoryManeger(new EfArticleCategoryDal());
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string sortOrder, string SearchString, int page = 1)
         {
-            var values = cm.GetListTAdmin().ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "NameDesc" : "Name";
+            ViewData["AboutSortParam"] = sortOrder == "About" ? "AboutDesc" : "About";
+
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = cm.Search(SearchString);
+                switch (sortOrder)
+                {
+                    case "About":
+                        valuesSearch = valuesSearch.OrderBy(x => x.CategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(x => x.CategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        valuesSearch = valuesSearch.OrderBy(s => s.CategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.CategoryName).ToList();
+                        break;
+                    default:
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.CategoryID).ToList();
+                        break;
+                }
+                return View(valuesSearch.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = cm.GetListTAdmin();
+                switch (sortOrder)
+                {
+                    case "About":
+                        values = values.OrderBy(x => x.CategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        values = values.OrderByDescending(x => x.CategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.CategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.CategoryName).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.CategoryID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+
         }
         [HttpGet]
         public IActionResult AddCategory()
@@ -100,10 +151,61 @@ namespace HealthProject.Areas.Admin.Controllers
 
 
 
-        public IActionResult MedicalCategori(int page = 1)
+        public IActionResult MedicalCategori(string sortOrder, string SearchString, int page = 1)
         {
-            var values = pcm.GetListTAdmin().ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "NameDesc" : "Name";
+            ViewData["AboutSortParam"] = sortOrder == "About" ? "AboutDesc" : "About";
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = pcm.Search(SearchString);
+                switch (sortOrder)
+                {
+                    case "About":
+                        valuesSearch = valuesSearch.OrderBy(x => x.ProductCategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(x => x.ProductCategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        valuesSearch = valuesSearch.OrderBy(s => s.ProductCategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.ProductCategoryName).ToList();
+                        break;
+                    default:
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.ProductCategoryID).ToList();
+                        break;
+                }
+                return View(valuesSearch.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = pcm.GetListTAdmin();
+                switch (sortOrder)
+                {
+                    case "About":
+                        values = values.OrderBy(x => x.ProductCategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        values = values.OrderByDescending(x => x.ProductCategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.ProductCategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.ProductCategoryName).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ProductCategoryID).ToList();
+                        break;
+                }
+
+                return View(values.ToPagedList(page, 10));
+            }
+
+
         }
         [HttpGet]
         public IActionResult AddMedicalCategory()
@@ -179,11 +281,61 @@ namespace HealthProject.Areas.Admin.Controllers
         }
 
 
-        public IActionResult ArticleCategori(int page = 1)
+        public IActionResult ArticleCategori(string sortOrder, string SearchString, int page = 1)
         {
-            var values = acm.GetListTAdmin().ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = sortOrder == "Name" ? "NameDesc" : "Name";
+            ViewData["AboutSortParam"] = sortOrder == "About" ? "AboutDesc" : "About";
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuesSearch = acm.Search(SearchString);
+                switch (sortOrder)
+                {
+                    case "About":
+                        valuesSearch = valuesSearch.OrderBy(x => x.ArticleCategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(x => x.ArticleCategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        valuesSearch = valuesSearch.OrderBy(s => s.ArticleCategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.ArticleCategoryName).ToList();
+                        break;
+                    default:
+                        valuesSearch = valuesSearch.OrderByDescending(s => s.ArticleCategoryID).ToList();
+                        break;
+                }
+                return View(valuesSearch.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = acm.GetListTAdmin();
+                switch (sortOrder)
+                {
+                    case "About":
+                        values = values.OrderBy(x => x.ArticleCategoryDescription).ToList();
+                        break;
+                    case "AboutDesc":
+                        values = values.OrderByDescending(x => x.ArticleCategoryDescription).ToList();
+                        break;
+                    case "Name":
+                        values = values.OrderBy(s => s.ArticleCategoryName).ToList();
+                        break;
+                    case "NameDesc":
+                        values = values.OrderByDescending(s => s.ArticleCategoryName).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ArticleCategoryID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
         }
+
+
         [HttpGet]
         public IActionResult AddArticleCategory()
         {

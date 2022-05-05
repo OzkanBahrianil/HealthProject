@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,11 +26,25 @@ namespace HealthProject.Controllers
         [HttpPost]
         public IActionResult Index(Contact p)
         {
-            p.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            p.ContactStatus = true;
-            cm.TAdd(p);
-            TempData["AlertMessage"] = "Mesajınız Başarı ile Gönderilmiştir...!";
-            return RedirectToAction("Index", "Contact");
+            ContactValidation cv = new ContactValidation();
+            ValidationResult result = cv.Validate(p);
+            if (result.IsValid)
+            {
+                p.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+                p.ContactStatus = true;
+                cm.TAdd(p);
+                TempData["AlertMessage"] = "Mesajınız Başarı ile Gönderilmiştir...!";
+                return View();
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    TempData["AlertMessageFalse"] = item.ErrorMessage;
+
+                }
+                return View();
+            }
 
         }
     }

@@ -16,10 +16,21 @@ namespace HealthProject.Areas.Admin.Controllers
     {
         CommentManeger cm = new CommentManeger(new EfCommentDal());
         CommentProductManeger cpm = new CommentProductManeger(new EfCommentProductDal());
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string SearchString, int page = 1)
         {
-            var values = cm.GetListTAdmin().Where(y=>y.CommentStatus==false).OrderByDescending(x => x.CommentDate).ToList().ToPagedList(page, 20);
-            return View(values);
+            ViewData["CurrentFilter"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = cm.SearchAdmin(SearchString).Where(y => y.CommentStatus == false).OrderByDescending(x => x.CommentDate).ToList().ToPagedList(page, 20);
+                return View(values);
+            }
+            else
+            {
+                var values = cm.GetListTAdmin().Where(y => y.CommentStatus == false).OrderByDescending(x => x.CommentDate).ToList().ToPagedList(page, 20);
+                return View(values);
+            }
+
+
         }
         [HttpGet]
         public IActionResult DeleteComment(int id)
@@ -27,7 +38,7 @@ namespace HealthProject.Areas.Admin.Controllers
             var values = cm.GetByIDT(id);
             cm.TDelete(values);
             return RedirectToAction("Index");
-        }   
+        }
         [HttpGet]
         public IActionResult ApproveComment(int id)
         {
@@ -43,7 +54,7 @@ namespace HealthProject.Areas.Admin.Controllers
             cm.TDelete(values);
             return Json(values);
         }
-      
+
         public IActionResult ApproveCommentBlog(int CommentId)
         {
             var values = cm.GetListTAdmin().FirstOrDefault(x => x.CommentID == CommentId);

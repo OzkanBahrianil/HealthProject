@@ -81,6 +81,13 @@
                     </div>
                     <br />
                 }
+                @if (TempData["AlertMessageFalse"] != null)
+                {
+                    <div class="alert alert-warning">
+                        <strong>Başarısız!</strong>&nbsp;&nbsp;&nbsp; @TempData["AlertMessageFalse"]
+                    </div>
+                    <br />
+                }
                 <form action="#" method="post">
                     <div class="row contact_left_grid">
 

@@ -31,7 +31,14 @@ namespace BusinessLayer.Concrete
         {
             return _BlogDal.GetListWithCategoryWithComments();
         }
-
+        public List<Blog> Search(string key)
+        {
+            key = key.ToLower();
+            return _BlogDal.GetListWithCategoryWithComments().Where(p => p.BlogTitle.ToLower().Contains(key)
+            || p.BlogShortContent.ToLower().Contains(key)
+            || p.BlogStatus.ToString().ToLower().Contains(key)
+            || p.User.UserName.ToLower().Contains(key)).ToList();
+        }
         public Blog GetByIDT(int id)
         {
             return _BlogDal.Get(x => x.BlogID == id);

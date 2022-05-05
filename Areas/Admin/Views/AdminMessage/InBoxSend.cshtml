@@ -36,20 +36,35 @@
 
 
                     <h2>
-                        Giden Kutusu (@ViewBag.InboxRS)
+                        Giden Kutusu (@ViewBag.InboxRS)<small>>@ViewData["CurrentFilter"]</small>
                     </h2>
                     <div class="mail-tools tooltip-demo m-t-md">
                         <div class="btn-group float-right fa">
                             <br />
-                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBoxSend", new { page }))
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBoxSend", new { page, SearchString = ViewData["CurrentFilter"] }))
 
 
 
                         </div>
-                        <button style="float:right;" class="btn btn-white btn-sm " title="Refresh inbox" onclick="location.reload();"><i class="mdi mdi-account-convert"></i> Refresh</button>
+                        <a style="float:right;" class="btn btn-white btn-sm " title="Refresh inbox" asp-action="InboxSend"><i class="mdi mdi-account-convert"></i> Refresh</a>
 
 
                     </div>
+                    <ul class="navbar-nav float-start me-auto">
+                        <li class="nav-item search-box">
+                            <a class="nav-link waves-effect waves-dark"
+                               href="javascript:void(0)">
+                                <i class="mdi mdi-magnify fs-4"></i>
+                            </a>
+                            <a>Ara</a>
+                            <form method="get" class="app-search position-absolute">
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Search &amp; enter" value="@ViewData["CurrentFilter"]" name="SearchString" />
+                                <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
                 <div class="mail-box">
 

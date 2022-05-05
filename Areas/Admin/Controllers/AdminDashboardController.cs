@@ -28,6 +28,8 @@ namespace HealthProject.Areas.Admin.Controllers
 
         ContactManeger cm = new ContactManeger(new EfContactDal());
 
+        WriterApplicationManeger wam = new WriterApplicationManeger(new EfWriterApplicationDal());
+
 
         CategoryManeger ctm = new CategoryManeger(new EfCategoryDal());
         ArticleCategoryManeger actm = new ArticleCategoryManeger(new EfArticleCategoryDal());
@@ -67,6 +69,8 @@ namespace HealthProject.Areas.Admin.Controllers
             ViewBag.BlogCommentFalse = cmt.GetListTAdmin().Where(x => x.CommentStatus == false).Count();
 
             ViewBag.SubscribeActive = nwm.GetListT().Where(x => x.MailStatus == true).Count();
+
+            ViewBag.WriterApplication = wam.GetListT().Where(x => x.ApplicationStatus == true).Count();
 
             ViewBag.AllActiveCategoryBlog = ctm.GetListT().Count();
             ViewBag.AllActiveCategoryArticle = actm.GetListT().Count();

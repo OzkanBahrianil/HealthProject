@@ -53,7 +53,7 @@
                         </div>
                     }
                 </div>
-
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("IndexProduct", new { page }))
             </div>
 
         </div>

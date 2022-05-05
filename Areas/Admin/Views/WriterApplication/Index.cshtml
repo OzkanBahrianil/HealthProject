@@ -1,0 +1,71 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.WriterApplication>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (TempData["AletrMessageApp"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessageApp"]
+    </div>
+    <br />
+}
+
+
+<body>
+    <div class="@*page-wrapper*@">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Yazar Başvuruları</h4>
+                    </div>
+                    @foreach (var item in Model)
+                    {
+
+
+                        <div class="comment-widgets scrollable">
+                            <div class="d-flex flex-row comment-row mt-0">
+                                <div class="p-2">
+                                    <img src="~/WriterImageFiles/@item.User.Image"
+                                         alt="user"
+                                         width="50"
+                                         class="rounded-circle" />
+                                </div>
+                                <div class="comment-text w-100">
+                                    <h6 class="font-medium">@item.User.NameSurname  </h6><h6 class="font-medium" style="text-align:left;">Email: @item.User.Email</h6>
+                                    <span class="mb-3 d-block">
+                                        <small>Üniversite:@item.ApplicationUniversity &nbsp;&nbsp;&nbsp;&nbsp;Bölüm: @item.ApplicationUniversityDepartment  &nbsp;&nbsp;&nbsp;&nbsp; <a style="color:dimgray;" href="~/WriterApplicationPdf/@item.ApplicationCV">Pdf:<i class="mdi mdi-file-pdf-box"></i></a></small>
+                                        <br />
+                                        Ön Yazı: @item.ApplicationCoverLetter
+                                    </span>
+                                    <div class="comment-footer">
+                                        <span class="text-muted float-end"> @(((DateTime)item.ApplicationDate).ToString("dd-MMM-yyyy"))</span>
+                                        <a type="button" href="/Admin/WriterApplication/WriterApplicationRefuse/@item.ApplicationID/"
+                                           class="btn btn-cyan btn-sm text-white">
+                                            Kabul Etme ve pdf'i Sil
+                                        </a>
+                                        <a type="button" href="/Admin/WriterApplication/GiveWriterTag/@item.UserID/"
+                                           class="btn btn-success btn-sm text-white">
+                                            Kabul Et Ve Yetki Ver (Kayıtlı CV ve veriler silinir)
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    }
+                </div>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+            </div>
+
+        </div>
+    </div>
+
+
+</body>

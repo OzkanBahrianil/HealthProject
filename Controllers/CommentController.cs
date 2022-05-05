@@ -17,10 +17,7 @@ namespace HealthProject.Controllers
     {
         CommentManeger cm = new CommentManeger(new EfCommentDal());
    
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         [HttpGet]
         public PartialViewResult PartialAddComment()
         {

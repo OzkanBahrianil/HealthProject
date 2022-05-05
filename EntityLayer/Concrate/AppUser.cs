@@ -15,6 +15,7 @@ namespace EntityLayer.Concrate
         public string VideoUrl { get; set; }
         public bool Status { get; set; }
         public List<Blog> Blogs { get; set; }
+        public List<WriterApplication> WriterApplications { get; set; }
         public List<MedicalProduct> MedicalProduct { get; set; }
         public List<Articles> Articles { get; set; }
 

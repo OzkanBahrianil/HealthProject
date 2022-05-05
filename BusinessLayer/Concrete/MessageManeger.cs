@@ -34,13 +34,30 @@ namespace BusinessLayer.Concrete
             return _MessageDal.GetListWithMessageByWriter(id);
 
 
-        }     public List<Message> GetInboxLinstByWriterSend(int id)
+        }
+        public List<Message> SearchInbox(int id, string key)
+        {
+            key = key.ToLower();
+            return _MessageDal.GetListWithMessageByWriter(id).Where(p => p.Subject.ToLower().Contains(key)
+            || p.SenderUser.NameSurname.ToLower().Contains(key)
+            || p.MessageStatus.ToString().ToLower().Contains(key)
+            || p.MessageDetails.ToLower().Contains(key)).ToList();
+
+        }
+        public List<Message> GetInboxLinstByWriterSend(int id)
         {
             return _MessageDal.GetListWithMessageByWriterSend(id);
 
 
         }
-
+        public List<Message> SearchSend(int id, string key)
+        {
+            key = key.ToLower();
+            return _MessageDal.GetListWithMessageByWriterSend(id).Where(p => p.Subject.ToLower().Contains(key)
+            || p.SenderUser.NameSurname.ToLower().Contains(key)
+            || p.MessageStatus.ToString().ToLower().Contains(key)
+            || p.MessageDetails.ToLower().Contains(key)).ToList();
+        }
         public List<Message> GetListT()
         {
             return _MessageDal.List();

@@ -28,7 +28,14 @@ namespace BusinessLayer.Concrete
         {
             return _WriterDal.List();
         }
-
+        public List<AppUser> Search(string key)
+        {
+            key = key.ToLower();
+            return _WriterDal.List().Where(p => p.NameSurname.ToLower().Contains(key)
+            || p.Email.ToLower().Contains(key)
+            || p.Id.ToString().ToLower().Contains(key)).ToList();
+          
+        }
         public List<AppUser> GetWriterByID(int id)
         {
             return _WriterDal.List().Where(p => p.Id == id).ToList();

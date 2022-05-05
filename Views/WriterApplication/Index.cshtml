@@ -1,0 +1,58 @@
+﻿@using EntityLayer.Concrate
+@model List<WriterApplication>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+
+
+<h3 class="title">Başvurularınız</h3>
+@if (TempData["AletrMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Başarılı!</strong>&nbsp;&nbsp;&nbsp; @TempData["AletrMessage"]
+    </div>
+    <br />
+}
+<div class="alert alert-info">
+  &nbsp;Başvuru Kabul Edildiğinde veya Reddedildiğinde Bütün Verileriniz (CV) Otomatik Olarak Silinecektir. 
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Başvuru Tarihi</th>
+        <th>Başvuru Durumu</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        @if (item.ApplicationStatus)
+        {
+            <tr class="badge-secondary">
+                <td><a href="~/WriterApplicationPdf/@item.ApplicationCV" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
+                <td>@(((DateTime)item.ApplicationDate).ToString("dd-MMM-yyyy"))</td>
+                <td>Kontrol Ediliyor</td>
+            </tr>
+        }
+        else
+        {
+            <tr class="badge-danger">
+                <td><a href="#" class="mr-2" style="color:black;">PDF:<i class="mdi mdi-file-pdf-box"></i></a></td>
+                <td>@(((DateTime)item.ApplicationDate).ToString("dd-MMM-yyyy"))</td>
+                <td>Kabul Edilmedi</td>
+            </tr>
+        }
+    }
+</table>
+
+
+@if (ViewBag.count < 3)
+{
+    <a href="/WriterApplication/WriterApplicationSend/" class="btn btn-primary">Yeni Başvuru</a>
+}
+else
+{
+    <p>Daha Fazla Başvuru Yapamazsınız</p>
+}
+
