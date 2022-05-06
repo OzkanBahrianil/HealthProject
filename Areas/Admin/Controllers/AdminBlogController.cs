@@ -37,9 +37,9 @@ namespace HealthProject.Areas.Admin.Controllers
                 var values = bm.GetBlogListWithCategoryWithCommentsAdmin().OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
                 return View(values);
             }
-          
+
         }
-        public IActionResult AdminReadAll(int id, int page= 1)
+        public IActionResult AdminReadAll(int id, int page = 1)
         {
             ViewBag.page = page;
             ViewBag.CommentCount = cmt.GetCommentListByIdBlogAdmin(id).Count();
@@ -70,17 +70,17 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DisableBlog(int id)
         {
-          
+
             var values = bm.GetByIDT(id);
             values.BlogStatus = false;
             bm.TUpdate(values);
-            TempData["AletrMessage"] = "Deactive İşlemi Başarılı...!"+ id;
+            TempData["AletrMessage"] = "Deactive İşlemi Başarılı...!" + id;
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult EnableBlog(int id)
         {
-          
+
             var values = bm.GetByIDT(id);
             values.BlogStatus = true;
             bm.TUpdate(values);
@@ -115,16 +115,12 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult EditBlog(AddBlogImage p)
         {
-            Blog w = new Blog();
-        
-           
-            w.BlogID = p.BlogID;
+            var w = bm.GetByIDT(p.BlogID);
             w.BlogShortContent = p.BlogShortContent;
             w.BlogContent = p.BlogContent;
             w.BlogTitle = p.BlogTitle;
             w.CategoryID = p.CategoryID;
             w.BlogStatus = true;
-            w.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             w.UserID = p.WriterID;
             BlogValidation bv = new BlogValidation();
             ValidationResult result = bv.Validate(w);
@@ -135,14 +131,15 @@ namespace HealthProject.Areas.Admin.Controllers
                                                       Text = x.CategoryName,
                                                       Value = x.CategoryID.ToString()
                                                   }).ToList();
-
+            ViewBag.cv = CategoryValue;
             if (result.IsValid)
             {
                 if (p.BlogImage != null)
                 {
-                    if (p.BlogImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.BlogImage.FileName);
+                    if (extension == ".png")
                     {
-                        var extension = Path.GetExtension(p.BlogImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -170,11 +167,12 @@ namespace HealthProject.Areas.Admin.Controllers
                 }
                 if (p.BlogThumbnailImage != null)
                 {
-                    if (p.BlogThumbnailImage.FileName.Contains(".png"))
+                    var extensionThumbnail = Path.GetExtension(p.BlogThumbnailImage.FileName);
+                    if (extensionThumbnail == ".png")
                     {
 
 
-                        var extensionThumbnail = Path.GetExtension(p.BlogThumbnailImage.FileName);
+
                         var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
                         var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageNameThumbnail);
                         var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);

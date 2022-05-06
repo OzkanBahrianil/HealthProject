@@ -60,7 +60,7 @@
                             <a href="@item.ProductCompanyWebsite" class="btn btn-primary read-m">Ürün Web Sitesi</a>
                         }
                     </article>
-                    @await Component.InvokeAsync("CommentListByProduct", new { id = ViewBag.i })
+                    @await Component.InvokeAsync("CommentListByProduct", new { id = ViewBag.i, page = ViewBag.page })
 
                     @await Html.PartialAsync("~/Areas/MedicalProducts/Views/CommentProduct/PartialAddCommentProduct.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddCommentProduct", ViewBag.i } })
 

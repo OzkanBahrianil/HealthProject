@@ -88,7 +88,7 @@
             </aside>
 
 
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("ProductIndex", new { page }))
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Search", new { page, Search = ViewBag.Search }))
 
             }
         </div>

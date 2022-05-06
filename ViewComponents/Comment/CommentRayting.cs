@@ -17,10 +17,19 @@ namespace HealthProject.ViewComponents.Comment
             var rayting = brm.GetListT().Where(x => x.BlogID == id).FirstOrDefault();
             if (rayting != null)
             {
-                Decimal raytingstar = (Decimal)rayting.BlogTotalScore / (Decimal)rayting.BlogRaytingCount;
+                if (rayting.BlogRaytingCount == 0)
+                {
+                    ViewBag.raytingstar = 0;
+                }
+                else
+                {
+                    Decimal raytingstar = (Decimal)rayting.BlogTotalScore / (Decimal)rayting.BlogRaytingCount;
 
-                raytingstar = Decimal.Round(raytingstar, 2);
-                ViewBag.raytingstar = raytingstar;
+                    raytingstar = Decimal.Round(raytingstar, 2);
+                    ViewBag.raytingstar = raytingstar;
+                }
+
+
 
             }
             else

@@ -36,17 +36,28 @@
 
 
                     <h2>
-                        Gelen Kutusu (@ViewBag.InboxR)
+                        Gelen Kutusu (@ViewBag.InboxR) <small> >@ViewData["CurrentFilterSearch"]</small>
                     </h2>
+                    <div>
+                        <form class="d-flex align-items-center h-100" method="get">
+                            <div class="input-group">
+                                <div class="input-group-prepend bg-transparent">
+                                    <i style="color:black;" class="input-group-text border-0 mdi mdi-magnify"></i>
+                                </div>
+                                <input type="text" class="form-control bg-transparent border-0" value="@ViewData["CurrentFilterSearch"]" name="SearchString" placeholder="Ara...">
+                            </div>
+                        </form>
+                    </div>
+                    <br />
                     <div class="mail-tools tooltip-demo m-t-md">
                         <div class="btn-group float-right fa">
 
-                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBox", new { page }))
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBox", new { page, SearchString = ViewData["CurrentFilterSearch"] }))
 
 
 
                         </div>
-                        <button class="btn btn-white btn-sm" data-placement="left" title="Refresh inbox" onclick="location.reload();"><i class="fa fa-refresh"></i> Refresh</button>
+                        <a class="btn btn-white btn-sm" data-placement="left" title="Refresh inbox" asp-action="InBox"><i class="fa fa-refresh"></i> Refresh</a>
 
 
                     </div>

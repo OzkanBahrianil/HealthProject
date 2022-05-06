@@ -20,8 +20,6 @@ namespace EntityLayer.Concrate
         public string ProductImage { get; set; }
         public string ProductCompanyWebsite { get; set; }
         public bool ProductStatus { get; set; }
-
-
         public int ProductCategoryID { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public int UserID { get; set; }

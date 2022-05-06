@@ -10,8 +10,11 @@ namespace HealthProject.Controllers
     public class HomePageController : Controller
     {
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(int pageblog = 1, int pagearticle = 1, int pageproduct = 1)
         {
+            ViewBag.pageblog = pageblog;
+            ViewBag.pagearticle = pagearticle;
+            ViewBag.pageproduct = pageproduct;
             return View();
         }
     }

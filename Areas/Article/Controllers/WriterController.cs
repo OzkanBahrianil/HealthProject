@@ -37,7 +37,7 @@ namespace HealthProject.Areas.Article.Controllers
             ViewData["DateSortParam"] = sortOrder == "Date" ? "DateDesc" : "Date";
             ViewData["CategorySortParam"] = sortOrder == "Category" ? "CategoryDesc" : "Category";
             ViewData["StatusParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
-          
+
             if (!String.IsNullOrEmpty(SearchString))
             {
                 var values = atm.GetListWithCategoryByWriterbmFSearch(SearchString, WriterID);
@@ -146,20 +146,35 @@ namespace HealthProject.Areas.Article.Controllers
             w.ArticlesStatus = false;
             w.ArticlesPublishDate = p.ArticlesPublishDate;
             w.UserID = WriterID;
-
-
+            List<SelectListItem> CategoryValue = (from x in acm.GetListT()
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.ArticleCategoryName,
+                                                      Value = x.ArticleCategoryID.ToString()
+                                                  }).ToList();
+            ViewBag.cv = CategoryValue;
             ArticleValidation bv = new ArticleValidation();
             ValidationResult result = bv.Validate(w);
             if (result.IsValid)
             {
-                if (p.ArticlesPdf != null && p.ArticlesPdf.FileName.Contains(".pdf"))
+                if (p.ArticlesPdf != null)
                 {
                     var extension = Path.GetFileName(p.ArticlesPdf.FileName);
-                    var newImageName = Guid.NewGuid() + extension;
-                    var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ArticlesPdf/", newImageName);
-                    var stream = new FileStream(Location, FileMode.Create);
-                    p.ArticlesPdf.CopyTo(stream);
-                    w.ArticlesPdf = newImageName;
+                    if (extension == ".pdf")
+                    {
+
+                        var newImageName = Guid.NewGuid() + extension;
+                        var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ArticlesPdf/", newImageName);
+                        var stream = new FileStream(Location, FileMode.Create);
+                        p.ArticlesPdf.CopyTo(stream);
+                        w.ArticlesPdf = newImageName;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
+
 
                 }
 
@@ -172,13 +187,8 @@ namespace HealthProject.Areas.Article.Controllers
                 else
                 {
                     TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
-                    List<SelectListItem> CategoryValue = (from x in acm.GetListT()
-                                                          select new SelectListItem
-                                                          {
-                                                              Text = x.ArticleCategoryName,
-                                                              Value = x.ArticleCategoryID.ToString()
-                                                          }).ToList();
-                    ViewBag.cv = CategoryValue;
+
+
                 }
                 return View();
 
@@ -190,12 +200,7 @@ namespace HealthProject.Areas.Article.Controllers
                     TempData["AlertMessageAdd"] = item.ErrorMessage;
 
                 }
-                List<SelectListItem> CategoryValue = (from x in acm.GetListT()
-                                                      select new SelectListItem
-                                                      {
-                                                          Text = x.ArticleCategoryName,
-                                                          Value = x.ArticleCategoryID.ToString()
-                                                      }).ToList();
+
                 ViewBag.cv = CategoryValue;
                 return View();
             }
@@ -299,18 +304,19 @@ namespace HealthProject.Areas.Article.Controllers
                                                       Value = x.ArticleCategoryID.ToString()
                                                   }).ToList();
 
-
+            ViewBag.cv = CategoryValue;
             ArticleValidation bv = new ArticleValidation();
             ValidationResult result = bv.Validate(w);
             if (result.IsValid)
             {
                 if (p.ArticlesPdf != null)
                 {
-                    if (p.ArticlesPdf.FileName.Contains(".pdf"))
+                    var extension = Path.GetFileName(p.ArticlesPdf.FileName);
+                    if (extension == ".pdf")
                     {
 
 
-                        var extension = Path.GetFileName(p.ArticlesPdf.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ArticlesPdf/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);

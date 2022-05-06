@@ -1,5 +1,6 @@
-﻿@using EntityLayer.Concrate
-@model List<Blog>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Blog>
 
 @await Component.InvokeAsync("BlogHeaderImage")
 
@@ -58,8 +59,8 @@
                 </div>
             </div>
             <br />
+            @Html.PagedListPager((IPagedList)Model, pageblog => Url.Action("Index", new { pageblog }))
 
- 
 
 
 

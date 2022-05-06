@@ -68,11 +68,10 @@ namespace HealthProject.Controllers
             {
                 if (p.WriterImage != null)
                 {
-                    if (p.WriterImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.WriterImage.FileName);
+                    if (extension == ".png")
                     {
 
-
-                        var extension = Path.GetExtension(p.WriterImage.FileName);
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -119,7 +118,7 @@ namespace HealthProject.Controllers
                 foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                   
+
                 }
 
             }
@@ -135,7 +134,7 @@ namespace HealthProject.Controllers
             var p = await _userManeger.FindByEmailAsync(usermail);
             p.Email = profileImage.WriterMail;
             p.UserName = profileImage.WriterMail;
-       
+
 
             WriterValidationEmailChange writerValidation = new WriterValidationEmailChange();
             ValidationResult result = writerValidation.Validate(p);
@@ -163,12 +162,13 @@ namespace HealthProject.Controllers
             var usermail = User.Identity.Name;
             var p = await _userManeger.FindByEmailAsync(usermail);
 
-          
+
 
             WriterValidationPasswordChange writerValidation = new WriterValidationPasswordChange();
             ValidationResult result = writerValidation.Validate(p);
             if (result.IsValid)
-            {  p.PasswordHash = profileImage.WriterPassword;
+            {
+                p.PasswordHash = profileImage.WriterPassword;
                 p.PasswordHash = _userManeger.PasswordHasher.HashPassword(p, profileImage.WriterPassword);
 
                 await _userManeger.UpdateAsync(p);

@@ -43,18 +43,27 @@ namespace HealthProject.Areas.Admin.Controllers
             ValidationResult result = bv.Validate(w);
             if (result.IsValid)
             {
-                if (p.PresentationImage != null && p.PresentationImage.FileName.Contains(".png"))
+                if (p.PresentationImage != null)
                 {
                     var extension = Path.GetExtension(p.PresentationImage.FileName);
-                    var newImageName = Guid.NewGuid() + extension;
-                    var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PresentationImageFiles/", newImageName);
-                    var stream = new FileStream(Location, FileMode.Create);
-                    p.PresentationImage.CopyTo(stream);
-                    w.PresentationImage = newImageName;
+                    if (extension == ".png")
+                    {
+
+                        var newImageName = Guid.NewGuid() + extension;
+                        var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PresentationImageFiles/", newImageName);
+                        var stream = new FileStream(Location, FileMode.Create);
+                        p.PresentationImage.CopyTo(stream);
+                        w.PresentationImage = newImageName;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
 
                 }
 
-              
+
                 if (w.PresentationImage != null)
                 {
 
@@ -74,7 +83,7 @@ namespace HealthProject.Areas.Admin.Controllers
                 {
                     TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
 
-                 
+
                 }
                 return View();
 
@@ -141,9 +150,10 @@ namespace HealthProject.Areas.Admin.Controllers
             {
                 if (p.PresentationImage != null)
                 {
-                    if (p.PresentationImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.PresentationImage.FileName);
+                    if (extension == ".png")
                     {
-                        var extension = Path.GetExtension(p.PresentationImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/PresentationImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -167,7 +177,7 @@ namespace HealthProject.Areas.Admin.Controllers
                     w.PresentationImage = p.PresentationImageString;
 
                 }
-              
+
                 pm.TUpdate(w);
                 TempData["AletrMessage"] = "Güncelleme İşlemi Başarılı...!";
                 return RedirectToAction("Index");
@@ -181,7 +191,7 @@ namespace HealthProject.Areas.Admin.Controllers
                     TempData["AlertMessageAdd"] = item.ErrorMessage;
 
                 }
-     
+
                 return View();
             }
 

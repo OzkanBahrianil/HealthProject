@@ -135,7 +135,7 @@ namespace HealthProject.Areas.Admin.Controllers
             w.ProductRealiseDate = p.ProductRealiseDate;
             w.ProductCompanyWebsite = p.ProductCompanyWebsite;
             w.UserID = CompanyID;
-
+            ViewBag.cv = CategoryValue;
 
 
             MedicalProductValidation bv = new MedicalProductValidation();
@@ -146,11 +146,12 @@ namespace HealthProject.Areas.Admin.Controllers
             {
                 if (p.ProductImage != null)
                 {
-                    if (p.ProductImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.ProductImage.FileName);
+                    if (extension == ".png")
                     {
 
 
-                        var extension = Path.GetExtension(p.ProductImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -179,9 +180,10 @@ namespace HealthProject.Areas.Admin.Controllers
                 }
                 if (p.ProductThumbnailImage != null)
                 {
-                    if (p.ProductImage.FileName.Contains(".png"))
+                    var extensionThumbnail = Path.GetExtension(p.ProductThumbnailImage.FileName);
+                    if (extensionThumbnail == ".png")
                     {
-                        var extensionThumbnail = Path.GetExtension(p.ProductThumbnailImage.FileName);
+
                         var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
                         var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageNameThumbnail);
                         var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);

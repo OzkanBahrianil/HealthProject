@@ -151,8 +151,17 @@ namespace HealthProject.Areas.Admin.Controllers
             List<RaytingChartClass> list = new List<RaytingChartClass>();
             foreach (var item in rayting)
             {
-                Decimal raytingstar = (Decimal)item.BlogTotalScore / (Decimal)item.BlogRaytingCount;
-                raytingstar = Decimal.Round(raytingstar, 2);
+                Decimal raytingstar;
+                if (item.BlogRaytingCount == 0)
+                {
+                   raytingstar = 0;
+                }
+                else
+                {
+                    raytingstar = (Decimal)item.BlogTotalScore / (Decimal)item.BlogRaytingCount;
+                    raytingstar = Decimal.Round(raytingstar, 2);
+                }
+
 
                 list.Add(new RaytingChartClass { blogname = bm.GetByIDT(item.BlogID).BlogTitle, raytingcount = raytingstar });
             }
@@ -163,13 +172,13 @@ namespace HealthProject.Areas.Admin.Controllers
         public IActionResult GetchartBlogJSON()
         {
 
-        
-            var blog = bm.GetBlogListWithCategoryWithComments().OrderBy(x=>x.BlogCreateDate).Take(10).ToList();
+
+            var blog = bm.GetBlogListWithCategoryWithComments().OrderBy(x => x.BlogCreateDate).Take(10).ToList();
             List<ListAdminClass> list = new List<ListAdminClass>();
             foreach (var item in blog)
             {
 
-                list.Add(new ListAdminClass { year = item.BlogCreateDate.Year, month = item.BlogCreateDate.Month, day= item.BlogCreateDate.Day, title = item.BlogTitle });
+                list.Add(new ListAdminClass { year = item.BlogCreateDate.Year, month = item.BlogCreateDate.Month, day = item.BlogCreateDate.Day, title = item.BlogTitle });
             }
             return Json(new { jsonlist = list });
         }
@@ -195,7 +204,7 @@ namespace HealthProject.Areas.Admin.Controllers
             foreach (var item in product)
             {
 
-                list.Add(new ListAdminClass { year = item.ProductRealiseDate.Year , month = item.ProductRealiseDate.Month, day = item.ProductRealiseDate.Day, title = item.ProductTitle });
+                list.Add(new ListAdminClass { year = item.ProductRealiseDate.Year, month = item.ProductRealiseDate.Month, day = item.ProductRealiseDate.Day, title = item.ProductTitle });
             }
             return Json(new { jsonlist = list });
         }

@@ -52,11 +52,12 @@ namespace HealthProject.Areas.Admin.Controllers
             {
                 if (p.AboutImage != null)
                 {
-                    if (p.AboutImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.AboutImage.FileName);
+                    if (extension == ".png")
                     {
 
 
-                        var extension = Path.GetExtension(p.AboutImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/AboutImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);

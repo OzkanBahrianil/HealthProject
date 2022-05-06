@@ -117,7 +117,7 @@ namespace HealthProject.Areas.Admin.Controllers
             w.ArticlesType = p.ArticlesType;
             w.ArticlesWritersName = p.ArticlesWritersName;
             w.UserID = WriterID;
-
+            ViewBag.cv = CategoryValue;
 
 
             ArticleValidation bv = new ArticleValidation();
@@ -126,11 +126,12 @@ namespace HealthProject.Areas.Admin.Controllers
             {
                 if (p.ArticlesPdf != null)
                 {
-                    if (p.ArticlesPdf.FileName.Contains(".pdf"))
+                    var extension = Path.GetFileName(p.ArticlesPdf.FileName);
+                    if (extension == ".pdf")
                     {
 
 
-                        var extension = Path.GetFileName(p.ArticlesPdf.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ArticlesPdf/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);

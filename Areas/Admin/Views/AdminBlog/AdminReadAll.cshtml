@@ -8,7 +8,7 @@
 <head>
 
 
-    <link href="~/web/css/style.css" rel='stylesheet' type='text/css' />
+    @*<link href="~/web/css/style.css" rel='stylesheet' type='text/css' />*@
 
 </head>
 
@@ -34,26 +34,14 @@
                                     </a>
                                 </div>
                                 <div class="blog-info-middle">
+                                    <br />
                                     <ul>
                                         <li>
                                             <a href="#">
-                                                <i class="far fa-calendar-alt"></i>  @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <i class="far fa-comment"></i> @ViewBag.CommentCount Yorum
-                                            </a>
-                                        </li>     
-                                        
-                                        <li>
-                                            <a href="#">
-                                                <i class="far fa-star"></i>
+                                                <i class="far fa-calendar-alt"></i>  @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy"))&nbsp;&nbsp;   <i class="far fa-comment"></i> @ViewBag.CommentCount Yorum  &nbsp;&nbsp;   <i class="far fa-star"></i>
                                                 @await Component.InvokeAsync("CommentRayting", new { id = item.BlogID })
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>

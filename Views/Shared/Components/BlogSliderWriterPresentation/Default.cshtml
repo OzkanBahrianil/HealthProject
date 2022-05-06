@@ -8,6 +8,7 @@
 </head>
 @{
     <br />
+    <br />
     <h3 class="tittle">Yazarlarımız</h3>
     <section id="demos">
 
@@ -58,7 +59,7 @@
 <script>
     jQuery(document).ready(function ($) {
         $('.owl-carousel').owlCarousel({
-            items: 3,
+            items: 4,
             merge: true,
             animateOut: 'fadeOut',
             loop: true,
@@ -68,34 +69,34 @@
             autoplay: true,
             nav: true,
             margin: 0,
-            autoplayTimeout: 1000,
+            autoplayTimeout: 2000,
             responsiveClass: true,
             URLhashListener: true,
             autoplayHoverPause: true,
             responsive: {
                 0: {
-                    items: 1,
+                    items: 2,
                     nav: true
                 },
                 600: {
-                    items: 2,
+                    items: 3,
                     nav: false
                 },
                 1000: {
-                    items: 3,
+                    items: 4,
                     nav: true,
                     loop: true
-                },   
+                },
                 2300: {
-                    items: 5,
+                    items: 6,
                     nav: true,
                     loop: true
-                },  
+                },
                 3000: {
-                    items: 7,
+                    items: 8,
                     nav: true,
                     loop: true
-                } 
+                }
 
             }
         });

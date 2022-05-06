@@ -1,6 +1,6 @@
-﻿@using EntityLayer.Concrate
-@model List<Articles>
-
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.Articles>
 
 <section class="main-content-w3layouts-agileits">
     <div class="container">
@@ -52,10 +52,8 @@
                     </article>
                 }
             </div>
-
-
-         
-      
         </div>
+        <br />
+        @Html.PagedListPager((IPagedList)Model, pagearticle => Url.Action("Index", new { pagearticle }))
     </div>
 </section>

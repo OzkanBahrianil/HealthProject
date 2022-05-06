@@ -19,12 +19,12 @@ namespace HealthProject.Areas.Article.Controllers
             if (!string.IsNullOrEmpty(Search))
             {
                 ViewBag.Search = Search;
-                var SearchValues = atm.TGetByFilter(x => x.ArticlesTitle.Contains(Search)).OrderByDescending(x => x.ArticlesPublishDate).ToList().ToPagedList(page, 9);
+                var SearchValues = atm.TGetByFilter(x => x.ArticlesTitle.Contains(Search)).OrderByDescending(x => x.ArticlesID).ToList().ToPagedList(page, 9);
                 return View(SearchValues);
             }
             else
             {
-                var Values = atm.GetArticlesListWithArticlesCategory().OrderByDescending(x => x.ArticlesPublishDate).ToList().ToPagedList(page, 9);
+                var Values = atm.GetArticlesListWithArticlesCategory().OrderByDescending(x => x.ArticlesID).ToList().ToPagedList(page, 9);
                 return View(Values);
             }
 

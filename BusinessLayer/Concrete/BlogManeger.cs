@@ -88,7 +88,13 @@ namespace BusinessLayer.Concrete
         {
             return _BlogDal.GetListWithCategoryByWriter(id);
         }
-
+        public List<Blog> GetListWithCategoryByWriterbmFSearch(string key, int id)
+        {
+            key = key.ToLower();
+            return _BlogDal.GetListWithCategoryByWriter(id).Where(p => p.BlogTitle.ToLower().Contains(key)
+            || p.BlogCreateDate.ToString().ToLower().Contains(key)
+            || p.BlogShortContent.ToString().ToLower().Contains(key)).ToList();
+        }
         public List<Blog> GetBlogListById(int id)
         {
            return _BlogDal.List().Where(p => p.BlogID == id).Where(x => x.BlogStatus == true).ToList();

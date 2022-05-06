@@ -25,13 +25,103 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
         MedicalProductManeger mpm = new MedicalProductManeger(new EfMedicalProductDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
 
-        public IActionResult ProductsListByCompany(int page = 1)
+        public IActionResult ProductsListByCompany(string sortOrder, string SearchString, int page = 1)
         {
 
             var usermail = User.Identity.Name;
             var CompanyID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = mpm.GetListWithCategoryCommentBCompanybmF(CompanyID).ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParam"] = sortOrder == "Title" ? "TitleDesc" : "Title";
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "DateDesc" : "Date";
+            ViewData["CategorySortParam"] = sortOrder == "Category" ? "CategoryDesc" : "Category";
+            ViewData["StatusParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
+            ViewData["CauntParam"] = sortOrder == "Caunt" ? "CauntDesc" : "Caunt";
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = mpm.GetListWithCategoryCommentBCompanybmFSearch(SearchString, CompanyID);
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.ProductTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.ProductTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.ProductRealiseDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.ProductRealiseDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.ProductCategory.ProductCategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.ProductCategory.ProductCategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.ProductStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.ProductStatus).ToList();
+                        break;
+                    case "Caunt":
+                        values = values.OrderBy(s => s.CommentProducts.Count()).ToList();
+                        break;
+                    case "CauntDesc":
+                        values = values.OrderByDescending(s => s.CommentProducts.Count()).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ProductCategoryID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = mpm.GetListWithCategoryCommentBCompanybmF(CompanyID);
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.ProductTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.ProductTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.ProductRealiseDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.ProductRealiseDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.ProductCategory.ProductCategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.ProductCategory.ProductCategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.ProductStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.ProductStatus).ToList();
+                        break;
+                    case "Caunt":
+                        values = values.OrderBy(s => s.CommentProducts.Count()).ToList();
+                        break;
+                    case "CauntDesc":
+                        values = values.OrderByDescending(s => s.CommentProducts.Count()).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.ProductCategoryID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+
+
+
 
         }
 
@@ -70,29 +160,48 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
                                                       Text = x.ProductCategoryName,
                                                       Value = x.ProductCategoryID.ToString()
                                                   }).ToList();
+            ViewBag.cv = CategoryValue;
             MedicalProductValidation bv = new MedicalProductValidation();
             ValidationResult result = bv.Validate(w);
             if (result.IsValid)
             {
-                if (p.ProductImage != null && p.ProductImage.FileName.Contains(".png"))
+                if (p.ProductImage != null)
                 {
                     var extension = Path.GetExtension(p.ProductImage.FileName);
-                    var newImageName = Guid.NewGuid() + extension;
-                    var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageName);
-                    var stream = new FileStream(Location, FileMode.Create);
-                    p.ProductImage.CopyTo(stream);
-                    w.ProductImage = newImageName;
+                    if (extension == ".png")
+                    {
+                        var newImageName = Guid.NewGuid() + extension;
+                        var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageName);
+                        var stream = new FileStream(Location, FileMode.Create);
+                        p.ProductImage.CopyTo(stream);
+                        w.ProductImage = newImageName;
+
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
 
                 }
 
-                if (p.ProductThumbnailImage != null && p.ProductThumbnailImage.FileName.Contains(".png"))
+                if (p.ProductThumbnailImage != null)
                 {
                     var extensionThumbnail = Path.GetExtension(p.ProductThumbnailImage.FileName);
-                    var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
-                    var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageNameThumbnail);
-                    var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);
-                    p.ProductThumbnailImage.CopyTo(streamThumbnail);
-                    w.ProductThumbnailImage = newImageNameThumbnail;
+                    if (extensionThumbnail == ".png")
+                    {
+                        var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
+                        var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageNameThumbnail);
+                        var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);
+                        p.ProductThumbnailImage.CopyTo(streamThumbnail);
+                        w.ProductThumbnailImage = newImageNameThumbnail;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
+
                 }
                 if (w.ProductImage != null && w.ProductThumbnailImage != null)
                 {
@@ -237,7 +346,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             w.ProductRealiseDate = p.ProductRealiseDate;
             w.ProductCompanyWebsite = p.ProductCompanyWebsite;
             w.UserID = CompanyID;
-
+            ViewBag.cv = CategoryValue;
 
 
             MedicalProductValidation bv = new MedicalProductValidation();
@@ -248,11 +357,12 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             {
                 if (p.ProductImage != null)
                 {
-                    if (p.ProductImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.ProductImage.FileName);
+                    if (extension == ".png")
                     {
 
 
-                        var extension = Path.GetExtension(p.ProductImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -281,9 +391,10 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
                 }
                 if (p.ProductThumbnailImage != null)
                 {
-                    if (p.ProductImage.FileName.Contains(".png"))
+                    var extensionThumbnail = Path.GetExtension(p.ProductThumbnailImage.FileName);
+                    if (extensionThumbnail == ".png")
                     {
-                        var extensionThumbnail = Path.GetExtension(p.ProductThumbnailImage.FileName);
+
                         var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
                         var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/MedicalProductImageFiles/", newImageNameThumbnail);
                         var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);

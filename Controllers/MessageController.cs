@@ -17,27 +17,58 @@ namespace HealthProject.Controllers
     {
         MessageManeger mm = new MessageManeger(new EfMessageDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
-        public IActionResult InBox(int page = 1)
+        public IActionResult InBox(string SearchString, int page = 1)
         {
-
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
-            ViewBag.InboxR = values.Count();
-            var valuesSend = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
-            ViewBag.InboxRS = valuesSend.Count();
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuessearch = mm.SearchInbox(writerID, SearchString).ToPagedList(page, 12);
+                var values = mm.GetInboxLinstByWriter(writerID);
+                ViewBag.InboxR = values.Count();
+                var valuesSend = mm.GetInboxLinstByWriterSend(writerID);
+                ViewBag.InboxRS = valuesSend.Count();
+                return View(valuessearch);
+            }
+            else
+            {
+
+                var values = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
+                ViewBag.InboxR = values.Count();
+                var valuesSend = mm.GetInboxLinstByWriterSend(writerID);
+                ViewBag.InboxRS = valuesSend.Count();
+                return View(values);
+
+            }
+
+
         }
-        public IActionResult InBoxSend(int page = 1)
+        public IActionResult InBoxSend(string SearchString, int page = 1)
         {
-
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
-            var valuesReceived = mm.GetInboxLinstByWriter(writerID).ToPagedList(page, 12);
-            ViewBag.InboxR = valuesReceived.Count();
-            ViewBag.InboxRS = values.Count();
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var valuessearch = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                var values = mm.GetInboxLinstByWriterSend(writerID);
+                var valuesReceived = mm.GetInboxLinstByWriter(writerID);
+                ViewBag.InboxR = valuesReceived.Count();
+                ViewBag.InboxRS = values.Count();
+                return View(valuessearch);
+            }
+            else
+            {
+                var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
+                var valuesReceived = mm.GetInboxLinstByWriter(writerID);
+                ViewBag.InboxR = valuesReceived.Count();
+                ViewBag.InboxRS = values.Count(); 
+                return View(values);
+            }
+
+
+          
         }
 
         public IActionResult MessageDetails(int id)

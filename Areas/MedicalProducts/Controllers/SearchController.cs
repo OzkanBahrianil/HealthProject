@@ -20,12 +20,12 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             if (!string.IsNullOrEmpty(Search))
             {
                 ViewBag.Search = Search;
-                var SearchValues = mpm.TGetByFilter(x => x.ProductTitle.Contains(Search)).OrderByDescending(x => x.ProductRealiseDate).ToList().ToPagedList(page, 9);
+                var SearchValues = mpm.TGetByFilter(x => x.ProductTitle.Contains(Search)).OrderByDescending(x => x.ProductID).ToList().ToPagedList(page, 9);
                 return View(SearchValues);
             }
             else
             {
-                var Values = mpm.GetProductListWithCategoryWithComments().OrderByDescending(x => x.ProductRealiseDate).ToList().ToPagedList(page, 9);
+                var Values = mpm.GetProductListWithCategoryWithComments().OrderByDescending(x => x.ProductID).ToList().ToPagedList(page, 9);
                 return View(Values);
             }
 

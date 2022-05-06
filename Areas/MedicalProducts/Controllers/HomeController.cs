@@ -21,9 +21,9 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             var values = mpm.GetProductListWithCategoryWithComments().OrderByDescending(x=>x.ProductID).ToPagedList(page, 9);
             return View(values);
         }
-        public IActionResult ProductReadAll(int id)
+        public IActionResult ProductReadAll(int id, int page = 1)
         {
-          
+            ViewBag.page = page;
             ViewBag.i = id;
             var values = mpm.TGetByFilter(x=>x.ProductID==id);
             return View(values);

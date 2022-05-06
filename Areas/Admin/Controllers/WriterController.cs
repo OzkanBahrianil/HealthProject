@@ -184,11 +184,12 @@ namespace HealthProject.Areas.Admin.Controllers
             {
                 if (p.WriterImage != null)
                 {
-                    if (p.WriterImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.WriterImage.FileName);
+                    if (extension == ".png")
                     {
 
 
-                        var extension = Path.GetExtension(p.WriterImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);

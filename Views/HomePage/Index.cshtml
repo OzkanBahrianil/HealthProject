@@ -23,16 +23,16 @@
         <br />
 
         <div class="fortest active Blog">
-            @await Component.InvokeAsync("BlogListHomePage")
+            @await Component.InvokeAsync("BlogListHomePage", new { page = ViewBag.pageblog })
 
         </div>
 
         <div class="fortest Medikal">
-            @await Component.InvokeAsync("MedicalProductsListHomePage")
+            @await Component.InvokeAsync("MedicalProductsListHomePage", new { page = ViewBag.pageproduct })
         </div>
 
         <div class="fortest Makale">
-            @await Component.InvokeAsync("ArticlesListHomePage")
+            @await Component.InvokeAsync("ArticlesListHomePage", new { page = ViewBag.pagearticle })
 
         </div>
 

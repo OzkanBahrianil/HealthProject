@@ -78,6 +78,13 @@ namespace BusinessLayer.Concrete
         {
             return _MedicalProductDal.GetListWithCategoryCommentByCompany(id);
         }
+        public List<MedicalProduct> GetListWithCategoryCommentBCompanybmFSearch(string key, int id)
+        {
+            key = key.ToLower();
+            return _MedicalProductDal.GetListWithCategoryCommentByCompany(id).Where(p => p.ProductTitle.ToLower().Contains(key)
+            || p.ProductRealiseDate.ToString().ToLower().Contains(key)
+            || p.ProductShortContent.ToString().ToLower().Contains(key)).ToList();
+        }
     }
 
 

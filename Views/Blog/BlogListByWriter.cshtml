@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
 
-<h1>Yazarın Blogları</h1>
+<h3>Yazarın Blogları<small> >@ViewData["CurrentFilterSearch"]</small></h3>
 @if (TempData["AletrMessage"] != null)
 {
     <div class="alert alert-success">
@@ -14,16 +14,120 @@
     </div>
     <br />
 }
-
+<div>
+    <form class="d-flex align-items-center h-100" method="get">
+        <div class="input-group">
+            <div class="input-group-prepend bg-transparent">
+                <i style="color:black;" class="input-group-text border-0 mdi mdi-magnify"></i>
+            </div>
+            <input type="text" class="form-control bg-transparent border-0" value="@ViewData["CurrentFilterSearch"]" name="SearchString" placeholder="Ara...">
+        </div>
+    </form>
+</div>
 <table class="table table-bordered">
     <tr>
         <th></th>
-        <th>Blog Başlığı</th>
-        <th>Oluşturulma Tarihi</th>
-        <th>Kategori</th>
-        <th>Yorum Sayısı</th>
+        <th>
+            <a style="color:black;" asp-action="BlogListByWriter" asp-route-sortOrder="@ViewData["TitleSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Blog Başlığı</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Title")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "TitleDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="BlogListByWriter" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Oluşturulma Tarihi</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Date")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "DateDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="BlogListByWriter" asp-route-sortOrder="@ViewData["CategorySortParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Kategori</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Category")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "CategoryDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
+        <th>
+            <a style="color:black;" asp-action="BlogListByWriter" asp-route-sortOrder="@ViewData["CauntParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Yorum Sayıs</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Caunt")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "CauntDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
         <th>Blog Puanı</th>
-        <th>Durum</th>
+        <th>
+            <a style="color:black;" asp-action="BlogListByWriter" asp-route-sortOrder="@ViewData["StatusParam"]" asp-route-SearchString="@ViewData["CurrentFilterSearch"]">Durum</a>
+            @if (ViewData["CurrentSort"] != null)
+            {
+
+
+                @if (ViewData["CurrentSort"].ToString() == "Status")
+                {
+                    <i class="mdi mdi-arrow-top-right"></i>
+                }
+                else if (ViewData["CurrentSort"].ToString() == "StatusDesc")
+                {
+                    <i class="mdi mdi-arrow-bottom-right"></i>
+                }
+            }
+            else
+            {
+                <i class="mdi mdi-arrow-left"></i>
+            }
+        </th>
         <th>Sil</th>
         <th>Düzenle</th>
     </tr>
@@ -59,7 +163,7 @@
         }
     }
 </table>
-
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByWriter", new { page }))
+<br />
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("BlogListByWriter", new { page, SearchString = ViewData["CurrentFilterSearch"], sortOrder = @ViewData["CurrentSort"] }))
 
 <a href="/Blog/BlogAddByWriter/" class="btn btn-primary">Yeni Blog Oluştur</a>

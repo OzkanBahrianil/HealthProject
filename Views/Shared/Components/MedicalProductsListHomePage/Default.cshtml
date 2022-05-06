@@ -1,5 +1,7 @@
-﻿@using EntityLayer.Concrate
-@model List<MedicalProduct>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrate.MedicalProduct>
+
 
 <section class="main-content-w3layouts-agileits">
     <div class="container">
@@ -12,7 +14,7 @@
                     {
                         <div class="col-md-6 card">
                             <a href="/MedicalProducts/Home/ProductReadAll/@item.ProductID/">
-                                <img src="~/MedicalProductImageFiles/@item.ProductThumbnailImage"  class="card-img-top img-fluid" alt="">
+                                <img src="~/MedicalProductImageFiles/@item.ProductThumbnailImage" class="card-img-top img-fluid" alt="">
                             </a>
                             <div class="card-body">
                                 <ul class="blog-icons my-4">
@@ -50,8 +52,8 @@
                     }
                 </div>
             </div>
-
-          
+            <br />
+            @Html.PagedListPager((IPagedList)Model, pageproduct => Url.Action("Index", new { pageproduct }))
 
         </div>
     </div>

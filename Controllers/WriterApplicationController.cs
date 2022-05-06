@@ -68,14 +68,23 @@ namespace HealthProject.Controllers
 
             if (result.IsValid)
             {
-                if (p.ApplicationCV != null && p.ApplicationCV.FileName.Contains(".pdf"))
+                if (p.ApplicationCV != null)
                 {
                     var extension = Path.GetExtension(p.ApplicationCV.FileName);
-                    var newImageName = Guid.NewGuid() + extension;
-                    var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterApplicationPdf/", newImageName);
-                    var stream = new FileStream(Location, FileMode.Create);
-                    p.ApplicationCV.CopyTo(stream);
-                    w.ApplicationCV = newImageName;
+                    if (extension == ".pdf")
+                    {
+                        var newImageName = Guid.NewGuid() + extension;
+                        var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterApplicationPdf/", newImageName);
+                        var stream = new FileStream(Location, FileMode.Create);
+                        p.ApplicationCV.CopyTo(stream);
+                        w.ApplicationCV = newImageName;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .pdf kabul edilir.";
+                    }
+
+
 
                 }
 

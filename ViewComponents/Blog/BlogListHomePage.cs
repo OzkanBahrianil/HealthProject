@@ -12,10 +12,10 @@ namespace HealthProject.ViewComponents.Blog
     public class BlogListHomePage:ViewComponent
     {
         BlogManeger bm = new BlogManeger(new EfBlogDal());
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int page)
         {
 
-            var values = bm.GetBlogListWithCategoryWithComments().OrderByDescending(x => x.BlogID).Take(9).ToList();
+            var values = bm.GetBlogListWithCategoryWithComments().OrderByDescending(x => x.BlogID).ToPagedList(page, 9);
             return View(values);
         }
     }

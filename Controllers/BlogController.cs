@@ -28,7 +28,7 @@ namespace HealthProject.Controllers
         [AllowAnonymous]
         public IActionResult Index(int page = 1)
         {
-            var values = bm.GetBlogListWithCategoryWithComments().Where(y => y.BlogStatus == true).OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
+            var values = bm.GetBlogListWithCategoryWithComments().OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
             return View(values);
         }
 
@@ -41,16 +41,26 @@ namespace HealthProject.Controllers
 
 
         [AllowAnonymous]
-        public IActionResult BlogReadAll(int id)
+        public IActionResult BlogReadAll(int id, int page = 1)
         {
+            ViewBag.page = page;
             ViewBag.CommentCount = cmt.GetCommentListByIdBlog(id).Count();
             ViewBag.i = id;
             var rayting = brm.GetListT().Where(x => x.BlogID == id).FirstOrDefault();
             if (rayting != null)
             {
-                Decimal raytingstar = (Decimal)rayting.BlogTotalScore / (Decimal)rayting.BlogRaytingCount;
-                raytingstar = Decimal.Round(raytingstar, 2);
-                ViewBag.raytingstar = raytingstar;
+                if (rayting.BlogRaytingCount == 0)
+                {
+                    ViewBag.raytingstar = 0;
+                }
+                else
+                {
+                    Decimal raytingstar = (Decimal)rayting.BlogTotalScore / (Decimal)rayting.BlogRaytingCount;
+                    raytingstar = Decimal.Round(raytingstar, 2);
+                    ViewBag.raytingstar = raytingstar;
+
+                }
+
 
             }
             else
@@ -71,13 +81,105 @@ namespace HealthProject.Controllers
 
 
         [Authorize(Roles = "Writer")]
-        public IActionResult BlogListByWriter(int page = 1)
+        public IActionResult BlogListByWriter(string sortOrder, string SearchString, int page = 1)
         {
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var values = bm.GetListWithCategoryByWriterbmF(writerID).ToPagedList(page, 10);
-            return View(values);
+            ViewData["CurrentFilterSearch"] = SearchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParam"] = sortOrder == "Title" ? "TitleDesc" : "Title";
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "DateDesc" : "Date";
+            ViewData["CategorySortParam"] = sortOrder == "Category" ? "CategoryDesc" : "Category";
+            ViewData["StatusParam"] = sortOrder == "Status" ? "StatusDesc" : "Status";
+            ViewData["CauntParam"] = sortOrder == "Caunt" ? "CauntDesc" : "Caunt";
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                var values = bm.GetListWithCategoryByWriterbmFSearch(SearchString, writerID);
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.BlogTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.BlogTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.BlogCreateDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.BlogCreateDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.Category.CategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.Category.CategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.BlogStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.BlogStatus).ToList();
+                        break;
+                    case "Caunt":
+                        values = values.OrderBy(s => s.Comments.Count()).ToList();
+                        break;
+                    case "CauntDesc":
+                        values = values.OrderByDescending(s => s.Comments.Count()).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.BlogID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+            else
+            {
+                var values = bm.GetListWithCategoryByWriterbmF(writerID);
+                switch (sortOrder)
+                {
+                    case "Title":
+                        values = values.OrderBy(x => x.BlogTitle).ToList();
+                        break;
+                    case "TitleDesc":
+                        values = values.OrderByDescending(x => x.BlogTitle).ToList();
+                        break;
+                    case "Date":
+                        values = values.OrderBy(s => s.BlogCreateDate).ToList();
+                        break;
+                    case "DateDesc":
+                        values = values.OrderByDescending(s => s.BlogCreateDate).ToList();
+                        break;
+                    case "Category":
+                        values = values.OrderBy(s => s.Category.CategoryName).ToList();
+                        break;
+                    case "CategoryDesc":
+                        values = values.OrderByDescending(s => s.Category.CategoryName).ToList();
+                        break;
+                    case "Status":
+                        values = values.OrderBy(s => s.BlogStatus).ToList();
+                        break;
+                    case "StatusDesc":
+                        values = values.OrderByDescending(s => s.BlogStatus).ToList();
+                        break;
+                    case "Caunt":
+                        values = values.OrderBy(s => s.Comments.Count()).ToList();
+                        break;
+                    case "CauntDesc":
+                        values = values.OrderByDescending(s => s.Comments.Count()).ToList();
+                        break;
+                    default:
+                        values = values.OrderByDescending(s => s.BlogID).ToList();
+                        break;
+                }
+                return View(values.ToPagedList(page, 10));
+            }
+
+
+
         }
+
+
         [HttpGet, Authorize(Roles = "Writer")]
         public IActionResult BlogAddByWriter()
         {
@@ -114,28 +216,46 @@ namespace HealthProject.Controllers
                                                       Text = x.CategoryName,
                                                       Value = x.CategoryID.ToString()
                                                   }).ToList();
-
+            ViewBag.cv = CategoryValue;
             if (result.IsValid)
             {
-                if (p.BlogImage != null && p.BlogImage.FileName.Contains(".png"))
+                if (p.BlogImage != null)
                 {
                     var extension = Path.GetExtension(p.BlogImage.FileName);
-                    var newImageName = Guid.NewGuid() + extension;
-                    var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageName);
-                    var stream = new FileStream(Location, FileMode.Create);
-                    p.BlogImage.CopyTo(stream);
-                    w.BlogImage = newImageName;
+                    if (extension == ".png")
+                    {
+                        var newImageName = Guid.NewGuid() + extension;
+                        var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageName);
+                        var stream = new FileStream(Location, FileMode.Create);
+                        p.BlogImage.CopyTo(stream);
+                        w.BlogImage = newImageName;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
+
 
                 }
 
-                if (p.BlogThumbnailImage != null && p.BlogThumbnailImage.FileName.Contains(".png"))
+                if (p.BlogThumbnailImage != null)
                 {
                     var extensionThumbnail = Path.GetExtension(p.BlogThumbnailImage.FileName);
-                    var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
-                    var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageNameThumbnail);
-                    var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);
-                    p.BlogThumbnailImage.CopyTo(streamThumbnail);
-                    w.BlogThumbnailImage = newImageNameThumbnail;
+                    if (extensionThumbnail == ".png")
+                    {
+                        var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
+                        var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageNameThumbnail);
+                        var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);
+                        p.BlogThumbnailImage.CopyTo(streamThumbnail);
+                        w.BlogThumbnailImage = newImageNameThumbnail;
+                    }
+                    else
+                    {
+                        TempData["AlertMessageAdd"] = "Sadece .png uzantılı resimler kabul edilir.";
+                    }
+
+
                 }
                 if (w.BlogImage != null && w.BlogThumbnailImage != null)
                 {
@@ -249,7 +369,7 @@ namespace HealthProject.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("BlogListByWriter","Blog");
+                    return RedirectToAction("BlogListByWriter", "Blog");
                 }
             }
             else
@@ -261,16 +381,14 @@ namespace HealthProject.Controllers
         [HttpPost, Authorize(Roles = "Writer")]
         public IActionResult EditBlog(AddBlogImage p)
         {
-            Blog w = new Blog();
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            w.BlogID = p.BlogID;
+            var w = bm.GetByIDT(p.BlogID);
             w.BlogShortContent = p.BlogShortContent;
             w.BlogContent = p.BlogContent;
             w.BlogTitle = p.BlogTitle;
             w.CategoryID = p.CategoryID;
             w.BlogStatus = false;
-            w.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
             w.UserID = writerID;
             BlogValidation bv = new BlogValidation();
             ValidationResult result = bv.Validate(w);
@@ -280,14 +398,15 @@ namespace HealthProject.Controllers
                                                       Text = x.CategoryName,
                                                       Value = x.CategoryID.ToString()
                                                   }).ToList();
-
+            ViewBag.cv = CategoryValue;
             if (result.IsValid)
             {
                 if (p.BlogImage != null)
                 {
-                    if (p.BlogImage.FileName.Contains(".png"))
+                    var extension = Path.GetExtension(p.BlogImage.FileName);
+                    if (extension == ".png")
                     {
-                        var extension = Path.GetExtension(p.BlogImage.FileName);
+
                         var newImageName = Guid.NewGuid() + extension;
                         var Location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageName);
                         var stream = new FileStream(Location, FileMode.Create);
@@ -314,11 +433,12 @@ namespace HealthProject.Controllers
                 }
                 if (p.BlogThumbnailImage != null)
                 {
-                    if (p.BlogThumbnailImage.FileName.Contains(".png"))
+                    var extensionThumbnail = Path.GetExtension(p.BlogThumbnailImage.FileName);
+                    if (extensionThumbnail == ".png")
                     {
 
 
-                        var extensionThumbnail = Path.GetExtension(p.BlogThumbnailImage.FileName);
+
                         var newImageNameThumbnail = Guid.NewGuid() + extensionThumbnail;
                         var LocationThumbnail = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/BlogImageFiles/", newImageNameThumbnail);
                         var streamThumbnail = new FileStream(LocationThumbnail, FileMode.Create);

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HealthProject.ViewComponents.Articles
 {
@@ -12,9 +13,9 @@ namespace HealthProject.ViewComponents.Articles
     {
       
         ArticlesManeger atm = new ArticlesManeger(new EfArticlesDal());
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int page)
         {
-            var values = atm.GetArticlesListWithArticlesCategory().OrderByDescending(x => x.ArticlesID).Take(9).ToList();
+            var values = atm.GetArticlesListWithArticlesCategory().OrderByDescending(x => x.ArticlesID).ToPagedList(page, 9);
             return View(values);
         }
     }
