@@ -136,8 +136,8 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult EditPresentation(AddPresentationImage p)
         {
-            Presentation w = new Presentation();
-            w.PresentationID = p.PresentationID;
+
+            var w = pm.GetByIDT(p.PresentationID);
             w.PresentationTitle = p.PresentationTitle;
             w.PresentationDetails = p.PresentationDetails;
             w.PresentationShortDetails = p.PresentationShortDetails;

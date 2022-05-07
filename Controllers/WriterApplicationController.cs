@@ -54,7 +54,6 @@ namespace HealthProject.Controllers
         {
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-
             WriterApplication w = new WriterApplication();
             w.ApplicationCoverLetter = p.ApplicationCoverLetter;
             w.ApplicationUniversity = p.ApplicationUniversity;

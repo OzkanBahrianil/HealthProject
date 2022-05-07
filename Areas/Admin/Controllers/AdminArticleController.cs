@@ -98,7 +98,8 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult EditArticle(AddArticlesPdf p)
         {
-            Articles w = new Articles();
+         
+            var w = atm.GetByIDT(p.ArticlesID);
             var usermail = User.Identity.Name;
             var WriterID = wm.TGetByFilter(x => x.Email == usermail).Id;
             List<SelectListItem> CategoryValue = (from x in acm.GetListT()
@@ -108,7 +109,6 @@ namespace HealthProject.Areas.Admin.Controllers
                                                       Value = x.ArticleCategoryID.ToString()
                                                   }).ToList();
             w.ArticleCategoryID = p.ArticleCategoryID;
-            w.ArticlesID = p.ArticlesID;
             w.ArticlesShortContent = p.ArticlesShortContent;
             w.ArticlesContent = p.ArticlesContent;
             w.ArticlesTitle = p.ArticlesTitle;

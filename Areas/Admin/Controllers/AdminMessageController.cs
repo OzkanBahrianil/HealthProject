@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -97,40 +99,53 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SendMessage(Message p, string NameMail)
         {
-
-            var usermail = User.Identity.Name;
-            var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-            var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
-            if (WriterCheck == null)
+            MessageValidation bv = new MessageValidation();
+            ValidationResult result = bv.Validate(p);
+            if (result.IsValid)
             {
-                var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
-                p.ReceiverID = WriterCheckLast.Id;
-                if (WriterCheckLast == null)
+                var usermail = User.Identity.Name;
+                var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
+                var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
+                if (WriterCheck == null)
                 {
-                    TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
+                    var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
+                    p.ReceiverID = WriterCheckLast.Id;
+                    if (WriterCheckLast == null)
+                    {
+                        TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
+                        return View();
+                    }
+                }
+                else
+                {
+                    p.ReceiverID = WriterCheck.Id;
+                }
+                p.SenderID = writerID;
+                p.MessageStatus = true;
+                p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+
+                if (p.SenderID == p.ReceiverID)
+                {
+                    TempData["AlertSame"] = "Kendinize Mesaj Gönderemezsiniz!!!";
                     return View();
                 }
+                else
+                {
+                    mm.TAdd(p);
+
+                }
+
+                return RedirectToAction("InBoxSend", "AdminMessage");
             }
             else
             {
-                p.ReceiverID = WriterCheck.Id;
-            }
-            p.SenderID = writerID;
-            p.MessageStatus = true;
-            p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                foreach (var item in result.Errors)
+                {
+                    TempData["AlertSame"] = item.ErrorMessage;
 
-            if (p.SenderID == p.ReceiverID)
-            {
-                TempData["AlertSame"] = "Kendinize Mesaj Gönderemezsiniz!!!";
+                }
                 return View();
             }
-            else
-            {
-                mm.TAdd(p);
-
-            }
-
-            return RedirectToAction("InBoxSend", "AdminMessage");
         }
     }
 }

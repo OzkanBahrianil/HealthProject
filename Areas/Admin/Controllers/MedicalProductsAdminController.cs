@@ -115,7 +115,8 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult EditProducts(AddProductImage p)
         {
-            MedicalProduct w = new MedicalProduct();
+          
+            var w = mpm.GetByIDT(p.ProductID);
             var usermail = User.Identity.Name;
             var CompanyID = wm.TGetByFilter(x => x.Email == usermail).Id;
             List<SelectListItem> CategoryValue = (from x in pcm.GetListT()
@@ -124,7 +125,6 @@ namespace HealthProject.Areas.Admin.Controllers
                                                       Text = x.ProductCategoryName,
                                                       Value = x.ProductCategoryID.ToString()
                                                   }).ToList();
-            w.ProductID = p.ProductID;
             w.ProductShortContent = p.ProductShortContent;
             w.ProductContent = p.ProductContent;
             w.ProductTitle = p.ProductTitle;

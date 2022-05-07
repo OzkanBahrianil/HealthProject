@@ -40,7 +40,7 @@ namespace HealthProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult EditAbout(AddAboutImage p)
         {
-            About w = new About();
+            var w = abm.GetByIDT(p.AboutID);
             w.AboutDetails = p.AboutDetails;
             w.AboutID = p.AboutID;
             w.AboutMapLocation = p.AboutMapLocation;

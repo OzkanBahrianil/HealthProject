@@ -12,7 +12,8 @@ namespace BusinessLayer.ValidationRules
     {
         public CategoryValidation()
         {
-
+            RuleFor(x => x.CategoryName).NotEmpty().WithMessage("İsim Yeri Boş Bırakılamaz").MaximumLength(100).WithMessage("İsim En Fazla 100 Karekter Yazılabilir");
+            RuleFor(x => x.CategoryDescription).NotEmpty().WithMessage("Açıklama Yeri Boş Bırakılamaz").MinimumLength(20).WithMessage("Hakkında En Az 20 Karekter Yazılabilir").MaximumLength(500).WithMessage("Hakkında En Fazla 500 Karekter Yazılabilir");
         }
     }
 }
