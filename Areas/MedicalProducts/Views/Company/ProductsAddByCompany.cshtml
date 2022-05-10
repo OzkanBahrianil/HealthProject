@@ -17,6 +17,7 @@
 }
 @using (Html.BeginForm("ProductsAddByCompany", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     @Html.Label("Ürünün Adı")
     @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control", @required = "required" })
     <br />
@@ -28,7 +29,7 @@
     <br />
 
     @Html.Label("Ürünün Piyasaya Çıkış Tarihi")
-    @Html.TextBoxFor(x => x.ProductCompanyWebsite,"{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", type = "date" })
+    @Html.TextBoxFor(x => x.ProductCompanyWebsite, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", type = "date" })
 
     <br />
     <div class="form-group">

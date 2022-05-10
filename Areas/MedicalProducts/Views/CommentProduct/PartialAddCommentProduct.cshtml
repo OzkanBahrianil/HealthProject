@@ -16,6 +16,7 @@
     <h4>Bir Yorum Yapın</h4>
     <div class="comment-bottom">
         <form action="/MedicalProducts/CommentProduct/PartialAddCommentProduct/" method="post">
+            @Html.AntiForgeryToken()
             <input class="form-control" type="text" name="CommentProductUserName" placeholder="Adınız ve Soyadınız" required="">
 
 

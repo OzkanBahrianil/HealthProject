@@ -138,6 +138,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ProductsAddByCompany(AddProductImage p)
         {
             MedicalProduct w = new MedicalProduct();
@@ -324,6 +325,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditProducts(AddProductImage p)
         {
         

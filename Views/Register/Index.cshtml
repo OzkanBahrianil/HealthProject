@@ -11,42 +11,42 @@
         <div class="inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
                 @using (Html.BeginForm("Index", "Register", FormMethod.Post))
-                {
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label for="WriterName">Adınız soyadınız</label>
-                            @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control" })
-                            <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="WriterMail">Mail Adresi</label>
-                            @Html.TextBoxFor(x => x.Mail, new { @class = "form-control",  @type = "email" })
-                            <span asp-validation-for="@Model.Mail" class="text-danger"></span>
-                        </div>
+                {@Html.AntiForgeryToken()
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="WriterName">Adınız soyadınız</label>
+                        @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control" })
+                        <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="WriterPassword mb-2">Şifre</label>
-                            @Html.PasswordFor(x => x.Password, new { @class = "form-control"})
-                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                        </div>
-                  
-                        <div class="form-group col-md-6">
-                            <label for="WriterPassword mb-2">Şifre Tekrar</label>
-                            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
-                            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="WriterMail">Mail Adresi</label>
+                        @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", @type = "email" })
+                        <span asp-validation-for="@Model.Mail" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="WriterPassword mb-2">Şifre</label>
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
 
+                    <div class="form-group col-md-6">
+                        <label for="WriterPassword mb-2">Şifre Tekrar</label>
+                        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+                        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                     </div>
-                    
-                    <p>
-                        <a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
-                    </p>
-                    <button type="submit" id="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
-                    <div class=" text-danger" asp-validation-summary="All">
 
-                    </div>
-                }
+                </div>
+
+                <p>
+                    <a href="#" id="btn1">Tüm şartları okudum, kabul ediyorum.</a>
+                </p>
+                <button type="submit" id="submit" class="btn btn-primary submit mb-4">Kayıt Ol</button>
+                <div class=" text-danger" asp-validation-summary="All">
+
+                </div>
+            }
 
             </div>
         </div>

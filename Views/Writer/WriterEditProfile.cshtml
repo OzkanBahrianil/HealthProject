@@ -18,9 +18,9 @@
             <br />
             @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                @Html.AntiForgeryToken()
                 <form class="forms-sample">
                     <div class="form-group">
-                        @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
                         <label for="WriterName">İsim Soyisim</label>
                         @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
@@ -66,9 +66,19 @@
             <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal2">
                 Şifre Değiştir
             </button>
-            <a href="/NewsLetter/SubscribeMailDeactiveByUser/" class="btn btn-primary">
-                Mail Bütleni Aboneliğini İptal Et
-            </a>
+            @if (ViewBag.News == "true")
+            {
+                <a href="/NewsLetter/SubscribeMailDeactiveByUser/" class="btn btn-primary">
+                    Mail Bütleni Aboneliğini İptal Et
+                </a>
+            }
+            else
+            {
+                <a href="/NewsLetter/SubscribeMailActiveByUser/" class="btn btn-primary">
+                    Mail Bütleni Aboneliğini Aç
+                </a>
+            }
+
 
 
             <div class="modal" id="myModal">
@@ -82,6 +92,7 @@
 
                         @using (Html.BeginForm("WriterEditEmail", "Writer", FormMethod.Post))
                         {
+                            @Html.AntiForgeryToken()
                             <div class="modal-body">
                                 <label for="exampleInputName1">Email</label>
                                 @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required = "required", @type = "email" })
@@ -113,7 +124,7 @@
                         @using (Html.BeginForm("WriterEditPassword", "Writer", FormMethod.Post))
                         {
                             <div class="modal-body">
-
+                                @Html.AntiForgeryToken()
 
                                 <label for="exampleInputName1">Yeni Şifre</label>
                                 <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />

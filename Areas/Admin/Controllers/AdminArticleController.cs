@@ -96,6 +96,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(addArticlesPdf);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditArticle(AddArticlesPdf p)
         {
          

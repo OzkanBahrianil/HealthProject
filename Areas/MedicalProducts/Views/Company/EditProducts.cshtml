@@ -16,21 +16,24 @@
 }
 @using (Html.BeginForm("EditProducts", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ProductID, new { @class = "form-control" })
 
     @Html.Label("Ürün Başlığı")
     @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.ProductTitle)
-    <br />  
+    <br />
+
     @Html.Label("Ürünün Üretim Şekli")
     @Html.TextBoxFor(x => x.ProductStyle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.ProductStyle)
-    <br /> 
+    <br />
+
     @Html.Label("Şirketinizin Web Adresi")
     @Html.TextBoxFor(x => x.ProductCompanyWebsite, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.ProductCompanyWebsite)
-    <br />  
+    <br />
+
     @Html.Label("Ürünün Piyasaya Çıkış Tarihi")
     @Html.TextBoxFor(x => x.ProductRealiseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.ProductRealiseDate)

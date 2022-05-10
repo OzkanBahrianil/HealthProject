@@ -9,7 +9,9 @@
 <h1>Kategori Güncelle</h1>
 <br />
 @using (Html.BeginForm("CategoryUpdate", "Category", FormMethod.Post))
-{   @Html.HiddenFor(x => x.CategoryID, new { @class = "form-control" })
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.CategoryID, new { @class = "form-control" })
     @Html.Label("Kategori Başlığı")
     @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.CategoryName)

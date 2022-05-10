@@ -24,6 +24,7 @@ namespace HealthProject.Controllers
             return PartialView();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PartialAddComment(Comment p)
         {
             int id = p.BlogID;

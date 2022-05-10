@@ -16,7 +16,7 @@ namespace HealthProject.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Moderator")]
+    [Authorize(Roles = "Admin")]
 
     public class AdminRoleController : Controller
     {
@@ -85,6 +85,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(values);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateRole(RoleUpdateViewModel p)
         {
             var values = _roleManeger.Roles.Where(x => x.Id == p.Id).FirstOrDefault();
@@ -167,6 +168,7 @@ namespace HealthProject.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> model)
         {
 

@@ -47,6 +47,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(UserSignInViewModel p)
         {
             if (ModelState.IsValid)
@@ -93,6 +94,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PasswordReset(ResetPasswordViewModel model)
         {
             AppUser user = await _userManager.FindByEmailAsync(model.Email);
@@ -132,6 +134,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost("[action]/{userId}/{token}/{token2}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Re(UpdatePasswordViewModel model, string userId, string token, string token2)
         {
             var codeDecodedBytes = WebEncoders.Base64UrlDecode(token + token2);

@@ -38,6 +38,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(addAboutImage);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditAbout(AddAboutImage p)
         {
             var w = abm.GetByIDT(p.AboutID);

@@ -63,6 +63,7 @@
 
                                     @using (Html.BeginForm("AddRole", "AdminRole", FormMethod.Post))
                                     {
+                                        @Html.AntiForgeryToken()
                                         <div class="modal-body">
 
 

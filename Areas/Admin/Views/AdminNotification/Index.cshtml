@@ -103,24 +103,24 @@
 
                                     @using (Html.BeginForm("AddNotification", "AdminNotification", FormMethod.Post))
                                     {
-                                        <div class="modal-body">
+                                <div class="modal-body">
+                                    @Html.AntiForgeryToken()
 
+                                    <label>Bildirim Tipi</label>
+                                    <input type="text" name="NotificationType" class="form-control" required="" />
+                                    <br />
+                                    <label>Bildirim Sembol (.png)</label>
+                                    <input type="text" name="NotificationTypeSymbol" class="form-control" required="" />
+                                    <br />
+                                    <label>Renk</label>
+                                    <input type="color" name="NotificationColor" class="form-control" required="" />
+                                    <br />
 
-                                            <label>Bildirim Tipi</label>
-                                            <input type="text" name="NotificationType" class="form-control" required="" />
-                                            <br />
-                                            <label>Bildirim Sembol (.png)</label>
-                                            <input type="text" name="NotificationTypeSymbol" class="form-control" required="" />
-                                            <br />
-                                            <label>Renk</label>
-                                            <input type="color" name="NotificationColor" class="form-control" required="" />
-                                            <br />
+                                    <label>Bildirim Detay</label>
+                                    <input type="text" name="NotificationDetails" class="form-control" required="" />
+                                    <br />
 
-                                            <label>Bildirim Detay</label>
-                                            <input type="text" name="NotificationDetails" class="form-control" required="" />
-                                            <br />
-
-                                        </div>
+                                </div>
 
 
                                         <div class="modal-footer">

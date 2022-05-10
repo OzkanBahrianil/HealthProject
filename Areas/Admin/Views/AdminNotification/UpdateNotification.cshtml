@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm("UpdateNotification", "AdminNotification", FormMethod.Post))
 {
-
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.NotificationID, new { @class = "form-control" })
 
     @Html.Label("Bildirim Tipi")

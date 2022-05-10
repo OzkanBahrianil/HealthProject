@@ -17,6 +17,7 @@
             <div class="row inner-sec">
                 <div class="login p-5 bg-light mx-auto mw-100">
                     <form method="post">
+                        @Html.AntiForgeryToken()
                         <div class="form-group">
                             <label asp-for="Password">Şifre</label>
                             <input type="password" class="form-control" asp-for="@Model.Password" id="" aria-describedby="password" placeholder="" required="">

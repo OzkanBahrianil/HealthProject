@@ -11,6 +11,7 @@
 <br />
 @using (Html.BeginForm("AddArticleCategory", "Category", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     @Html.Label("Kategori Başlığı")
     @Html.TextBoxFor(x => x.ArticleCategoryName, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.ArticleCategoryName)

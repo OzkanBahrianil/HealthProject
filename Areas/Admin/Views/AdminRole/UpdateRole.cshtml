@@ -18,6 +18,7 @@
 <h1>Rol Güncelleme Sayfası</h1>
 <form method="post">
     <div class="form-group">
+        @Html.AntiForgeryToken()
         <input type="hidden" name="Id" value="@Model.Id" />
         <label>Role Başlığı</label>
         <input type="text" name="Name" value="@Model.Name" class="form-control" />

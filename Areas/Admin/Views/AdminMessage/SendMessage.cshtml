@@ -20,59 +20,60 @@
 <link href="~/Admin/stylemes.css" rel="stylesheet">
 @using (Html.BeginForm("SendMessage", "AdminMessage", FormMethod.Post))
 {
-    <body>
+<body>
+    @Html.AntiForgeryToken()
+    <div class="mail-box-header">
 
-        <div class="mail-box-header">
-
-            <h2>
-                Mesaj Gönder
-            </h2>
-            <br />
-
-
-            <div class="mail-tools tooltip-demo m-t-md">
-                <h5>
-                    @if (@ViewBag.sender != null)
-                    {
-                        <span class="font-normal">Alıcı:      <input class="form-control" value="@ViewBag.sender" name="NameMail"></span>
-                    }
-                    else
-                    {
-                        <span class="font-normal">Alıcı: <input class="form-control" type="text" name="NameMail" placeholder="Alıcı Mail Veya Ad Soyad" required=""></span>
-                    }
-
-                </h5>
-
-                <h5>
-                    <span>Konu @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @required = "required" }) </span>
+        <h2>
+            Mesaj Gönder
+        </h2>
+        <br />
 
 
-                </h5>
+        <div class="mail-tools tooltip-demo m-t-md">
+            <h5>
+                @if (@ViewBag.sender != null)
+                {
+                <span class="font-normal">Alıcı:  @ViewBag.senderName   <input class="form-control" disabled="disabled" value="@ViewBag.sender" name="NameMail"></span>
+                }
+                else
+                {
+                    @Html.LabelFor(x=>x.ReceiverID,"Kullanıcı Seçiniz")
+                    @Html.DropDownListFor(x => x.ReceiverID, (List<SelectListItem>)ViewBag.wv, new { @class = "form-control" })
+                }
 
-            </div>
+            </h5>
+
+            <h5>
+                <span>Konu @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @required = "required" }) </span>
+
+
+            </h5>
+
         </div>
-        <div class="mail-box">
+    </div>
+    <div class="mail-box">
 
 
-            <div class="mail-body">
-                <h5> <span class="font-normal">Mesaj</span></h5>
-                <p>
-                    @Html.TextAreaFor(x => x.MessageDetails, 15, 3, new { @class = "form-control", @required = "required" })
-                </p>
-
-            </div>
-
-            <div class="mail-body text-right tooltip-demo">
-
-                <a class="btn btn-sm btn-white" href="/Admin/AdminMessage/InBox/"><i class="fa fa-arrow-right"></i>Mesajlara Dön</a>
-                <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Gönder</button>
-            </div>
-
-
+        <div class="mail-body">
+            <h5> <span class="font-normal">Mesaj</span></h5>
+            <p>
+                @Html.TextAreaFor(x => x.MessageDetails, 15, 3, new { @class = "form-control", @required = "required" })
+            </p>
 
         </div>
 
-    </body>
+        <div class="mail-body text-right tooltip-demo">
+
+            <a class="btn btn-sm btn-white" href="/Admin/AdminMessage/InBox/"><i class="fa fa-arrow-right"></i>Mesajlara Dön</a>
+            <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Gönder</button>
+        </div>
+
+
+
+    </div>
+
+</body>
 }
 
 

@@ -158,7 +158,6 @@ namespace HealthProject.Areas.Admin.Controllers
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
             var writervalues = wm.GetByIDT(writerID);
             AddProfileImage addProfileImage = new AddProfileImage();
-            addProfileImage.WriterId = writervalues.Id;
             addProfileImage.WriterAbout = writervalues.About;
             addProfileImage.WriterImageString = writervalues.Image;
             addProfileImage.WriterVideoUrl = writervalues.VideoUrl;
@@ -170,6 +169,7 @@ namespace HealthProject.Areas.Admin.Controllers
         }
 
         [HttpPost, Authorize(Roles = "Admin, Moderator")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminEditProfile(AddProfileImage p)
         {
             var usermail = User.Identity.Name;
@@ -244,6 +244,7 @@ namespace HealthProject.Areas.Admin.Controllers
         }
 
         [HttpPost, Authorize(Roles = "Admin, Moderator")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminEditEmail(AddProfileImage profileImage)
         {
 
@@ -275,6 +276,7 @@ namespace HealthProject.Areas.Admin.Controllers
         }
 
         [HttpPost, Authorize(Roles = "Admin, Moderator")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminEditPassword(AddProfileImage profileImage)
         {
 

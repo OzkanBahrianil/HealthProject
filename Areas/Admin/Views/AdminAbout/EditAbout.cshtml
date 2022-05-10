@@ -24,6 +24,7 @@
             <br />
             @using (Html.BeginForm("EditAbout", "AdminAbout", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                @Html.AntiForgeryToken()
                 <form class="forms-sample">
                     <div class="form-group">
                         @Html.HiddenFor(x => x.AboutID, new { @class = "form-control" })
@@ -57,7 +58,7 @@
 
                 </form>
             }
-  
+
         </div>
     </div>
 </div>

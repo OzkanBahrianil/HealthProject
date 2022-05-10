@@ -53,6 +53,7 @@ namespace HealthProject.Areas.Admin.Controllers
         }
       
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNotification(Notification p)
         {
 
@@ -84,6 +85,7 @@ namespace HealthProject.Areas.Admin.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateNotification(Notification p)
         {
             NotificationValidation bv = new NotificationValidation();

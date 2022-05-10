@@ -16,6 +16,7 @@
 }
 @using (Html.BeginForm("ArticlesAddByWriter", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     @Html.Label("Makalenin Adı")
     @Html.TextBoxFor(x => x.ArticlesTitle, new { @class = "form-control", @required = "required" })
     <br />
@@ -37,7 +38,7 @@
             <label for="logo" class="custom-file-label">Dosya Seç...</label>
         </div>
     </div>
-    
+
     @Html.Label("Makalenin Kategorisi")
     @Html.DropDownListFor(x => x.ArticleCategoryID, (List<SelectListItem>)ViewBag.cv, new { @class = "form-control" })
     <br />

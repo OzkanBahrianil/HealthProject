@@ -113,6 +113,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(addProductImage);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditProducts(AddProductImage p)
         {
           

@@ -35,6 +35,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(UserSignUpViewModel p)
         {
             if (ModelState.IsValid)

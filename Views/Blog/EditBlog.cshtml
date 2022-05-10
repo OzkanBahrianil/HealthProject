@@ -15,7 +15,7 @@
 }
 @using (Html.BeginForm("EditBlog", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.BlogID, new { @class = "form-control" })
 
     @Html.Label("Blog Başlığı")

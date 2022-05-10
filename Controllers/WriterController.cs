@@ -20,6 +20,8 @@ namespace HealthProject.Controllers
     {
         WriterManeger wm = new WriterManeger(new EfWriterDal());
 
+        NewsLetterManeger nwlm = new NewsLetterManeger(new EfNewsLetterDal());
+
         private readonly UserManager<AppUser> _userManeger;
 
         public WriterController(UserManager<AppUser> userManeger)
@@ -39,11 +41,25 @@ namespace HealthProject.Controllers
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
+
             var usermail = User.Identity.Name;
             var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
             var writervalues = wm.GetByIDT(writerID);
+            var valedatenews = nwlm.Search(usermail).FirstOrDefault();
+            if (valedatenews != null)
+            {
+                if (valedatenews.MailStatus)
+                {
+                    ViewBag.News = "true";
+                }
+                else
+                {
+                    ViewBag.News = "false";
+                }
+
+            }
+
             AddProfileImage addProfileImage = new AddProfileImage();
-            addProfileImage.WriterId = writervalues.Id;
             addProfileImage.WriterAbout = writervalues.About;
             addProfileImage.WriterImageString = writervalues.Image;
             addProfileImage.WriterVideoUrl = writervalues.VideoUrl;
@@ -55,6 +71,7 @@ namespace HealthProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> WriterEditProfile(AddProfileImage p)
         {
             var usermail = User.Identity.Name;
@@ -127,6 +144,7 @@ namespace HealthProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> WriterEditEmail(AddProfileImage profileImage)
         {
 
@@ -156,6 +174,7 @@ namespace HealthProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> WriterEditPassword(AddProfileImage profileImage)
         {
 

@@ -19,7 +19,7 @@
 }
 @using (Html.BeginForm("EditProducts", "MedicalProductsAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ProductID, new { @class = "form-control" })
 
     @Html.Label("Ürün Başlığı")

@@ -5,6 +5,7 @@ using EntityLayer.Concrate;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,38 +89,76 @@ namespace HealthProject.Areas.Admin.Controllers
         {
             if (id.HasValue)
             {
-                var ReceiverMail = wm.TGetByFilter(x => x.Id == id).Email;
-                ViewBag.sender = ReceiverMail;
+                var ReceiverMail = wm.TGetByFilter(x => x.Id == id);
+                ViewBag.sender = ReceiverMail.Email;
+                ViewBag.senderName = ReceiverMail.NameSurname;
 
+            }
+            else
+            {
+                List<SelectListItem> WriterValue = (from x in wm.GetListT()
+                                                    select new SelectListItem
+                                                    {
+                                                        Text = x.NameSurname,
+                                                        Value = x.Id.ToString()
+                                                    }).ToList();
+                ViewBag.wv = WriterValue;
             }
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult SendMessage(Message p, string NameMail)
+        [ValidateAntiForgeryToken]
+        public IActionResult SendMessage(Message p, string NameMail, int? id)
         {
+            if (id.HasValue)
+            {
+                var ReceiverMail = wm.TGetByFilter(x => x.Id == id);
+                ViewBag.sender = ReceiverMail.Email;
+                ViewBag.senderName = ReceiverMail.NameSurname;
+
+            }
+            else
+            {
+                List<SelectListItem> WriterValue = (from x in wm.GetListT()
+                                                    select new SelectListItem
+                                                    {
+                                                        Text = x.NameSurname,
+                                                        Value = x.Id.ToString()
+                                                    }).ToList();
+                ViewBag.wv = WriterValue;
+            }
             MessageValidation bv = new MessageValidation();
             ValidationResult result = bv.Validate(p);
             if (result.IsValid)
             {
                 var usermail = User.Identity.Name;
                 var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-                var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
-                if (WriterCheck == null)
+
+                if (p.ReceiverID == null)
                 {
-                    var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
-                    p.ReceiverID = WriterCheckLast.Id;
-                    if (WriterCheckLast == null)
+                    var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
+                    if (WriterCheck == null)
                     {
-                        TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
-                        return View();
+                        var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
+
+                        if (WriterCheckLast == null)
+                        {
+                            TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
+                            return View();
+                        }
+                        else
+                        {
+                            p.ReceiverID = WriterCheckLast.Id;
+                        }
+                    }
+                    else
+                    {
+                        p.ReceiverID = WriterCheck.Id;
                     }
                 }
-                else
-                {
-                    p.ReceiverID = WriterCheck.Id;
-                }
+
                 p.SenderID = writerID;
                 p.MessageStatus = true;
                 p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());

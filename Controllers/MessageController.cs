@@ -4,6 +4,7 @@ using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,15 @@ namespace HealthProject.Controllers
 {
     public class MessageController : Controller
     {
+        private readonly UserManager<AppUser> _userManeger;
         MessageManeger mm = new MessageManeger(new EfMessageDal());
         WriterManeger wm = new WriterManeger(new EfWriterDal());
+
+        public MessageController(UserManager<AppUser> userManeger)
+        {
+            _userManeger = userManeger;
+        }
+
         public IActionResult InBox(string SearchString, int page = 1)
         {
             var usermail = User.Identity.Name;
@@ -63,12 +71,12 @@ namespace HealthProject.Controllers
                 var values = mm.GetInboxLinstByWriterSend(writerID).ToPagedList(page, 12);
                 var valuesReceived = mm.GetInboxLinstByWriter(writerID);
                 ViewBag.InboxR = valuesReceived.Count();
-                ViewBag.InboxRS = values.Count(); 
+                ViewBag.InboxRS = values.Count();
                 return View(values);
             }
 
 
-          
+
         }
 
         public IActionResult MessageDetails(int id)
@@ -117,8 +125,15 @@ namespace HealthProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendMessage(Message p, string NameMail)
+        [ValidateAntiForgeryToken]
+        public IActionResult SendMessage(Message p, string NameMail, int? id)
         {
+            if (id.HasValue)
+            {
+                var ReceiverMail = wm.TGetByFilter(x => x.Id == id);
+                ViewBag.sender = ReceiverMail.Email;
+                ViewBag.senderName = ReceiverMail.NameSurname;
+            }
             MessageValidation bv = new MessageValidation();
             ValidationResult result = bv.Validate(p);
             if (result.IsValid)
@@ -127,38 +142,65 @@ namespace HealthProject.Controllers
 
                 var usermail = User.Identity.Name;
                 var writerID = wm.TGetByFilter(x => x.Email == usermail).Id;
-
-                var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
-                if (WriterCheck == null)
+                if (NameMail == "Admin")
                 {
-                    var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
-                    p.ReceiverID = WriterCheckLast.Id;
-                    if (WriterCheckLast == null)
+                    var moderators = _userManeger.GetUsersInRoleAsync("Moderator").Result;
+
+                    foreach (var item in moderators)
                     {
-                        TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
+                        p.SenderID = writerID;
+                        p.MessageStatus = true;
+                        p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                        p.ReceiverID = item.Id;
+                        if (p.SenderID != p.ReceiverID)
+                        {
+                            mm.TAdd(p);
+
+                        }
+                    }
+                    return RedirectToAction("InBoxSend", "Message");
+                }
+                else
+                {
+
+
+                    var WriterCheck = wm.TGetByFilter(x => x.Email == NameMail);
+                    if (WriterCheck == null)
+                    {
+                        var WriterCheckLast = wm.TGetByFilter(x => x.NameSurname == NameMail);
+
+                        if (WriterCheckLast == null)
+                        {
+                            TempData["AlertSame"] = "Kullanıcı Bulunamadı!!!";
+                            return View();
+                        }
+                        else
+                        {
+                            p.ReceiverID = WriterCheckLast.Id;
+                        }
+                    }
+                    else
+                    {
+                        p.ReceiverID = WriterCheck.Id;
+                    }
+
+                    p.SenderID = writerID;
+                    p.MessageStatus = true;
+                    p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+
+                    if (p.SenderID == p.ReceiverID)
+                    {
+                        TempData["AlertSame"] = "Kendinize Mesaj Gönderemezsiniz!!!";
                         return View();
                     }
-                }
-                else
-                {
-                    p.ReceiverID = WriterCheck.Id;
-                }
-                p.SenderID = writerID;
-                p.MessageStatus = true;
-                p.MessageDate = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+                    else
+                    {
+                        mm.TAdd(p);
 
-                if (p.SenderID == p.ReceiverID)
-                {
-                    TempData["AlertSame"] = "Kendinize Mesaj Gönderemezsiniz!!!";
-                    return View();
-                }
-                else
-                {
-                    mm.TAdd(p);
+                    }
 
+                    return RedirectToAction("InBoxSend", "Message");
                 }
-
-                return RedirectToAction("InBoxSend", "Message");
             }
             else
             {

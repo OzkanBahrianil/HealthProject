@@ -131,6 +131,7 @@ namespace HealthProject.Areas.Article.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ArticlesAddByWriter(AddArticlesPdf p)
         {
             Articles w = new Articles();
@@ -282,6 +283,7 @@ namespace HealthProject.Areas.Article.Controllers
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditArticles(AddArticlesPdf p)
         {
 

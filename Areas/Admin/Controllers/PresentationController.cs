@@ -32,6 +32,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PresentationAdd(AddPresentationImage p)
         {
             Presentation w = new Presentation();
@@ -134,6 +135,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(addPresentationImage);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditPresentation(AddPresentationImage p)
         {
 

@@ -92,7 +92,7 @@
                                                 <td>@item.MailID</td>
                                                 <td>@item.Mail</td>
                                                 <td>Aktif</td>
-                                                <td><a href="#" class="btn btn-warning">Pasif Yap</a></td>
+                                                <td><a href="/Admin/Subscribe/DisableSubscribe/@item.MailID" class="btn btn-warning">Pasif Yap</a></td>
                                                 <td>Zaten Aktif</td>
 
 
@@ -106,7 +106,7 @@
                                                 <td>@item.Mail</td>
                                                 <td>Pasif</td>
                                                 <td>Zaten Pasif</td>
-                                                <td><a href="#" class="btn btn-primary">Pasif Yap</a></td>
+                                                <td><a href="/Admin/Subscribe/EnableSubscribe/@item.MailID" class="btn btn-primary">Aktif Yap</a></td>
 
 
                                             </tr>
@@ -131,14 +131,14 @@
 
                                     @using (Html.BeginForm("MailSend", "Subscribe", FormMethod.Post))
                                     {
-                                        <div class="modal-body">
+                                <div class="modal-body">
 
+                                    @Html.AntiForgeryToken()
+                                    <label for="exampleInputName1">İsim</label>
+                                    <textarea name="MailContents" id="summernote" class="summernote" required=""></textarea>
+                                    <br />
 
-                                            <label for="exampleInputName1">İsim</label>
-                                            <textarea name="MailContents" id="summernote" class="summernote" required=""></textarea>
-                                            <br />
-
-                                        </div>
+                                </div>
 
 
                                         <div class="modal-footer">

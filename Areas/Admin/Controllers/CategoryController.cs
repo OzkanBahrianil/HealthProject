@@ -82,6 +82,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddCategory(Category p)
         {
             CategoryValidation cv = new CategoryValidation();
@@ -126,6 +127,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(values);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CategoryUpdate(Category p)
         {
 
@@ -213,6 +215,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddMedicalCategory(ProductCategory p)
         {
             ProductCategoryValidation cv = new ProductCategoryValidation();
@@ -257,6 +260,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(values);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult MedicalCategoryUpdate(ProductCategory p)
         {
 
@@ -342,6 +346,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddArticleCategory(ArticleCategory p)
         {
             ArticleCategoryValidation cv = new ArticleCategoryValidation();
@@ -386,6 +391,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(values);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ArticleCategoryUpdate(ArticleCategory p)
         {
 

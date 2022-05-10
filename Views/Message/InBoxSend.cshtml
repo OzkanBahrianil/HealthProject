@@ -25,7 +25,7 @@
                             <ul class="folder-list m-b-md" style="padding: 0">
                                 <li><a href="/Message/InBox/"> <i class="fa fa-inbox "></i> Gelen Kutusu <span class="label label-warning float-right" style="width:16px; text-align:center;">@ViewBag.InboxR</span> </a></li>
                                 <li><a href="/Message/InBoxSend/"> <i class="fa fa-envelope-o"></i> Gönderilenler <span class="label label-warning float-right" style="width:16px; text-align:center;">@ViewBag.InboxRS</span> </a></li>
-
+                                <li><a href="/Message/SendMessage/"> <i class="fa fa-envelope-o"></i> Mesaj Gönder </a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
@@ -39,6 +39,7 @@
                     <h2>
                         Giden Kutusu (@ViewBag.InboxRS) <small> >@ViewData["CurrentFilterSearch"]</small>
                     </h2>
+
                     <div>
                         <form class="d-flex align-items-center h-100" method="get">
                             <div class="input-group">
@@ -49,6 +50,7 @@
                             </div>
                         </form>
                     </div>
+                    <br />
                     <div class="mail-tools tooltip-demo m-t-md">
                         <div class="btn-group float-right fa">
 
@@ -57,7 +59,7 @@
 
 
                         </div>
-                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inboxsend" asp-action="InBoxSend" ><i class="fa fa-refresh"></i> Refresh</a>
+                        <a class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inboxsend" asp-action="InBoxSend"><i class="fa fa-refresh"></i> Refresh</a>
 
 
                     </div>

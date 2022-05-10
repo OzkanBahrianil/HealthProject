@@ -50,6 +50,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> WriterApplicationSend(WriterApplicationPdf p)
         {
             var usermail = User.Identity.Name;

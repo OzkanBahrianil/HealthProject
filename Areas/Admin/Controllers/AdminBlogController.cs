@@ -113,6 +113,7 @@ namespace HealthProject.Areas.Admin.Controllers
             return View(addBlogImage);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditBlog(AddBlogImage p)
         {
             var w = bm.GetByIDT(p.BlogID);

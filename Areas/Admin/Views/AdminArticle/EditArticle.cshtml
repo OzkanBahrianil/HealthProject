@@ -18,7 +18,7 @@
 }
 @using (Html.BeginForm("EditArticle", "AdminArticle", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ArticlesID, new { @class = "form-control" })
 
     @Html.Label("Makale Başlığı")

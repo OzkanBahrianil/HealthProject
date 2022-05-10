@@ -195,6 +195,7 @@ namespace HealthProject.Controllers
             return View();
         }
         [HttpPost, Authorize(Roles = "Writer")]
+        [ValidateAntiForgeryToken]
         public IActionResult BlogAddByWriter(AddBlogImage p)
         {
             Blog w = new Blog();
@@ -379,6 +380,7 @@ namespace HealthProject.Controllers
 
         }
         [HttpPost, Authorize(Roles = "Writer")]
+        [ValidateAntiForgeryToken]
         public IActionResult EditBlog(AddBlogImage p)
         {
             var usermail = User.Identity.Name;

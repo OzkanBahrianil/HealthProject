@@ -21,45 +21,46 @@
             <br />
             @using (Html.BeginForm("AdminEditProfile", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <form class="forms-sample">
-                    <div class="form-group">
-                        @Html.HiddenFor(x => x.WriterId, new { @class = "form-control" })
-                        <label for="WriterName">İsim Soyisim</label>
-                        @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label for="WriterMail">Email</label>
-                        @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
-                    </div>
-                    <div class="form-group">
 
-                        @Html.HiddenFor(x => x.WriterImageString, new { @class = "form-control" })
-                    </div>
+        <form class="forms-sample">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="WriterName">İsim Soyisim</label>
+                @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="WriterMail">Email</label>
+                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
+            </div>
+            <div class="form-group">
 
-                    <div class="form-group">
-                        <label>Yazar Görseli</label>
-                        <div class="custom-file">
-                            <input id="logo" type="file" name="WriterImage" class="custom-file-input">
-                            <label for="logo" class="custom-file-label">Dosya Seç...</label>
-                        </div>
-                    </div>
+                @Html.HiddenFor(x => x.WriterImageString, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Yazar Görseli</label>
+                <div class="custom-file">
+                    <input id="logo" type="file" name="WriterImage" class="custom-file-input">
+                    <label for="logo" class="custom-file-label">Dosya Seç...</label>
+                </div>
+            </div>
 
 
-                    <div class="form-group">
-                        <label for="WriterAbout">Hakkında (Kısa)</label>
-                        @Html.TextAreaFor(x => x.WriterAbout, 5, 3, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label for="WriterVideoUrl">Hakkında Video (Ana Sayfa)</label>
-                        @Html.TextBoxFor(x => x.WriterVideoUrl, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.WriterVideoUrl, "", new { @class = "text-danger" })
-                    </div>
-                    <button type="submit" class="btn btn-secondary mr-2">Güncelle</button>
-                    <a href="/Admin/AdminDashboard/Index/" class="btn btn-outline-danger">İptal Et</a>
+            <div class="form-group">
+                <label for="WriterAbout">Hakkında (Kısa)</label>
+                @Html.TextAreaFor(x => x.WriterAbout, 5, 3, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterAbout, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="WriterVideoUrl">Hakkında Video (Ana Sayfa)</label>
+                @Html.TextBoxFor(x => x.WriterVideoUrl, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.WriterVideoUrl, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="btn btn-secondary mr-2">Güncelle</button>
+            <a href="/Admin/AdminDashboard/Index/" class="btn btn-outline-danger">İptal Et</a>
 
-                </form>
+        </form>
             }
             <br />
             <button type="button" class="btn btn-primary my-button" data-toggle="modal" data-target="#myModal">
@@ -82,23 +83,23 @@
                         </div>
 
                         @using (Html.BeginForm("AdminEditEmail", "Writer", FormMethod.Post))
-                        {
-                            <div class="modal-body">
-                                <label for="exampleInputName1">Email</label>
-                                @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required = "required", @type = "email" })
-                                <br />
-                                <div class="alert alert-danger">
-                                    <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
-                                </div>
+                        {@Html.AntiForgeryToken()
+                        <div class="modal-body">
+                            <label for="exampleInputName1">Email</label>
+                            @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required = "required", @type = "email" })
+                            <br />
+                            <div class="alert alert-danger">
+                                <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
+                                <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
                             </div>
+                        </div>
 
 
-                            <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" value="Güncelle">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Vazgeç</button>
-                            </div>
-                        }
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Güncelle">
+                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Vazgeç</button>
+                        </div>
+                    }
                     </div>
                 </div>
             </div>
@@ -113,21 +114,21 @@
 
                         @using (Html.BeginForm("AdminEditPassword", "Writer", FormMethod.Post))
                         {
-                            <div class="modal-body">
+                    <div class="modal-body">
 
-
-                                <label for="exampleInputName1">Yeni Şifre</label>
-                                <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />
-                                <br />
-                                <label for="exampleInputName1">Yeni Şifre Doğrula</label>
-                                <input type="password" name="WriterNewPasswordCheck" id="WriterNewPasswordCheck" class="form-control" value="" required="" />
-                                <span id='messageConfirm'></span>
-                                <br />
-                                <div class="alert alert-danger">
-                                    <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
-                                    <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
-                                </div>
-                            </div>
+                        @Html.AntiForgeryToken()
+                        <label for="exampleInputName1">Yeni Şifre</label>
+                        <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />
+                        <br />
+                        <label for="exampleInputName1">Yeni Şifre Doğrula</label>
+                        <input type="password" name="WriterNewPasswordCheck" id="WriterNewPasswordCheck" class="form-control" value="" required="" />
+                        <span id='messageConfirm'></span>
+                        <br />
+                        <div class="alert alert-danger">
+                            <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
+                            <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
+                        </div>
+                    </div>
 
 
                             <div class="modal-footer">

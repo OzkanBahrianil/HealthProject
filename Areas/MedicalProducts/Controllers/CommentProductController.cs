@@ -23,6 +23,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
             return PartialView();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PartialAddCommentProduct(CommentProduct p)
         {
             int id = p.ProductID;

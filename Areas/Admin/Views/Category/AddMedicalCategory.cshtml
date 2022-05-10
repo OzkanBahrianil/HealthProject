@@ -8,6 +8,7 @@
 <br />
 @using (Html.BeginForm("AddMedicalCategory", "Category", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     @Html.Label("Kategori Başlığı")
     @Html.TextBoxFor(x => x.ProductCategoryName, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.ProductCategoryName)

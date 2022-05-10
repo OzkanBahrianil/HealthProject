@@ -3,6 +3,7 @@ using DataAccessLayer.EntityFremawork;
 using HealthProject.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,6 +86,7 @@ namespace HealthProject.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult MailSend(NewsLetterMail p)
         {
 
@@ -92,13 +94,14 @@ namespace HealthProject.Areas.Admin.Controllers
             var getmail = nlm.GetListT().Where(x => x.MailStatus == true).ToList();
             foreach (var item in getmail)
             {
-
+                byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(item.MailID.ToString());
+                var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
                 MailMessage mail = new MailMessage();
                 mail.IsBodyHtml = true;
                 mail.To.Add(item.Mail);
                 mail.From = new MailAddress("healthprojectblog@gmail.com", "Aylık Haber Bülten", Encoding.UTF8);
                 mail.Subject = "Aylık Haber Bülteni (HealthProject)";
-                mail.Body = $"{p.MailContents}" + $" <a target=\"_blank\" href=\"https://localhost:44380{Url.Action("SubscribeMailDeactive", "NewsLetter", new { userId = item.MailID })}\">Aboneliği İptal Edin veya Eğer kayıtlı isteniz ayarlardan aboneliği kapatabilirsiniz.</a>";
+                mail.Body = $"{p.MailContents}" + $" <a target=\"_blank\" href=\"https://localhost:44380{Url.Action("SubscribeMailDeactive", "NewsLetter", new { userId = codeEncoded })}\">Aboneliği İptal Edin veya Eğer kayıtlı isteniz ayarlardan aboneliği kapatabilirsiniz.</a>";
                 mail.IsBodyHtml = true;
                 SmtpClient smp = new SmtpClient();
                 smp.Credentials = new NetworkCredential("healthprojectblog@gmail.com", "11051998Fb.");
@@ -110,6 +113,45 @@ namespace HealthProject.Areas.Admin.Controllers
             }
             TempData["AletrMessage"] = "Mail Gönderme İşlemi Başarılı...!";
             return RedirectToAction("Index");
+
+        }
+
+
+        [HttpGet]
+        public IActionResult DisableSubscribe(int id)
+        {
+
+            var values = nlm.GetByIDT(id);
+            if (values != null)
+            {
+                values.MailStatus = false;
+                nlm.TUpdate(values);
+                TempData["AletrMessage"] = "Deactive İşlemi Başarılı...!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+        [HttpGet]
+        public IActionResult EnableSubscribe(int id)
+        {
+
+            var values = nlm.GetByIDT(id);
+            if (values != null)
+            {
+                values.MailStatus = true;
+                nlm.TUpdate(values);
+                TempData["AletrMessage"] = "active İşlemi Başarılı...!";
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
 
         }
     }

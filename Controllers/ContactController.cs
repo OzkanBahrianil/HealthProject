@@ -24,6 +24,7 @@ namespace HealthProject.Controllers
             return View(values);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(Contact p)
         {
             ContactValidation cv = new ContactValidation();

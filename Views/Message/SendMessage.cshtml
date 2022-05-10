@@ -18,7 +18,7 @@
 @using (Html.BeginForm("SendMessage", "Message", FormMethod.Post))
 {
     <body>
-
+        @Html.AntiForgeryToken()
         <div class="mail-box-header">
 
             <h2>
@@ -31,11 +31,14 @@
                 <h5>
                     @if (@ViewBag.sender != null)
                     {
-                    <span class="font-normal">Alıcı: @ViewBag.senderName   <input type="hidden" class="form-control" value="@ViewBag.sender" name="NameMail"></span>
+                        <span class="font-normal">Alıcı: @ViewBag.senderName    <input type="hidden" disabled="disabled" class="form-control" value="@ViewBag.sender" name="NameMail"></span>
                     }
                     else
                     {
-                        <span class="font-normal">Alıcı: <input class="form-control" type="text" name="NameMail" placeholder="Alıcı Mail Veya Ad Soyad" required=""></span>
+                        <span class="font-normal">Alıcı: <input class="form-control" id="textbox" type="text" name="NameMail" placeholder="Alıcı Mail Veya Ad Soyad" required=""></span>
+                        <br />
+                        <input type="checkbox" id="checkadmin" onclick="myFunction()"/>
+                        <label for="checkadmin">Yöneticilere Mesaj Gönder</label><br>
                     }
 
                 </h5>
@@ -72,5 +75,17 @@
     </body>
 }
 
+<script>
+    function myFunction() {
+        var checkBox = document.getElementById("checkadmin");
+        var textbox = document.getElementById("textbox");
+        var value = document.getElementById("textbox");
+        if (checkBox.checked == true) {
+            textbox.style.display = "none";
+            textbox.value = "Admin";
+        } else {
+            textbox.style.display = "block";
 
-
+        }
+    }
+</script>
