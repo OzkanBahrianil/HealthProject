@@ -56,9 +56,12 @@
                         </div>
                     }
 
-                    @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.i,  page = ViewBag.page })
+                    @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.i, page = ViewBag.page })
 
                     @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddComment", ViewBag.i } })
+
+                    <br />
+                    <small>Sayfa Görüntülenme Sayısı:  @ViewBag.viewvalue</small>
                 </div>
 
 

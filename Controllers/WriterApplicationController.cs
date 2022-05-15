@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
+using HealthProject.Filters;
 using HealthProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
+    [PageVisitCountFilter]
     public class WriterApplicationController : Controller
     {
         readonly UserManager<AppUser> _userManager;

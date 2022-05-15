@@ -4,33 +4,36 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Sağlık Proje</title>
-
+    <link rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="~/Admin/favicon.ico" />
     <link rel="stylesheet" href="~/writer/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/writer/assets/vendors/css/vendor.bundle.base.css">
 
     <link rel="stylesheet" href="~/writer/assets/css/style.css">
     <link href="~/css/csshtml.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="~/writer/assets/images/favicon.ico" />
 </head>
 <body>
     <div class="container-scroller">
 
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="/HomePage/Index/"><img src="~/writer/assets/images/logo.svg" alt="logo" /></a>
-                <a class="navbar-brand brand-logo-mini" href="/HomePage/Index/"><img src="~/writer/assets/images/logo-mini.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo" href="/HomePage/Index/"><img src="~/WriterImageFiles/healthproject.png" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/HomePage/Index/"><img src="~/WriterImageFiles/healthprojectmini.png" style="background-color:transparent;" alt="logo" /></a>
             </div>
+
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-        
+
                 <ul class="navbar-nav navbar-nav-right">
 
                     @await Component.InvokeAsync("WriterNavbarPartialHead")

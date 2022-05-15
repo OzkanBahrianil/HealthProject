@@ -5,6 +5,7 @@ using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
 using HealthProject.Areas.MedicalProducts.Models;
+using HealthProject.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,6 +20,7 @@ namespace HealthProject.Areas.MedicalProducts.Controllers
 {
     [Area("MedicalProducts")]
     [Authorize(Roles = "CompanyWriter")]
+    [PageVisitCountFilter]
     public class CompanyController : Controller
     {
         ProductCategoryManeger pcm = new ProductCategoryManeger(new EfProductCategoryDal());

@@ -1109,8 +1109,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Owl.Carousel.2" Version="2.0.1" />
-    <PackageReference Include="X.PagedList" Version="8.1.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+    <PackageReference Include="X.PagedList" Version="8.4.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>

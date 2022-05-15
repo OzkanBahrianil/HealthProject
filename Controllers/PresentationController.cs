@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
+using HealthProject.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,7 @@ namespace HealthProject.Controllers
     public class PresentationController : Controller
     {
         PresentationManeger pm = new PresentationManeger(new EfPresentationDal());
-        
+        [PageVisitCountFilter]
         public IActionResult PresentationRead(int id)
         {
            var values= pm.GetByIDT(id);

@@ -1,20 +1,18 @@
 ﻿<!DOCTYPE html>
-<html dir="ltr" lang="tr">
+<html lang="zxx">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
+    <title>Sağlık Proje</title>
     <link rel="icon"
           type="image/png"
           sizes="16x16"
-          href="~/Admin/assets/images/favicon.png" />
+          href="~/Admin/favicon.ico" />
+
     <link href="~/Admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
     <link href="~/Admin/dist/css/style.min.css" rel="stylesheet" />
-    <link rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="~/Admin/assets/images/favicon.png" />
     <link href="~/css/csshtml.css" rel="stylesheet" />
     <link href="~/Admin/assets/libs/fullcalendar/dist/fullcalendar.min.css"
           rel="stylesheet" />
@@ -47,15 +45,15 @@
 
                         <b class="logo-icon ps-2">
 
-                            <img src="~/Admin/assets/images/logo-icon.png"
+                            <img src="~/WriterImageFiles/HealthProjectAdminmini.png"
                                  alt="homepage"
                                  class="light-logo"
                                  width="25" />
                         </b>
 
                         <span class="logo-text ms-2">
-                          
-                            <img src="~/Admin/assets/images/logo-text.png"
+
+                            <img src="~/WriterImageFiles/HealthProjectAdmin.png"
                                  alt="homepage"
                                  class="light-logo" />
                         </span>
@@ -81,12 +79,12 @@
                             </a>
                         </li>
 
-                    
+
                     </ul>
 
                     <ul class="navbar-nav float-end">
 
-                   
+
                         @await Component.InvokeAsync("NotificationAdminHeader")
 
 
@@ -95,7 +93,7 @@
                         @await Component.InvokeAsync("UserAdminHeader")
 
 
-                        
+
 
                     </ul>
                 </div>
@@ -270,6 +268,13 @@
                                href="/Admin/WriterApplication/Index/"
                                aria-expanded="false">
                                 <i class="mdi mdi-note-plus"></i><span class="hide-menu">Yazar Başvurusu Kontrol</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                               href="/Admin/Filters/Index/"
+                               aria-expanded="false">
+                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">Sayfa Ziyaretci Sayıları</span>
                             </a>
                         </li>
                     </ul>

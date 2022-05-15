@@ -29,7 +29,7 @@
                                 <br />
                             </div>
                             <div class="blog-info-middle">
-                           
+
                                 <ul>
                                     <li>
                                         <a href="#">
@@ -47,7 +47,7 @@
                                         </a>
                                     </li>
                                     <br />
-                                   
+
                                     <li>
 
                                         <a href="#">
@@ -59,7 +59,7 @@
                                 </ul>
 
                             </div>
-                       
+
 
 
                         </div>
@@ -68,9 +68,11 @@
                     </article>
                     <p>
 
-                       @Html.Raw(item.ArticlesContent)
+                        @Html.Raw(item.ArticlesContent)
                     </p>
                 }
+                <br />
+                <small>Sayfa Görüntülenme Sayısı:  @ViewBag.viewvalue</small>
             </div>
 
             <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
@@ -87,7 +89,7 @@
 
 
                     @foreach (var item in Model)
-                    {
+                    {<br />
                         <div class="tech-btm">
                             <h4>Yazar</h4>
 

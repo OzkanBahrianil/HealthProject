@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Concrete
 {
-    public class Context : IdentityDbContext<AppUser,AppRole,int>
+    public class Context : IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,7 +23,7 @@ namespace DataAccessLayer.Concrete
                 .WithMany(y => y.WriterSender)
                 .HasForeignKey(z => z.SenderID)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-          
+
             modelBuilder.Entity<Message>()
              .HasOne(x => x.ReceiverUser)
              .WithMany(y => y.WriterReceiver)
@@ -39,7 +39,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
- 
+        public DbSet<PageVisit> PageVisits { get; set; }
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<BlogRayting> BlogRaytings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
@@ -51,6 +51,6 @@ namespace DataAccessLayer.Concrete
         public DbSet<Articles> Articles { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
         public DbSet<Presentation> Presentations { get; set; }
-      
+
     }
 }

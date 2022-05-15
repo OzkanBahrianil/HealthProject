@@ -63,7 +63,8 @@
                     @await Component.InvokeAsync("CommentListByProduct", new { id = ViewBag.i, page = ViewBag.page })
 
                     @await Html.PartialAsync("~/Areas/MedicalProducts/Views/CommentProduct/PartialAddCommentProduct.cshtml", Model, new ViewDataDictionary(ViewData) { { "PartialAddCommentProduct", ViewBag.i } })
-
+                    <br />
+                    <small>Sayfa Görüntülenme Sayısı:  @ViewBag.viewvalue</small>
                 </div>
 
                 <aside class="col-lg-4 agileits-w3ls-right-blog-con text-left">
@@ -79,7 +80,7 @@
                         @await Component.InvokeAsync("ProductCategoryList")
 
                         @foreach (var item in Model)
-                        {
+                        {<br />
                             <div class="tech-btm">
                                 <h4>Yazar</h4>
 

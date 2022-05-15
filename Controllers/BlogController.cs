@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
 using FluentValidation.Results;
+using HealthProject.Filters;
 using HealthProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ using X.PagedList;
 
 namespace HealthProject.Controllers
 {
-
+    [PageVisitCountFilter]
     public class BlogController : Controller
     {
         CategoryManeger cm = new CategoryManeger(new EfCategoryDal());
@@ -24,10 +25,11 @@ namespace HealthProject.Controllers
         WriterManeger wm = new WriterManeger(new EfWriterDal());
         CommentManeger cmt = new CommentManeger(new EfCommentDal());
         BlogRaytingManeger brm = new BlogRaytingManeger(new EfBlogRaytingDal());
-
+        PageVisitManeger pvm = new PageVisitManeger(new EfPageVisitDal());
         [AllowAnonymous]
         public IActionResult Index(int page = 1)
         {
+
             var values = bm.GetBlogListWithCategoryWithComments().OrderByDescending(x => x.BlogCreateDate).ToList().ToPagedList(page, 9);
             return View(values);
         }
@@ -43,6 +45,13 @@ namespace HealthProject.Controllers
         [AllowAnonymous]
         public IActionResult BlogReadAll(int id, int page = 1)
         {
+            var Urlstring = HttpContext.Request.Path;
+            var viewvalue = pvm.GetByUrl(Urlstring);
+            if (viewvalue != null)
+            {
+                ViewBag.viewvalue = viewvalue.Visits;
+            }
+
             ViewBag.page = page;
             ViewBag.CommentCount = cmt.GetCommentListByIdBlog(id).Count();
             ViewBag.i = id;

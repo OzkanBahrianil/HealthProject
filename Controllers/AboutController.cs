@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
+using HealthProject.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace HealthProject.Controllers
 {
     [AllowAnonymous]
+    [PageVisitCountFilter]
     public class AboutController : Controller
     {
         AboutManeger abm = new AboutManeger(new EfAboutDal());

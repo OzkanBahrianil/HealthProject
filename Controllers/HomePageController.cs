@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HealthProject.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace HealthProject.Controllers
     public class HomePageController : Controller
     {
         [AllowAnonymous]
+        [PageVisitCountFilter]
         public IActionResult Index(int pageblog = 1, int pagearticle = 1, int pageproduct = 1)
         {
             ViewBag.pageblog = pageblog;

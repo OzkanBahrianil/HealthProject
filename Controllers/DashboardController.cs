@@ -2,6 +2,7 @@
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFremawork;
 using EntityLayer.Concrate;
+using HealthProject.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HealthProject.Controllers
 {
-    
+    [PageVisitCountFilter]
     public class DashboardController : Controller
     {  
         WriterManeger wm = new WriterManeger(new EfWriterDal());
