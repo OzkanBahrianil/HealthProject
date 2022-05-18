@@ -16,11 +16,11 @@
 
 @using (Html.BeginForm("BlogAddByWriter", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+    
     @Html.Label("Blog Başlığı")
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", @required = "required" })
 
-    <br />
+    <br />@Html.AntiForgeryToken()
     <div class="form-group">
         <label>Blog Görseli</label>
         <div class="custom-file">

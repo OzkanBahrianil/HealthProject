@@ -18,13 +18,13 @@
 }
 @using (Html.BeginForm("EditPresentation", "Presentation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+  
     @Html.HiddenFor(x => x.PresentationID, new { @class = "form-control" })
 
     @Html.Label("Tanıtım Başlığı")
     @Html.TextBoxFor(x => x.PresentationTitle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.PresentationTitle)
-    <br />
+    <br />  @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.PresentationImageString)
     <div class="form-group">
         <label>Tanıtım Görseli</label>

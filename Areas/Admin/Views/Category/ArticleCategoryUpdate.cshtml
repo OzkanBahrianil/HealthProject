@@ -10,12 +10,12 @@
 <br />
 @using (Html.BeginForm("ArticleCategoryUpdate", "Category", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+   
     @Html.HiddenFor(x => x.ArticleCategoryID, new { @class = "form-control" })
     @Html.Label("Kategori Başlığı")
     @Html.TextBoxFor(x => x.ArticleCategoryName, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.ArticleCategoryName)
-    <br />
+    <br /> @Html.AntiForgeryToken()
     @Html.Label("Kategori Açıklaması")
     @Html.TextAreaFor(x => x.ArticleCategoryDescription, 10, 3, new { @class = "form-control" })
     @Html.ValidationMessageFor(x => x.ArticleCategoryDescription)

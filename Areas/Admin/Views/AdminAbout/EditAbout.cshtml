@@ -24,7 +24,7 @@
             <br />
             @using (Html.BeginForm("EditAbout", "AdminAbout", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.AntiForgeryToken()
+                
                 <form class="forms-sample">
                     <div class="form-group">
                         @Html.HiddenFor(x => x.AboutID, new { @class = "form-control" })
@@ -41,7 +41,7 @@
                             <label for="logo" class="custom-file-label">Dosya Seç...</label>
                         </div>
                     </div>
-
+@Html.AntiForgeryToken()
 
                     <div class="form-group">
                         <label for="WriterAbout">Hakkında</label>

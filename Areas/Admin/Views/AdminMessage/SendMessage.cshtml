@@ -21,7 +21,7 @@
 @using (Html.BeginForm("SendMessage", "AdminMessage", FormMethod.Post))
 {
 <body>
-    @Html.AntiForgeryToken()
+   
     <div class="mail-box-header">
 
         <h2>
@@ -31,7 +31,7 @@
 
 
         <div class="mail-tools tooltip-demo m-t-md">
-            <h5>
+            <h5> 
                 @if (@ViewBag.sender != null)
                 {
                 <span class="font-normal">Alıcı:  @ViewBag.senderName   <input class="form-control" disabled="disabled" value="@ViewBag.sender" name="NameMail"></span>
@@ -43,7 +43,7 @@
                 }
 
             </h5>
-
+@Html.AntiForgeryToken()
             <h5>
                 <span>Konu @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @required = "required" }) </span>
 

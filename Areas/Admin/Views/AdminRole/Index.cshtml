@@ -63,11 +63,11 @@
 
                                     @using (Html.BeginForm("AddRole", "AdminRole", FormMethod.Post))
                                     {
-                                        @Html.AntiForgeryToken()
+                                       
                                         <div class="modal-body">
 
 
-                                            <label for="exampleInputName1">İsim</label>
+                                            <label for="exampleInputName1">İsim</label> @Html.AntiForgeryToken()
                                             <input type="text" name="Name" id="WriterNewPassword" class="form-control" required="" />
                                             <br />
 

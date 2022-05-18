@@ -11,13 +11,13 @@
         <div class="inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
                 @using (Html.BeginForm("Index", "Register", FormMethod.Post))
-                {@Html.AntiForgeryToken()
+                {
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="WriterName">Adınız soyadınız</label>
                         @Html.TextBoxFor(x => x.NameSurname, new { @class = "form-control" })
                         <span asp-validation-for="@Model.NameSurname" class="text-danger"></span>
-                    </div>
+                    </div>@Html.AntiForgeryToken()
                     <div class="col-md-6 mb-3">
                         <label for="WriterMail">Mail Adresi</label>
                         @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", @type = "email" })

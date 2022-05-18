@@ -18,7 +18,7 @@
 @using (Html.BeginForm("SendMessage", "Message", FormMethod.Post))
 {
     <body>
-        @Html.AntiForgeryToken()
+      
         <div class="mail-box-header">
 
             <h2>
@@ -42,7 +42,7 @@
                     }
 
                 </h5>
-
+  @Html.AntiForgeryToken()
                 <h5>
                     <span>Konu @Html.TextBoxFor(x => x.Subject, new { @class = "form-control", @required = "required" }) </span>
 

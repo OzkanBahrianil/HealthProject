@@ -90,12 +90,12 @@
                 }
                 <form action="#" method="post">
                     <div class="row contact_left_grid">
-                        @Html.AntiForgeryToken()
+                      
                         <div class="col-md-6 con-left">
                             <div class="form-group">
                                 <label for="validationCustom01 my-2">Adınız</label>
                                 <input class="form-control" type="text" name="ContactUserName" placeholder="" required="">
-                            </div>
+                            </div>  @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Email</label>
                                 <input class="form-control" type="email" name="ContactMail" placeholder="" required="">

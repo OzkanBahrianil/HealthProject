@@ -31,11 +31,11 @@
         <div class="row inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
                 <form method="post">
-                    @Html.AntiForgeryToken()
+                   
                     <div class="form-group">
                         <label for="exampleInputEmail1 mb-2">Email</label>
                         <input type="text" class="form-control" asp-for="@Model.username" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
-                    </div>
+                    </div> @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="exampleInputPassword1 mb-2">Şifre</label>
                         <input type="password" asp-for="@Model.password" class="form-control" id="exampleInputPassword1" placeholder="" required="">

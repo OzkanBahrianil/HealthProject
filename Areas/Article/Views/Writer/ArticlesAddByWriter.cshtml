@@ -16,7 +16,7 @@
 }
 @using (Html.BeginForm("ArticlesAddByWriter", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+   
     @Html.Label("Makalenin Adı")
     @Html.TextBoxFor(x => x.ArticlesTitle, new { @class = "form-control", @required = "required" })
     <br />
@@ -26,7 +26,7 @@
     @Html.Label("Makalenin Türü")
     @Html.TextBoxFor(x => x.ArticlesType, new { @class = "form-control", @required = "required" })
     <br />
-
+ @Html.AntiForgeryToken()
     @Html.Label("Makalenin Tarihi")
     @Html.TextBoxFor(x => x.ArticlesPublishDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @required = "required", type = "date" })
 

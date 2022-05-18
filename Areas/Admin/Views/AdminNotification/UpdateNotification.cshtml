@@ -8,13 +8,13 @@
 
 @using (Html.BeginForm("UpdateNotification", "AdminNotification", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+   
     @Html.HiddenFor(x => x.NotificationID, new { @class = "form-control" })
 
     @Html.Label("Bildirim Tipi")
     @Html.TextBoxFor(x => x.NotificationType, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.NotificationType)
-    <br />
+    <br /> @Html.AntiForgeryToken()
 
     @Html.Label("Bildirim Sembol (.png)")
     @Html.TextBoxFor(x => x.NotificationTypeSymbol, new { @class = "form-control", @required = "required" })

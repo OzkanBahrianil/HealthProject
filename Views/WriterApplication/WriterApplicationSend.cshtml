@@ -21,13 +21,13 @@
 
 @using (Html.BeginForm("WriterApplicationSend", "WriterApplication", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+    
     @Html.Label("Mezun Olunan Veya Devam Eden Üniversite")
     @Html.TextBoxFor(x => x.ApplicationUniversity, new { @class = "form-control", @required = "required" })
     <br />
     @Html.Label("Bölüm")
     @Html.TextBoxFor(x => x.ApplicationUniversityDepartment, new { @class = "form-control", @required = "required" })
-    <br />
+    <br />@Html.AntiForgeryToken()
 
     @Html.Label("Telefon Numarası")
     @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", @required = "required" })

@@ -18,13 +18,13 @@
             <br />
             @using (Html.BeginForm("WriterEditProfile", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.AntiForgeryToken()
+              
                 <form class="forms-sample">
                     <div class="form-group">
                         <label for="WriterName">İsim Soyisim</label>
                         @Html.TextBoxFor(x => x.WriterName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.WriterName, "", new { @class = "text-danger" })
-                    </div>
+                    </div>  @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="WriterMail">Email</label>
                         @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", disabled = "disabled" })
@@ -92,11 +92,11 @@
 
                         @using (Html.BeginForm("WriterEditEmail", "Writer", FormMethod.Post))
                         {
-                            @Html.AntiForgeryToken()
+                            
                             <div class="modal-body">
                                 <label for="exampleInputName1">Email</label>
                                 @Html.TextBoxFor(x => x.WriterMail, new { @class = "form-control", @required = "required", @type = "email" })
-                                <br />
+                                <br />@Html.AntiForgeryToken()
                                 <div class="alert alert-danger">
                                     <strong>Dikkat!</strong>&nbsp;&nbsp;&nbsp; Bu işlemden sonra yeniden giriş yapmanız gerekmektedir.
                                     <button aria-hidden="true" data-dismiss="alert" class="close" style="background-color:transparent;  border:hidden;" type="button">x</button>
@@ -124,11 +124,11 @@
                         @using (Html.BeginForm("WriterEditPassword", "Writer", FormMethod.Post))
                         {
                             <div class="modal-body">
-                                @Html.AntiForgeryToken()
+                               
 
                                 <label for="exampleInputName1">Yeni Şifre</label>
                                 <input type="password" name="WriterPassword" id="WriterNewPassword" class="form-control" value="" required="" />
-                                <br />
+                                <br /> @Html.AntiForgeryToken()
                                 <label for="exampleInputName1">Yeni Şifre Doğrula</label>
                                 <input type="password" name="WriterNewPasswordCheck" id="WriterNewPasswordCheck" class="form-control" value="" required="" />
                                 <span id='messageConfirm'></span>

@@ -16,13 +16,13 @@
 }
 @using (Html.BeginForm("EditProducts", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+  
     @Html.HiddenFor(x => x.ProductID, new { @class = "form-control" })
 
     @Html.Label("Ürün Başlığı")
     @Html.TextBoxFor(x => x.ProductTitle, new { @class = "form-control", @required = "required" })
     @Html.ValidationMessageFor(x => x.ProductTitle)
-    <br />
+    <br />  @Html.AntiForgeryToken()
 
     @Html.Label("Ürünün Üretim Şekli")
     @Html.TextBoxFor(x => x.ProductStyle, new { @class = "form-control", @required = "required" })
